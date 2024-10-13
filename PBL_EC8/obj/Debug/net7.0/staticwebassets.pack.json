@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\Pbl_EC8.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\wwwroot\\css\\menu.css",
+      "PackagePath": "staticwebassets\\css\\menu.css"
+    },
+    {
       "Id": "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },

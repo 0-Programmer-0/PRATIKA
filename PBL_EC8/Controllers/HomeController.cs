@@ -1,8 +1,9 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Pbl_EC8.Models;
+using PBL_EC8.Bll;
 
-namespace Pbl_EC8.Controllers;
+namespace PBL_EC8.Controllers;
 
 /*[ApiController]
 [Route("api/[controller]")]*/
@@ -17,12 +18,18 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        return View("Menu");
     }
 
     public IActionResult Privacy()
     {
         return View();
+    }
+
+    [HttpGet]
+    public string VerificaUsuario(string login, string senha)
+    {
+        return new UsuarioBll().VerificaUsuario(login, senha);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
