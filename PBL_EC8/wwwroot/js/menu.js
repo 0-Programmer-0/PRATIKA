@@ -1,9 +1,10 @@
 const base_path = window.location.href;
 
 function menu() {
-    function campos() {
-        textboxLogin = "#textboxLogin";
-        btnLogin = "#btnLogin";
+    var dto = {
+        textboxLogin: document.getElementById("textboxLogin").value,
+        textboxSenha: document.getElementById("textboxSenha").value,
+        btnLogin: document.getElementById("btnLogin")
     }
 
     function verificaUsuario() {
@@ -11,18 +12,18 @@ function menu() {
     }
 
     function verificaUsuarioAjax() {
-        alert(base_path + "Home/VerificaLogin")
+        alert(base_path + "Home/VerificaUsuario")
         $(document).ready(function () {
             $.ajax({
-                url: base_path + 'Home/VerificaLogin', // Verifique se o base_path está correto
+                url: base_path + 'Home/VerificaUsuario', // Verifique se o base_path está correto
                 data: {
-                    login: "teste",
-                    senha: "123"
+                    login: dto.textboxLogin,
+                    senha: dto.textboxSenha
                 },
                 type: 'GET', // Certifique-se de que o método do controlador está aceitando GET
                 dataType: 'json',
                 success: function (data) {
-                    alert(`Resposta: ${data}`);
+                    alert(`Resposta: ${data.retorno}`);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.error('Erro na requisição:', textStatus, errorThrown);
@@ -33,7 +34,6 @@ function menu() {
     }
 
     return {
-        campos: campos,
         verificaUsuario: verificaUsuario,
         verificaUsuarioAjax: verificaUsuarioAjax
     };

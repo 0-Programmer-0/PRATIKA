@@ -27,9 +27,10 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    public string VerificaUsuario(string login, string senha)
+    public JsonResult VerificaUsuario(string login, string senha)
     {
-        return new UsuarioBll().VerificaUsuario(login, senha);
+        string teste = new UsuarioBll().VerificaUsuario(login, senha);
+        return Json(new { retorno = teste });
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
