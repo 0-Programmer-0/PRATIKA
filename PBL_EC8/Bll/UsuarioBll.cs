@@ -15,5 +15,25 @@ namespace PBL_EC8.Bll
         {
             return $"Parabéns {login}, sua senha é {senha}";
         }
+
+        public void CriaUsuario() 
+        {
+            
+        }
+
+        public void PesquisaUsuario()
+        {
+
+        }
+
+        public void DeletaUsuario()
+        {
+
+        }
+
+        public void AtualizaUsuario()
+        {
+
+        }
     }
 }
