@@ -8,24 +8,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../js/menu.js" defer></script>
+    <link rel="stylesheet" href="../css/menu.css">
     <title>PRATIKA</title>
 </head>
 <body>
-    <!-- Título acima da caixa -->
-    <label class="title">PRATIKA</label>
 
-    <!-- Caixa centralizada com campos de login -->
-    <div class="login-box">
-        <input name="textboxLogin" id="textboxLogin" type="text" placeholder="Login">
-        <br>
-        <input name="textboxSenha" id="textboxSenha" type="password" placeholder="Senha">
-        <br>
-        <label class="forgot-password" onclick="alert('Recuperação de senha iniciada')">Esqueci minha senha</label>
-        <br>
-        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="CadastroUsuario">Cadastre-se</a>
-        <br>
-        <button class="botao-login" name="" id="btnLogin" onclick="menu().verificaUsuarioAjax();">Login</button>
-    </div>
+    <main>
+        <!-- Caixa centralizada com campos de login -->
+        <div class="login-box">
+            <img src="../img/Component-19.png">
+            <label>Login</label>
+            <input class="input-senha-email" name="textboxLogin" id="textboxLogin" type="text">
+            <br>
+            <label>Senha</label>
+            <input class="input-senha-email" name="textboxSenha" id="textboxSenha" type="password">
+            <br>
+            <label class="forgot-password" onclick="alert('Recuperação de senha iniciada')">Esqueci minha senha</label>
+            <br>
+            <button class="botao-login" name="" id="btnLogin" onclick="menu().verificaUsuarioAjax();">Login</button>
+        </div>
+    </main>
 
 </body>
 </html>
