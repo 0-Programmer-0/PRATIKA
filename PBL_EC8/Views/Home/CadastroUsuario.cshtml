@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "PRATIKA";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../js/menu.js" defer></script>
+    <title>PRATIKA</title>
+</head>
+<body>
+    <!-- Título acima da caixa -->
+    <label class="title">PRATIKA</label>
+
+    <!-- Caixa centralizada com campos de login -->
+    <div class="login-box">
+        <input name="textboxLogin" id="textboxLogin" type="text" placeholder="Usuário">
+        <br>
+        <input name="textboxEmail" id="textboxEmail" type="text" placeholder="Email">
+        <br>
+        <input name="textboxSenha" id="textboxSenha" type="password" placeholder="Senha">
+        <br>
+        <input name="textboxConfirmacaoSenha" id="textboxConfirmacaoSenha" type="password" placeholder="Confirme sua senha">
+        <br>
+        <input name="textboxDataNascimento" id="textboxDataNascimento" type="date" placeholder="Data de nascimento">
+        <br>
+        <textarea name="textareaDescricao" id="textareaDescricao" type="text" placeholder="Descrição"></textarea>
+        <br>
+        <select name="comboGenero" id="comboGenero" placeholder="Genero">
+            <option>Masculino</option>
+            <option>Feminino</option>
+            <option>Outro</option>
+        </select>
+        <br>
+        <button class="botao-login" name="" id="btnCadastrar" onclick="menu().cadastrarUsuario();">Cadastrar</button>
+    </div>
+
+</body>
+</html>

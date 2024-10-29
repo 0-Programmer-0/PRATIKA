@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "PRATIKA";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../js/menu.js" defer></script>
+    <title>PRATIKA</title>
+</head>
+<body>
+    <!-- Título acima da caixa -->
+    <label class="title">PRATIKA</label>
+
+    <!-- Caixa centralizada com campos de login -->
+    <div class="login-box">
+        <input name="textboxLogin" id="textboxLogin" type="text" placeholder="Login">
+        <br>
+        <input name="textboxSenha" id="textboxSenha" type="password" placeholder="Senha">
+        <br>
+        <label class="forgot-password" onclick="alert('Recuperação de senha iniciada')">Esqueci minha senha</label>
+        <br>
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="CadastroUsuario">Cadastre-se</a>
+        <br>
+        <button class="botao-login" name="" id="btnLogin" onclick="menu().verificaUsuarioAjax();">Login</button>
+    </div>
+
+</body>
+</html>
