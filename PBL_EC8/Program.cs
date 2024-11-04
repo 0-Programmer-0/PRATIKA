@@ -7,8 +7,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Registrar o MongoClient
 builder.Services.AddSingleton<IMongoClient, MongoClient>(sp =>
 {
-    var connectionString = builder.Configuration["MongoDBSettings:ConnectionString"];
-    return new MongoClient(connectionString);
+    //Configuração antiga
+    // var connectionString = builder.Configuration["MongoDBSettings:ConnectionString"];
+    // return new MongoClient(connectionString);
+
+    //Configuração nova - aumento de tempo de requisão, devido a casos de internet lenta
+    var settings = MongoClientSettings.FromConnectionString(builder.Configuration["MongoDBSettings:ConnectionString"]);
+    settings.ConnectTimeout = TimeSpan.FromSeconds(60); // Ajusta para o tempo desejado
+    settings.SocketTimeout = TimeSpan.FromSeconds(60);
+    settings.UseTls = true; // Habilita SSL/TLS
+    var client = new MongoClient(settings);
+    return client;
 });
 
 // Registrar o UsuarioBll
@@ -22,6 +31,9 @@ builder.Services.AddScoped<UsuarioBll>(sp =>
 
 // Registrar controllers com views
 builder.Services.AddControllersWithViews();
+
+// Adicionar a utilização de Session
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -37,9 +49,12 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 
+// Utilizar Session
+app.UseSession();
+
 // Configurar rotas padrão
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Menu}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

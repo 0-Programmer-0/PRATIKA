@@ -17,8 +17,32 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\wwwroot\\js\\menu.js",
-      "PackagePath": "staticwebassets\\js\\menu.js"
+      "Id": "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\wwwroot\\img\\pump_preenchido.png",
+      "PackagePath": "staticwebassets\\img\\pump_preenchido.png"
+    },
+    {
+      "Id": "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\wwwroot\\img\\pump_vazio.png",
+      "PackagePath": "staticwebassets\\img\\pump_vazio.png"
+    },
+    {
+      "Id": "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\wwwroot\\img\\relevancia_preenchido.png",
+      "PackagePath": "staticwebassets\\img\\relevancia_preenchido.png"
+    },
+    {
+      "Id": "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\wwwroot\\img\\relevancia_vazia.png",
+      "PackagePath": "staticwebassets\\img\\relevancia_vazia.png"
+    },
+    {
+      "Id": "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\wwwroot\\js\\anuncios.js",
+      "PackagePath": "staticwebassets\\js\\anuncios.js"
+    },
+    {
+      "Id": "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\wwwroot\\js\\cadastroUsuario.js",
+      "PackagePath": "staticwebassets\\js\\cadastroUsuario.js"
+    },
+    {
+      "Id": "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\wwwroot\\js\\loginUsuario.js",
+      "PackagePath": "staticwebassets\\js\\loginUsuario.js"
     },
     {
       "Id": "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\wwwroot\\js\\site.js",

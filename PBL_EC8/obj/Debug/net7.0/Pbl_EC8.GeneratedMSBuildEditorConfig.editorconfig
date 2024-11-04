@@ -16,12 +16,16 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Johns\Documents\Faculdade\EC8\script_pbl\PBL_EC8
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Johns/Documents/Faculdade/EC8/script_pbl/PBL_EC8/Views/Home/CadastroUsuario.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDYWRhc3Ryb1VzdWFyaW8uY3NodG1s
+[C:/Users/Johns/Documents/Faculdade/EC8/script_pbl/PBL_EC8/Views/Anuncios/AnunciosIndex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQW51bmNpb3NcQW51bmNpb3NJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Johns/Documents/Faculdade/EC8/script_pbl/PBL_EC8/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[C:/Users/Johns/Documents/Faculdade/EC8/script_pbl/PBL_EC8/Views/Comunidade/ComunidadeIndex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tdW5pZGFkZVxDb211bmlkYWRlSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Johns/Documents/Faculdade/EC8/script_pbl/PBL_EC8/Views/Home/CadastroUsuario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDYWRhc3Ryb1VzdWFyaW8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Johns/Documents/Faculdade/EC8/script_pbl/PBL_EC8/Views/Home/Menu.cshtml]

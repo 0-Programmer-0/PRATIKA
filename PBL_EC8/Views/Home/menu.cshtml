@@ -4,12 +4,14 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../js/menu.js" defer></script>
+    <script src="../js/loginUsuario.js"></script>
     <title>PRATIKA</title>
 </head>
+
 <body>
     <!-- Título acima da caixa -->
     <label class="title">PRATIKA</label>
@@ -20,12 +22,15 @@
         <br>
         <input name="textboxSenha" id="textboxSenha" type="password" placeholder="Senha">
         <br>
-        <label class="forgot-password" onclick="alert('Recuperação de senha iniciada')">Esqueci minha senha</label>
+        <a name="lblEsqueciSenha" id="lblEsqueciSenha" class="navbar-brand" style="font-size: 100%" onclick=""
+            asp-area="" asp-controller="Home" asp-action="CadastroUsuario">Esqueci minha senha</a>
         <br>
-        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="CadastroUsuario">Cadastre-se</a>
+        <a name="lblCadastroUsuario" id="lblCadastroUsuario" class="navbar-brand" style="font-size: 100%" onclick=""
+            asp-area="" asp-controller="Home" asp-action="CadastroUsuario">Cadastre-se</a>
         <br>
-        <button class="botao-login" name="" id="btnLogin" onclick="menu().verificaUsuarioAjax();">Login</button>
+        <button class="botao-login" name="btnLogin" id="btnLogin" onclick="loginUsuario().validacaoLogin();">Login</button>
     </div>
 
 </body>
+
 </html>

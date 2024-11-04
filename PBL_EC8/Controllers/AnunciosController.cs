@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Pbl_EC8.Models;
 using PBL_EC8.Bll;
@@ -7,29 +7,19 @@ using AspNetCoreGeneratedDocument;
 
 namespace PBL_EC8.Controllers;
 
-public class HomeController : Controller
+public class AnunciosController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<AnunciosController> _logger;
     private readonly UsuarioBll usuarioBll;
 
     // Construtor injetando tanto o ILogger quanto o UsuarioBll
-    public HomeController(ILogger<HomeController> logger, UsuarioBll _usuarioBll)
+    public AnunciosController(ILogger<AnunciosController> logger, UsuarioBll _usuarioBll)
     {
         _logger = logger;
         usuarioBll = _usuarioBll;
     }
 
-    public IActionResult Menu()
-    {
-        return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    public IActionResult CadastroUsuario()
+    public IActionResult AnunciosIndex()
     {
         return View();
     }
@@ -38,15 +28,6 @@ public class HomeController : Controller
     public async Task<JsonResult> ValidacaoLogin(string login, string senha)
     {
         RetornoAcaoDto resultado = await usuarioBll.ValidacaoLogin(login, senha);
-        if(resultado.Sucesso)
-            HttpContext.Session.SetString("Usuario", login);
-        return Json(new { success = resultado.Sucesso, message = resultado.Mensagem, redirectUrl = Url.Action("ComunidadeIndex", "Comunidade") });
-    }
-
-    [HttpPost]
-    public async Task<JsonResult> CadastrarUsuario(UsuarioDto dto)
-    {
-        RetornoAcaoDto resultado = await usuarioBll.CriarUsuario(dto);
         return Json(new { success = resultado.Sucesso, message = resultado.Mensagem, redirectUrl = Url.Action("ComunidadeIndex", "Comunidade") });
     }
 
