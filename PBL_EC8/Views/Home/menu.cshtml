@@ -4,15 +4,22 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <script src="../js/menu.js" defer></script>
     <link rel="stylesheet" href="../css/menu.css">
+=======
+    <script src="../js/loginUsuario.js"></script>
+>>>>>>> 7d0ba4c94f243bb222bcdce238d2a1df89dc5f45
     <title>PRATIKA</title>
 </head>
+
 <body>
 
+<<<<<<< HEAD
     <main>
         <!-- Caixa centralizada com campos de login -->
         <div class="login-box">
@@ -28,6 +35,23 @@
             <button class="botao-login" name="" id="btnLogin" onclick="menu().verificaUsuarioAjax();">Login</button>
         </div>
     </main>
+=======
+    <!-- Caixa centralizada com campos de login -->
+    <div class="login-box">
+        <input name="textboxLogin" id="textboxLogin" type="text" placeholder="Login">
+        <br>
+        <input name="textboxSenha" id="textboxSenha" type="password" placeholder="Senha">
+        <br>
+        <a name="lblEsqueciSenha" id="lblEsqueciSenha" class="navbar-brand" style="font-size: 100%" onclick=""
+            asp-area="" asp-controller="Home" asp-action="CadastroUsuario">Esqueci minha senha</a>
+        <br>
+        <a name="lblCadastroUsuario" id="lblCadastroUsuario" class="navbar-brand" style="font-size: 100%" onclick=""
+            asp-area="" asp-controller="Home" asp-action="CadastroUsuario">Cadastre-se</a>
+        <br>
+        <button class="botao-login" name="btnLogin" id="btnLogin" onclick="loginUsuario().validacaoLogin();">Login</button>
+    </div>
+>>>>>>> 7d0ba4c94f243bb222bcdce238d2a1df89dc5f45
 
 </body>
+
 </html>

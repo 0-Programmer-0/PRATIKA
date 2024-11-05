@@ -7,6 +7,7 @@ a.navbar-brand[b-2y94yc4g77] {
   word-break: break-all;
 }
 
+<<<<<<< HEAD
 header[b-2y94yc4g77]{
   height: 50px;
 }
@@ -19,6 +20,8 @@ footer[b-2y94yc4g77]{
   height: 50px;
 }
 
+=======
+>>>>>>> 7d0ba4c94f243bb222bcdce238d2a1df89dc5f45
 a[b-2y94yc4g77] {
   color: #0077cc;
 }
@@ -56,4 +59,8 @@ button.accept-policy[b-2y94yc4g77] {
   bottom: 0;
   width: 100%;
   white-space: nowrap;
+<<<<<<< HEAD
+=======
+  line-height: 60px;
+>>>>>>> 7d0ba4c94f243bb222bcdce238d2a1df89dc5f45
 }

@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../js/menu.js" defer></script>
+    <script src="../js/cadastroUsuario.js" defer></script>
     <title>PRATIKA</title>
 </head>
 <body>
@@ -16,7 +16,21 @@
 
     <!-- Caixa centralizada com campos de login -->
     <div class="login-box">
-        <input name="textboxLogin" id="textboxLogin" type="text" placeholder="Usuário">
+        <div id="divImagemPerfil" hidden>
+            <label>Imagem Selecionada:</label>
+            <br>
+            <img id="imagePreview" src="#" alt="Imagem do perfil" />
+        </div>
+        <br>
+        <form id="uploadForm">
+            <input type="file" id="imagemInput" onchange="cadastroUsuario().inserirImagem(this);" accept="image/png, image/jpeg" required>
+        </form>   
+        <br>   
+        <input name="textboxNomeUsuario" id="textboxNomeUsuario" type="text" placeholder="Nome de Usuário">
+        <br>
+        <input name="textboxNome" id="textboxNome" type="text" placeholder="Nome">
+        <br>
+        <input name="textboxSobrenome" id="textboxSobrenome" type="text" placeholder="Sobrenome">
         <br>
         <input name="textboxEmail" id="textboxEmail" type="text" placeholder="Email">
         <br>
@@ -34,7 +48,7 @@
             <option>Outro</option>
         </select>
         <br>
-        <button class="botao-login" name="" id="btnCadastrar" onclick="menu().cadastrarUsuario();">Cadastrar</button>
+        <button class="botao-login" name="btnCadastrar" id="btnCadastrar" onclick="cadastroUsuario().cadastrarUsuario();">Cadastrar</button>
     </div>
 
 </body>

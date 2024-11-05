@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\nadys\\OneDrive\\Documentos\\pratika\\pratika\\PBL_EC8\\Pbl_EC8.csproj": {}
   },
   "projects": {
@@ -15,6 +16,26 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nadys\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+    "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\Pbl_EC8.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\Pbl_EC8.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\Pbl_EC8.csproj",
+        "projectName": "Pbl_EC8",
+        "projectPath": "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\Pbl_EC8.csproj",
+        "packagesPath": "C:\\Users\\Johns\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Johns\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+>>>>>>> 7d0ba4c94f243bb222bcdce238d2a1df89dc5f45
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -64,7 +85,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+>>>>>>> 7d0ba4c94f243bb222bcdce238d2a1df89dc5f45
         }
       }
     }

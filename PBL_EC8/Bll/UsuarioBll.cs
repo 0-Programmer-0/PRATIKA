@@ -25,23 +25,24 @@ public class UsuarioBll : IUsuarioBll
         try
         {
             Usuario usuario = ConverterUsuarioDto(usuarioDto); // Conversão do DTO
-            UsuarioDto usuarioPesquisado = await PesquisarUsuario(usuarioDto);
-            if (usuarioPesquisado != null)
+            RetornoAcaoDto usuarioPesquisado = await ValidaCriacaoUsuario(usuarioDto);
+            if (!usuarioPesquisado.Sucesso)
             {
-                retorno.Mensagem = "Já existe um usuário cadastrado com esse email";
-                retorno.Retorno = false;
+                retorno.Mensagem = usuarioPesquisado.Mensagem;
+                retorno.Sucesso = false;
+                return retorno;
             }
             else
             {
                 await _usuariosCollection.InsertOneAsync(usuario); // Aguarda o insert no MongoDB
                 retorno.Mensagem = "Usuário criado com sucesso!";
-                retorno.Retorno = true;
+                retorno.Sucesso = true;
             }
         }
         catch (Exception ex)
         {
             retorno.Mensagem = "Falha ao criar o usuário...";
-            retorno.Retorno = false;
+            retorno.Sucesso = false;
         }
         return retorno;
     }
@@ -54,11 +55,81 @@ public class UsuarioBll : IUsuarioBll
             Usuario usuario = await _usuariosCollection.Find(filtro).FirstOrDefaultAsync();
             usuarioDto = ConverterUsuario(usuario);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-
+            Console.WriteLine("Falha ao pesquisar o usuário");
         }
         return usuarioDto;
+    }
+
+    public async Task<RetornoAcaoDto> ValidaCriacaoUsuario(UsuarioDto usuarioDto)
+    {
+        RetornoAcaoDto retorno = new RetornoAcaoDto();
+        FilterDefinition<Usuario> filtro;
+        Usuario usuario = new Usuario();
+        try
+        {
+            //Valida apenas Nome de Usuário
+            filtro = Builders<Usuario>.Filter.Eq(u => u.NomeUsuario, usuarioDto.NomeUsuario);
+            usuario = await _usuariosCollection.Find(filtro).FirstOrDefaultAsync();
+            if (usuario != null)
+            {
+                retorno.Sucesso = false;
+                retorno.Mensagem = "Nome de Usuário já utilizado!";
+                return retorno;
+            }
+
+            //Valida apenas email
+            filtro = Builders<Usuario>.Filter.Eq(u => u.Email, usuarioDto.Email);
+            usuario = await _usuariosCollection.Find(filtro).FirstOrDefaultAsync();
+            if (usuario != null)
+            {
+                retorno.Sucesso = false;
+                retorno.Mensagem = "Email já utilizado!";
+                return retorno;
+            }
+        }
+        catch (Exception ex)
+        {
+            retorno.Sucesso = false;
+            retorno.Mensagem = ex.Message;
+        }
+        retorno.Sucesso = true;
+        retorno.Mensagem = "Usuário pronto para ser utilizado";
+        return retorno;
+    }
+
+    public async Task<RetornoAcaoDto> ValidacaoLogin(string login, string senha)
+    {
+        RetornoAcaoDto retorno = new RetornoAcaoDto();
+        try
+        {
+            var filtro = Builders<Usuario>.Filter.And(
+                Builders<Usuario>.Filter.Or
+                    (
+                        Builders<Usuario>.Filter.Eq(u => u.Email, login),
+                        Builders<Usuario>.Filter.Eq(u => u.NomeUsuario, login)
+                    ),
+                Builders<Usuario>.Filter.Eq(u => u.Senha, senha)
+            );
+            Usuario usuario = await _usuariosCollection.Find(filtro).FirstOrDefaultAsync();
+            if (usuario != null)
+            {
+                retorno.Sucesso = true;
+                retorno.Mensagem = $"Bem Vindo à Pratika, {usuario.NomeUsuario}";
+            }
+            else
+            {
+                retorno.Sucesso = false;
+                retorno.Mensagem = "Falha no acesso, verifique seu login e senha";
+            }
+        }
+        catch (Exception ex)
+        {
+            retorno.Sucesso = false;
+            retorno.Mensagem = ex.Message;
+        }
+        return retorno;
     }
 
     public async Task<List<Usuario>> PesquisarTodosUsuario()
@@ -80,7 +151,10 @@ public class UsuarioBll : IUsuarioBll
     {
         Usuario usuario = new Usuario();
 
+        usuario.ImagemPerfil = usuarioDto.ImagemPerfil;
+        usuario.NomeUsuario = usuarioDto.NomeUsuario;
         usuario.Nome = usuarioDto.Nome;
+        usuario.Sobrenome = usuarioDto.Sobrenome;
         usuario.Email = usuarioDto.Email;
         usuario.Senha = usuarioDto.Senha;
         usuario.DataNascimento = Convert.ToDateTime(usuarioDto.DataNascimento);
@@ -93,7 +167,10 @@ public class UsuarioBll : IUsuarioBll
     {
         UsuarioDto usuarioDto = new UsuarioDto();
 
+        usuarioDto.ImagemPerfil = usuarioDto.ImagemPerfil;
+        usuarioDto.NomeUsuario = usuario.NomeUsuario;
         usuarioDto.Nome = usuario.Nome;
+        usuarioDto.Sobrenome = usuario.Sobrenome;
         usuarioDto.Email = usuario.Email;
         usuarioDto.Senha = usuario.Senha;
         usuarioDto.DataNascimento = usuario.DataNascimento.ToString();
