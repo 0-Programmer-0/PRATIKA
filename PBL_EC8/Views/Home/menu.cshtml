@@ -13,23 +13,22 @@
 </head>
 
 <body>
-    <!-- Título acima da caixa -->
-    <label class="title">PRATIKA</label>
 
-    <!-- Caixa centralizada com campos de login -->
-    <div class="login-box">
-        <input name="textboxLogin" id="textboxLogin" type="text" placeholder="Login">
-        <br>
-        <input name="textboxSenha" id="textboxSenha" type="password" placeholder="Senha">
-        <br>
-        <a name="lblEsqueciSenha" id="lblEsqueciSenha" class="navbar-brand" style="font-size: 100%" onclick=""
-            asp-area="" asp-controller="Home" asp-action="CadastroUsuario">Esqueci minha senha</a>
-        <br>
-        <a name="lblCadastroUsuario" id="lblCadastroUsuario" class="navbar-brand" style="font-size: 100%" onclick=""
-            asp-area="" asp-controller="Home" asp-action="CadastroUsuario">Cadastre-se</a>
-        <br>
-        <button class="botao-login" name="btnLogin" id="btnLogin" onclick="loginUsuario().validacaoLogin();">Login</button>
-    </div>
+    <main>
+        <!-- Caixa centralizada com campos de login -->
+        <div class="login-box">
+            <img src="../img/Component-19.png">
+            <label>Login</label>
+            <input class="input-senha-email" name="textboxLogin" id="textboxLogin" type="text">
+            <br>
+            <label>Senha</label>
+            <input class="input-senha-email" name="textboxSenha" id="textboxSenha" type="password">
+            <br>
+            <label class="forgot-password" onclick="alert('Recuperação de senha iniciada')">Esqueci minha senha</label>
+            <br>
+            <button class="botao-login" name="" id="btnLogin" onclick="loginUsuario().validacaoLogin();">Login</button>
+        </div>
+    </main>
 
 </body>
 

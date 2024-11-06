@@ -9,51 +9,55 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Pbl_EC8
 build_property.RootNamespace = Pbl_EC8
+<<<<<<< HEAD
 build_property.ProjectDir = C:\Users\Johns\Documents\Faculdade\EC8\script_pbl\PBL_EC8\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
+=======
+build_property.ProjectDir = c:\Users\nadys\OneDrive\Documentos\pratika\PRATIKA\PBL_EC8\
+>>>>>>> c5f63c9a4bb7a164c8fb0763b1a786ec3c3ab4a5
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Johns\Documents\Faculdade\EC8\script_pbl\PBL_EC8
+build_property.MSBuildProjectDirectory = c:\Users\nadys\OneDrive\Documentos\pratika\PRATIKA\PBL_EC8
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Johns/Documents/Faculdade/EC8/script_pbl/PBL_EC8/Views/Anuncios/AnunciosIndex.cshtml]
+[c:/Users/nadys/OneDrive/Documentos/pratika/PRATIKA/PBL_EC8/Views/Anuncios/AnunciosIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQW51bmNpb3NcQW51bmNpb3NJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Johns/Documents/Faculdade/EC8/script_pbl/PBL_EC8/Views/Comunidade/ComunidadeIndex.cshtml]
+[c:/Users/nadys/OneDrive/Documentos/pratika/PRATIKA/PBL_EC8/Views/Comunidade/ComunidadeIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tdW5pZGFkZVxDb211bmlkYWRlSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Johns/Documents/Faculdade/EC8/script_pbl/PBL_EC8/Views/Home/CadastroUsuario.cshtml]
+[c:/Users/nadys/OneDrive/Documentos/pratika/PRATIKA/PBL_EC8/Views/Home/CadastroUsuario.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDYWRhc3Ryb1VzdWFyaW8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Johns/Documents/Faculdade/EC8/script_pbl/PBL_EC8/Views/Home/Menu.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNZW51LmNzaHRtbA==
+[c:/Users/nadys/OneDrive/Documentos/pratika/PRATIKA/PBL_EC8/Views/Home/menu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxtZW51LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Johns/Documents/Faculdade/EC8/script_pbl/PBL_EC8/Views/Home/Privacy.cshtml]
+[c:/Users/nadys/OneDrive/Documentos/pratika/PRATIKA/PBL_EC8/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Johns/Documents/Faculdade/EC8/script_pbl/PBL_EC8/Views/Shared/Error.cshtml]
+[c:/Users/nadys/OneDrive/Documentos/pratika/PRATIKA/PBL_EC8/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Johns/Documents/Faculdade/EC8/script_pbl/PBL_EC8/Views/Shared/_ValidationScriptsPartial.cshtml]
+[c:/Users/nadys/OneDrive/Documentos/pratika/PRATIKA/PBL_EC8/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Johns/Documents/Faculdade/EC8/script_pbl/PBL_EC8/Views/_ViewImports.cshtml]
+[c:/Users/nadys/OneDrive/Documentos/pratika/PRATIKA/PBL_EC8/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Johns/Documents/Faculdade/EC8/script_pbl/PBL_EC8/Views/_ViewStart.cshtml]
+[c:/Users/nadys/OneDrive/Documentos/pratika/PRATIKA/PBL_EC8/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Johns/Documents/Faculdade/EC8/script_pbl/PBL_EC8/Views/Shared/_Layout.cshtml]
+[c:/Users/nadys/OneDrive/Documentos/pratika/PRATIKA/PBL_EC8/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-2y94yc4g77

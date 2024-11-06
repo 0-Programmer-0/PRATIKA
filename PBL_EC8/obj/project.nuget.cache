@@ -1,6 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "2o6xBiuuMV8=",
+=======
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
+>>>>>>> 7d0ba4c94f243bb222bcdce238d2a1df89dc5f45
+  "dgSpecHash": "OjRIwweU7asFezFUoPXHVYfSJh+uv9rDa2uAGcexJO8RQ2OjEe9/Me6J15DuUEGvB/XBOGQBtlgI2CSNI41E3Q==",
+>>>>>>> c5f63c9a4bb7a164c8fb0763b1a786ec3c3ab4a5
   "success": true,
   "projectFilePath": "C:\\Users\\Johns\\Documents\\Faculdade\\EC8\\script_pbl\\PBL_EC8\\Pbl_EC8.csproj",
   "expectedPackageFiles": [
@@ -19,5 +27,14 @@
     "C:\\Users\\Johns\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512",
     "C:\\Users\\Johns\\.nuget\\packages\\zstdsharp.port\\0.7.3\\zstdsharp.port.0.7.3.nupkg.sha512"
   ],
+<<<<<<< HEAD
+=======
+  "dgSpecHash": "R3o1jTst0sbigvlhUbPF866MXHzbsrnjIAHhtBG3I7rRTN8hSIVKJ5rogkaPr59MIt1Uag2dnnLZbOAw4WCb1Q==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\nadys\\OneDrive\\Documentos\\pratika\\pratika\\PBL_EC8\\Pbl_EC8.csproj",
+  "expectedPackageFiles": [],
+>>>>>>> Stashed changes
+=======
+>>>>>>> 7d0ba4c94f243bb222bcdce238d2a1df89dc5f45
   "logs": []
 }
