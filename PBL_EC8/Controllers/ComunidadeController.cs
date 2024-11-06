@@ -17,7 +17,7 @@ public class ComunidadeController: Controller
        
     }
 
-   public IActionResult Comunidade()
+   public IActionResult ComunidadeIndex()
     {
         return View();
     }
