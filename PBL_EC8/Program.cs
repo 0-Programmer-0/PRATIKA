@@ -4,6 +4,17 @@ using PBL_EC8.Bll; // Para usar IOptions
 
 var builder = WebApplication.CreateBuilder(args);
 
+// builder.WebHost.ConfigureKestrel(options =>
+// {
+//     options.ListenAnyIP(5020); // Escuta em todas as interfaces na porta 5020
+// });
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenLocalhost(5014); // HTTP
+    options.ListenLocalhost(7282, listenOptions => listenOptions.UseHttps()); // HTTPS
+});
+
 // Registrar o MongoClient
 builder.Services.AddSingleton<IMongoClient, MongoClient>(sp =>
 {
@@ -44,7 +55,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
@@ -55,6 +66,6 @@ app.UseSession();
 // Configurar rotas padrão
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Menu}/{id?}");
 
 app.Run();

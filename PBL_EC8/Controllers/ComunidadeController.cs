@@ -24,13 +24,6 @@ public class ComunidadeController : Controller
         return View();
     }
 
-    [HttpPost]
-    public async Task<JsonResult> ValidacaoLogin(string login, string senha)
-    {
-        RetornoAcaoDto resultado = await usuarioBll.ValidacaoLogin(login, senha);
-        return Json(new { success = resultado.Sucesso, message = resultado.Mensagem, redirectUrl = Url.Action("ComunidadeIndex", "Comunidade") });
-    }
-
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
