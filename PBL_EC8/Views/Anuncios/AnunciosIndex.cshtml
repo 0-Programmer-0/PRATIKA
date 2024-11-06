@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../js/anuncios.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Marketplace</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .marketplace {
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .product {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .product:hover {
+            transform: scale(1.05);
+        }
+
+        .product img {
+            width: 100%;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .product-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            color: #28a745;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        /* Paginação */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 0 5px;
+            border: none;
+            background-color: #00FF0A;
+            color: #000000;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #00c707;
+            transform: scale(1.05);
+        }
+
+        .modal {
+            display: none;
+            /* Oculto por padrão */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Fundo semi-transparente */
+            justify-content: center;
+            align-items: center;
+            color: #00FF0A;
+        }
+
+        /* Estilos da caixa de conteúdo do modal */
+        .modal-content {
+            background-color: #252525;
+            padding: 20px;
+            width: 80%;
+            max-width: 500px;
+            /* Largura máxima */
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        img {
+            max-width: 70%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="marketplace">
+        <button onclick="anuncios().abrirModal();">Anunciar</button>
+        <div class="product-grid" id="productGrid">
+            <!-- Produtos vão ser inseridos aqui -->
+            <!-- Cada produto contém uma imagem, um título e um preço -->
+            <div class="product">
+                <img src="../img/pump_vazio.png" alt="Produto 1">
+                <div class="product-title">Produto 1</div>
+                <div class="product-price">R$100,00</div>
+            </div>
+            <div class="product">
+                <img src="../img/pump_vazio.png" alt="Produto 2">
+                <div class="product-title">Produto 2</div>
+                <div class="product-price">R$200,00</div>
+            </div>
+            <div class="product">
+                <img src="../img/pump_vazio.png" alt="Produto 3">
+                <div class="product-title">Produto 3</div>
+                <div class="product-price">R$300,00</div>
+            </div>
+            <!-- Adicione mais produtos conforme necessário -->
+        </div>
+
+        <div id="modalAnuncios" class="modal">
+            <div class="modal-content">
+                <h2>Anúncio</h2>
+                <br>              
+                <div id="divImagemPerfil" hidden>
+                    <img id="imgPreview" src="#" alt="Imagem do perfil" />
+                </div>
+                <br>
+                <form id="uploadForm">
+                    <input type="file" id="inputImagem" onchange="anuncios().inserirImagem(this);"
+                        accept="image/png, image/jpeg" required>
+                </form>
+                <br>
+                <label style="text-align: left;">Anunciante: </label>
+                <br>
+                <label id="lblNomeItemAnuncio">Item</label>
+                <input type="text" id="textboxNomeItemAnuncio" placeholder="Digite o nome do item" required>
+                <br>
+                <label id="lblContatoAnuncio">Contato</label>
+                <input type="text" id="textboxContatoAnuncio" placeholder="Digite seu contato (email ou telefone)" required>
+                <br>
+                <label id="lblMetodoPagamentoAnuncio">Método de Pagamento:</label>
+                <select id="comboMetodoPagamentoAnuncio" required>
+                    <option value="" disabled selected>Selecione um método de pagamento</option>
+                    <option value="pix">PIX</option>
+                    <option value="debito">Cartão Débito</option>
+                    <option value="credito">Cartão Crédito</option>
+                    <option value="troca">Troca</option>
+                </select>
+                <br>
+                <label id="lblDescricaoAnuncio">Descrição</label>
+                <textarea id="textareaDescricaoAnuncio" placeholder="Digite uma descrição" required></textarea>
+                <br>
+                <button id="btnCadastrarAnuncio" onclick="anuncios().fecharModal();">Cadastrar Anúncio</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

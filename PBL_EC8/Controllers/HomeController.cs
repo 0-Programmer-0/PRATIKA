@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pbl_EC8.Models;
 using PBL_EC8.Bll;
 using PBL_EC8;
+using AspNetCoreGeneratedDocument;
 
 namespace PBL_EC8.Controllers;
 
@@ -16,11 +17,6 @@ public class HomeController : Controller
     {
         _logger = logger;
         usuarioBll = _usuarioBll;
-    }
-
-    public IActionResult Index()
-    {
-        return View();
     }
 
     public IActionResult Menu()
@@ -38,18 +34,20 @@ public class HomeController : Controller
         return View();
     }
 
-    [HttpGet]
-    public JsonResult VerificaUsuario(string login, string senha)
+    [HttpPost]
+    public async Task<JsonResult> ValidacaoLogin(string login, string senha)
     {
-        // UsuarioDto teste = new UsuarioBll().PesquisarUsuario();
-        return Json(new { retorno = "teste" });
+        RetornoAcaoDto resultado = await usuarioBll.ValidacaoLogin(login, senha);
+        if(resultado.Sucesso)
+            HttpContext.Session.SetString("Usuario", login);
+        return Json(new { success = resultado.Sucesso, message = resultado.Mensagem, redirectUrl = Url.Action("ComunidadeIndex", "Comunidade") });
     }
 
     [HttpPost]
     public async Task<JsonResult> CadastrarUsuario(UsuarioDto dto)
     {
         RetornoAcaoDto resultado = await usuarioBll.CriarUsuario(dto);
-        return Json(new { retorno = resultado.Mensagem });
+        return Json(new { success = resultado.Sucesso, message = resultado.Mensagem, redirectUrl = Url.Action("ComunidadeIndex", "Comunidade") });
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
