@@ -33,4 +33,7 @@ public class Usuario
 
     [BsonElement("Genero")]
     public string Genero { get; set; }
+
+    [BsonElement("Perfil")]
+    public string Perfil { get; set; }
 }

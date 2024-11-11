@@ -4,14 +4,9 @@ using PBL_EC8.Bll; // Para usar IOptions
 
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.WebHost.ConfigureKestrel(options =>
-// {
-//     options.ListenAnyIP(5020); // Escuta em todas as interfaces na porta 5020
-// });
-
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenLocalhost(5014); // HTTP
+    //options.ListenLocalhost(5014); // HTTP
     options.ListenLocalhost(7282, listenOptions => listenOptions.UseHttps()); // HTTPS
 });
 
@@ -38,6 +33,15 @@ builder.Services.AddScoped<UsuarioBll>(sp =>
     var databaseName = builder.Configuration["MongoDBSettings:DatabaseName"] ?? "db_pratika"; // Pega o nome do banco de dados
     var collectionName = "collection_usuarios";  // Nome da coleção
     return new UsuarioBll(mongoClient, databaseName, collectionName);
+});
+
+// Registrar o AnuncioBll
+builder.Services.AddScoped<AnuncioBll>(sp =>
+{
+    var mongoClient = sp.GetRequiredService<IMongoClient>();
+    var databaseName = builder.Configuration["MongoDBSettings:DatabaseName"] ?? "db_pratika"; // Pega o nome do banco de dados
+    var collectionName = "collection_anuncios";  // Nome da coleção
+    return new AnuncioBll(mongoClient, databaseName, collectionName);
 });
 
 // Registrar controllers com views

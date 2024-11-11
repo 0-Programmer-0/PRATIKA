@@ -3,23 +3,55 @@ var mensagemErro = "";
 
 function anuncios() {
     var dto = {
-        textboxLogin: $("#textboxLogin").val(),
-        modalAnuncios: $('#modalAnuncios'),
-        btnAbrirModal: $('#btnAbrirModal'),
-        btnCadastrarAnuncio: $('#btnCadastrarAnuncio'),
-        textboxNomeItemAnuncio: $("#textboxNomeItemAnuncio").val(),
-        textboxContatoAnuncio: $("#textboxContatoAnuncio").val(),
-        comboMetodoPagamentoAnuncio: $("#comboMetodoPagamentoAnuncio :selected").text(),
-        textboxDescricaoAnuncio: $("#textboxDescricaoAnuncio").val(),
-        inputImagem: $('#inputImagem')
+        modalCadastroAnuncio: $('#modalCadastroAnuncio'),
+        modalPerfilInvalido: $('#modalPerfilInvalido'),
+
+        //Campos do modal
+        divImagemPerfil: $('#divImagemPerfil'),
+        imgPreview: $('#imgPreview'),
+        textboxTitulo: $("#textboxTitulo").val(),
+        textboxProfissao: $("#textboxProfissao").val(),
+        comboEstado: $("#comboEstado :selected").text(),
+        textboxCidade: $("#textboxCidade").val(),
+        textareaDescricao: $("#textareaDescricao").val(),
+        btnCadastrarAnuncio: $('#btnCadastrarAnuncio')
     }
 
-    function abrirModal() {
-        dto.modalAnuncios.css('display', 'flex'); // Mostra o modal usando Flexbox para centralizar
+    function abrirModalCadastrarAnuncio() {
+        $(document).ready(function () {
+            $.ajax({
+                url: base_path + "/Anuncios/ValidacaoPerfil",
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.success) {
+                        dto.modalCadastroAnuncio.css('display', 'flex');
+                        debugger;
+                        if (data.imagemPerfil != null) {
+                            dto.imgPreview.attr('src', data.imagemPerfil);
+                            dto.divImagemPerfil.show();
+                        }
+                        else
+                            dto.divImagemPerfil.hide();
+                    }
+                    else {
+                        dto.modalPerfilInvalido.css('display', 'flex');
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Erro na requisição:', textStatus, errorThrown);
+                }
+            });
+        });
+
     }
-    
-    function fecharModal() {
-        dto.modalAnuncios.css('display', 'none'); // Oculta o modal
+
+    function fecharModalCadastrarAnuncio() {
+        dto.modalCadastroAnuncio.css('display', 'none'); // Oculta o modal
+    }
+
+    function fecharModalPerfilInvalido() {
+        dto.modalPerfilInvalido.css('display', 'none');
     }
 
     function inserirImagem(inputImagem) {
@@ -36,41 +68,33 @@ function anuncios() {
         }
     }
 
-    //precisa terminar o metodo de criar anuncios
     function cadastrarAnuncio() {
         if (validaCampos()) {
+            debugger;
             $(document).ready(function () {
-                converterImagem(dto.imagemInput[0].files[0], function(imagemProcessada) {
-                    console.log(imagemProcessada);
-                    $.ajax({
-                        url: base_path + "/Home/CadastrarUsuario", // Verifique se o base_path está correto
-                        data: {
-                            dto: {
-                                ImagemPerfil: imagemProcessada,
-                                NomeUsuario: dto.textboxNomeUsuario,
-                                Nome: dto.textboxNome,
-                                Sobrenome: dto.textboxSobrenome,
-                                Email: dto.textboxEmail,
-                                Senha: dto.textboxSenha,
-                                DataNascimento: dto.textboxDataNascimento,
-                                Descricao: dto.textareaDescricao,
-                                Genero: dto.comboGenero
-                            }
-                        },
-                        type: 'POST', // Certifique-se de que o método do controlador está aceitando GET
-                        dataType: 'json',
-                        success: function (data) {
-                            debugger;
-                            alert(`${data.message}`);
-                            if (data.success) {
-                                window.location.href = data.redirectUrl;
-                            }
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            console.error('Erro na requisição:', textStatus, errorThrown);
+                $.ajax({
+                    url: base_path + "/Anuncios/CadastrarAnuncio",
+                    data: {
+                        dto: {
+                            Titulo: dto.textboxTitulo,
+                            Profissao: dto.textboxProfissao,
+                            Estado: dto.comboEstado,
+                            Cidade: dto.textboxCidade,
+                            Descricao: dto.textareaDescricao
                         }
-                    });
-                });               
+                    },
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (data) {
+                        alert(`${data.message}`);
+                        if (data.success) {
+                            window.location.href = data.redirectUrl;
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Erro na requisição:', textStatus, errorThrown);
+                    }
+                });
             });
         }
         else {
@@ -79,6 +103,7 @@ function anuncios() {
     }
 
     function validaCampos() {
+        return true;
         if (dto.inputImagem[0].files.length == 0) {
             mensagemErro = "Por favor, escolha uma imagem para o anúncio!";
             return false;
@@ -106,8 +131,10 @@ function anuncios() {
     return {
         inserirImagem: inserirImagem,
         validaCampos: validaCampos,
-        abrirModal: abrirModal,
-        fecharModal: fecharModal,
-        inserirImagem: inserirImagem
+        abrirModalCadastrarAnuncio: abrirModalCadastrarAnuncio,
+        fecharModalCadastrarAnuncio: fecharModalCadastrarAnuncio,
+        fecharModalPerfilInvalido: fecharModalPerfilInvalido,
+        inserirImagem: inserirImagem,
+        cadastrarAnuncio: cadastrarAnuncio
     };
 }
