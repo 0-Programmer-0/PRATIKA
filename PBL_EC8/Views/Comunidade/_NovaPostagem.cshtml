@@ -1,0 +1,16 @@
+<!-- Views/Shared/_MyModalContent.cshtml -->
+<div class="modal-content">
+    <span class="close" onclick="comunidade().closeModal()">&times;</span>
+    <h2>Nova Postagem</h2>
+    
+    <div class="modal-body">
+        <!-- Caixa de texto para digitar o conteúdo da postagem -->
+        <textarea id="postContent" class="input-post" placeholder="Digite sua postagem..."></textarea>
+
+        <!-- Botão para escolher arquivos -->
+        <input type="file" id="fileInput" class="file-input" multiple />
+        
+        <!-- Botão para enviar a postagem -->
+        <button class="botao-enviar" onclick="submitPost()">Enviar</button>
+    </div>
+</div>

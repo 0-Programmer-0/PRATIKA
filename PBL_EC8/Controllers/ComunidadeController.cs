@@ -22,6 +22,13 @@ public class ComunidadeController: Controller
         return View();
     }
 
+    [HttpPost]
+    public IActionResult ShowModalContent()
+    {
+        return PartialView("_NovaPostagem"); // Retorna a partial view
+    }
+
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 }

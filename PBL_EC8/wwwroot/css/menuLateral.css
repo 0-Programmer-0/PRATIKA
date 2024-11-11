@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap');
+
+.sidebar-container {
+    width: 250px;
+    background-color: #121212; /* Fundo mais elegante */
+    padding: 25px 20px;
+    box-shadow: 3px 0 10px rgba(0, 255, 10, 0.3); /* Sombra mais suave */
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+    transition: width 0.3s ease; /* Animação para o hover */
+}
+
+.sidebar-container:hover {
+    width: 270px; /* Expansão suave ao passar o mouse */
+}
+
+.sidebar-container .nav-link {
+    color: #00FF7F; /* Verde suave */
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif; /* Defina a fonte desejada */
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+
+.sidebar-container .nav-link:hover {
+    color: #FFFFFF; /* Texto branco no hover */
+    background-color: #00FF7F; /* Fundo verde mais claro */
+}
