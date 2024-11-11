@@ -121,6 +121,8 @@
 
 <body>
     <div class="marketplace">
+        <a name="lblEsqueciSenha" id="lblEsqueciSenha" class="navbar-brand" style="font-size: 100%" onclick=""
+            asp-area="" asp-controller="Comunidade" asp-action="ComunidadeIndex">Anúncios</a>
         <button onclick="anuncios().abrirModalCadastrarAnuncio();">Anunciar</button>
         <div class="product-grid" id="productGrid">
             <!-- Produtos vão ser inseridos aqui -->
@@ -205,6 +207,9 @@
             </div>
         </div>
 
+        <div id="loginPopup">
+            @Html.Partial("_LoginPopup")
+        </div>
     </div>
 </body>
 

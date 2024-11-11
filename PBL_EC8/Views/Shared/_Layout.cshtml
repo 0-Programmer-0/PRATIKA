@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     @* <link rel="stylesheet" href="~/Pbl_EC8.styles.css" asp-append-version="true" /> *@
     <link rel="stylesheet" href="~_Layout.cshtml.css" />
+    <script src="../js/tokenCheck.js"></script>
 </head>
-<body style="height: 100vh;">
+<body onload="tokenCheck().checkToken();" style="height: 100vh;">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: black">
             <div class="container-fluid">
