@@ -33,7 +33,7 @@ function tokenCheck() {
     function showLoginPopup() {
         const loginPopup = document.getElementById('loginPopup');
         if (loginPopup) {
-            loginPopup.style.display = 'block';
+            loginPopup.style.display = 'flex';
         } else {
             console.error("Elemento 'loginPopup' não encontrado.");
         }
@@ -62,7 +62,9 @@ function tokenCheck() {
                 dataType: 'json',
                 success: function (data) {
                     if (data.success) {
+                        debugger;
                         alert("usuário validado com sucesso")
+                        expiracaoToken(data.token);
                         hideLoginPopup();
                     }
                     else
@@ -75,11 +77,18 @@ function tokenCheck() {
         });
     }
 
+    function expiracaoToken(token) {
+        const expiration = JSON.parse(atob(token.split('.')[1])).exp * 1000; // Converte o 'exp' para milissegundos
+        sessionStorage.setItem('token', token);
+        sessionStorage.setItem('tokenExpiration', expiration);
+    }
+
     return {
         checkToken: checkToken,
         isTokenExpired: isTokenExpired,
         showLoginPopup: showLoginPopup,
         hideLoginPopup: hideLoginPopup,
-        validacaoLogin: validacaoLogin
+        validacaoLogin: validacaoLogin,
+        expiracaoToken: expiracaoToken
     };
 }
