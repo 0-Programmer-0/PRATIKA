@@ -121,6 +121,8 @@
 
 <body>
     <div class="marketplace">
+        <a name="lblEsqueciSenha" id="lblEsqueciSenha" class="navbar-brand" style="font-size: 100%" onclick=""
+            asp-area="" asp-controller="Comunidade" asp-action="ComunidadeIndex">Anúncios</a>
         <button onclick="anuncios().abrirModalCadastrarAnuncio();">Anunciar</button>
         <div class="product-grid" id="productGrid">
             <!-- Produtos vão ser inseridos aqui -->
@@ -197,14 +199,16 @@
                 <label>Anuncie seu trabalho assinando nosso plano Premium!</label>
                 <br>
                 <div>
-                    <button id="btnCadastrarAnuncio" onclick="anuncios().fecharModalPerfilInvalido();">Vamos
-                        lá!</button>
+                    <button id="btnCadastrarAnuncio" onclick="anuncios().fecharModalPerfilInvalido();">Vamos lá!</button>
                     <button id="btnCadastrarAnuncio" onclick="anuncios().fecharModalPerfilInvalido();">Fechar</button>
 
                 </div>
             </div>
         </div>
 
+        <div id="loginPopup" class="modal">
+            @Html.Partial("_LoginPopup")
+        </div>
     </div>
 </body>
 

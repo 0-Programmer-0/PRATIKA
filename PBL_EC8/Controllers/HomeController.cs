@@ -11,12 +11,14 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly UsuarioBll usuarioBll;
+    private readonly JwtService jwtService;
 
     // Construtor injetando tanto o ILogger quanto o UsuarioBll
-    public HomeController(ILogger<HomeController> logger, UsuarioBll _usuarioBll)
+    public HomeController(ILogger<HomeController> logger, UsuarioBll _usuarioBll, JwtService _jwtService)
     {
         _logger = logger;
         usuarioBll = _usuarioBll;
+        jwtService = _jwtService;
     }
 
     public IActionResult Menu()
@@ -37,10 +39,14 @@ public class HomeController : Controller
     [HttpPost]
     public async Task<JsonResult> ValidacaoLogin(string login, string senha)
     {
+        string token = "";
         RetornoAcaoDto resultado = await usuarioBll.ValidacaoLogin(login, senha);
-        if(resultado.Sucesso)
+        if (resultado.Sucesso)
+        {
             HttpContext.Session.SetString("Usuario", login);
-        return Json(new { success = resultado.Sucesso, message = resultado.Mensagem, redirectUrl = Url.Action("ComunidadeIndex", "Comunidade") });
+            token = jwtService.GenerateToken(login);
+        }
+        return Json(new { success = resultado.Sucesso, message = resultado.Mensagem, redirectUrl = Url.Action("ComunidadeIndex", "Comunidade"), token = token });
     }
 
     [HttpPost]
