@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function tokenCheck() {
     function checkToken() {
-        debugger;
+         
         const token = sessionStorage.getItem('token');
         if (!token || isTokenExpired(token)) {
             showLoginPopup();
@@ -14,7 +14,7 @@ function tokenCheck() {
     }
 
     function isTokenExpired(token) {
-        debugger;
+         
         try {
             // Extrair a parte payload do token (segunda parte)
             const payload = JSON.parse(atob(token.split('.')[1]));
@@ -62,7 +62,7 @@ function tokenCheck() {
                 dataType: 'json',
                 success: function (data) {
                     if (data.success) {
-                        debugger;
+                         
                         alert("usuário validado com sucesso")
                         expiracaoToken(data.token);
                         hideLoginPopup();

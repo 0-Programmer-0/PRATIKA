@@ -78,7 +78,7 @@ function cadastroUsuario() {
                         type: 'POST', // Certifique-se de que o método do controlador está aceitando GET
                         dataType: 'json',
                         success: function (data) {
-                            debugger;
+                             
                             alert(`${data.message}`);
                             if (data.success) {
                                 window.location.href = data.redirectUrl;
