@@ -1,4 +1,4 @@
-const base_path = window.location.origin;
+base_path = window.location.origin;
 var mensagemErro = "";
 
 function anuncios() {
@@ -136,5 +136,5 @@ function anuncios() {
         fecharModalPerfilInvalido: fecharModalPerfilInvalido,
         inserirImagem: inserirImagem,
         cadastrarAnuncio: cadastrarAnuncio
-    };
+    }
 }

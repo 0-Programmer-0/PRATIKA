@@ -16,12 +16,11 @@
             display: flex;
             justify-content: center;
             margin: 0;
-            padding: 20px;
         }
 
         .marketplace {
-            width: 90%;
-            max-width: 1200px;
+            width: 70%;
+            margin: 0px 300px;
         }
 
         .product-grid {
@@ -120,6 +119,9 @@
 </head>
 
 <body>
+    <div class="sidebar-container">
+    @await Html.PartialAsync("_MenuLateral")
+  </div>
     <div class="marketplace">
         <a name="lblEsqueciSenha" id="lblEsqueciSenha" class="navbar-brand" style="font-size: 100%" onclick=""
             asp-area="" asp-controller="Comunidade" asp-action="ComunidadeIndex">Anúncios</a>
