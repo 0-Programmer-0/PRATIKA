@@ -24,7 +24,7 @@ function loginUsuario() {
                     success: function (data) {
                         alert(data.message);
                         if(data.success) {
-                            debugger;
+                             
                             expiracaoToken(data.token);
                             window.location.href = data.redirectUrl;
                         }

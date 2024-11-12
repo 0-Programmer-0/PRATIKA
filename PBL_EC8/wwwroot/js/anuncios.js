@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 //base_path = window.location.origin;
+=======
+// base_path = window.location.origin;
+>>>>>>> 34d4153346426f2029abef26205441104148643e
 var mensagemErro = "";
 
 function anuncios() {
@@ -26,7 +30,7 @@ function anuncios() {
                 success: function (data) {
                     if (data.success) {
                         dto.modalCadastroAnuncio.css('display', 'flex');
-                        debugger;
+                      
                         if (data.imagemPerfil != null) {
                             dto.imgPreview.attr('src', data.imagemPerfil);
                             dto.divImagemPerfil.show();
@@ -70,7 +74,7 @@ function anuncios() {
 
     function cadastrarAnuncio() {
         if (validaCampos()) {
-            debugger;
+           
             $(document).ready(function () {
                 $.ajax({
                     url: base_path + "/Anuncios/CadastrarAnuncio",
