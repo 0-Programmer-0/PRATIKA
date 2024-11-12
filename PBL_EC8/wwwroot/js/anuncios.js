@@ -1,4 +1,4 @@
-base_path = window.location.origin;
+//base_path = window.location.origin;
 var mensagemErro = "";
 
 function anuncios() {

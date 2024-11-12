@@ -5,6 +5,12 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function tokenCheck() {
+    var dto = {
+        textboxLogin: $("#textboxLogin").val(),
+        textboxSenha: $("#textboxSenha").val(),
+        loginPopup: $("#loginPopup")
+    }
+
     function checkToken() {
         debugger;
         const token = sessionStorage.getItem('token');
@@ -31,8 +37,7 @@ function tokenCheck() {
     }
 
     function showLoginPopup() {
-        const loginPopup = document.getElementById('loginPopup');
-        if (loginPopup) {
+        if (dto.loginPopup) {
             loginPopup.style.display = 'flex';
         } else {
             console.error("Elemento 'loginPopup' não encontrado.");
@@ -40,8 +45,7 @@ function tokenCheck() {
     }
 
     function hideLoginPopup() {
-        const loginPopup = document.getElementById('loginPopup');
-        if (loginPopup) {
+        if (dto.loginPopup) {
             loginPopup.style.display = 'none';
         } else {
             console.error("Elemento 'loginPopup' não encontrado.");
@@ -50,13 +54,11 @@ function tokenCheck() {
 
     function validacaoLogin() {
         $(document).ready(function () {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
             $.ajax({
                 url: base_path + "/Home/ValidacaoLogin",
                 data: {
-                    login: username,
-                    senha: password
+                    login: dto.textboxLogin,
+                    senha: dto.textboxSenha
                 },
                 type: 'POST',
                 dataType: 'json',
