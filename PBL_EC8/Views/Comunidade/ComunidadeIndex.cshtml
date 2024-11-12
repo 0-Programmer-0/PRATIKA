@@ -1,73 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Timeline estilo Twitter</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f8fa;
-      display: flex;
-      justify-content: center;
-      margin: 0;
-    }
-    .timeline {
-      width: 600px;
-      margin-top: 20px;
-    }
-    .tweet {
-      display: flex;
-      background-color: #fff;
-      padding: 15px;
-      margin-bottom: 10px;
-      border: 1px solid #e1e8ed;
-      border-radius: 8px;
-    }
-    .icons {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center; /* Centraliza os ícones verticalmente */
-      margin-right: 15px;
-    }
-    .pump {
-      width: 65%;
-      height: 15%;
-      margin-bottom: 8px;
-    }
-    .relevancia {
-      width: 65%;
-      height: 20%;
-      margin-bottom: 8px;
-    }
-    .profile-pic {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      margin-right: 15px;
-      background-color: #ccc;
-    }
-    .tweet-content {
-      flex: 1;
-    }
-    .username {
-      font-weight: bold;
-      color: #1DA1F2;
-    }
-    .handle {
-      color: #657786;
-      margin-left: 5px;
-    }
-    .content {
-      margin-top: 5px;
-      color: #14171a;
-    }
-  </style>
+  <link rel="stylesheet" href="../css/comunidade.css">
+  <script src="../js/comunidade.js"></script>
 </head>
+
 <body>
-    <a name="lblEsqueciSenha" id="lblEsqueciSenha" class="navbar-brand" style="font-size: 100%" onclick=""
-            asp-area="" asp-controller="Anuncios" asp-action="AnunciosIndex">Anúncios</a>
+  <div class="sidebar-container">
+    @await Html.PartialAsync("_MenuLateral")
+  </div>
+  <div id="modalContainer" style="display: none;">
+    <!-- O conteúdo da modal será inserido aqui via AJAX -->
+</div>
   <div class="timeline">
     <div class="tweet">
       <div class="icons">
@@ -115,5 +63,13 @@
     </div>
     <!-- Adicione mais tweets aqui -->
   </div>
+  <button class="novaPostagem" onclick="comunidade().abrirModalNovaPostagem();">
+    <img src="../img/novaPostagem.png">
+  </button>
+
+  @* <div id="loginPopup">
+    @Html.Partial("_LoginPopup")
+  </div> *@
 </body>
+
 </html>

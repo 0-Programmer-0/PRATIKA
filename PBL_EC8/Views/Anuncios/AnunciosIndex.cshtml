@@ -1,3 +1,5 @@
+@model UsuarioDto;
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -14,12 +16,11 @@
             display: flex;
             justify-content: center;
             margin: 0;
-            padding: 20px;
         }
 
         .marketplace {
-            width: 90%;
-            max-width: 1200px;
+            width: 70%;
+            margin: 0px 300px;
         }
 
         .product-grid {
@@ -118,8 +119,13 @@
 </head>
 
 <body>
+    <div class="sidebar-container">
+    @await Html.PartialAsync("_MenuLateral")
+  </div>
     <div class="marketplace">
-        <button onclick="anuncios().abrirModal();">Anunciar</button>
+        <a name="lblEsqueciSenha" id="lblEsqueciSenha" class="navbar-brand" style="font-size: 100%" onclick=""
+            asp-area="" asp-controller="Comunidade" asp-action="ComunidadeIndex">Anúncios</a>
+        <button onclick="anuncios().abrirModalCadastrarAnuncio();">Anunciar</button>
         <div class="product-grid" id="productGrid">
             <!-- Produtos vão ser inseridos aqui -->
             <!-- Cada produto contém uma imagem, um título e um preço -->
@@ -141,43 +147,70 @@
             <!-- Adicione mais produtos conforme necessário -->
         </div>
 
-        <div id="modalAnuncios" class="modal">
+        <div id="modalCadastroAnuncio" class="modal">
             <div class="modal-content">
                 <h2>Anúncio</h2>
-                <br>              
-                <div id="divImagemPerfil" hidden>
+                <br>
+                <div id="divImagemPerfil">
                     <img id="imgPreview" src="#" alt="Imagem do perfil" />
                 </div>
                 <br>
-                <form id="uploadForm">
-                    <input type="file" id="inputImagem" onchange="anuncios().inserirImagem(this);"
-                        accept="image/png, image/jpeg" required>
-                </form>
+
+                <!-- Campo Título -->
+                <label for="textboxTitulo">Título:</label>
+                <input type="text" id="textboxTitulo" placeholder="Digite o título do anúncio" required>
                 <br>
-                <label style="text-align: left;">Anunciante: </label>
+
+                <!-- Campo Profissão -->
+                <label for="textboxProfissao">Profissão:</label>
+                <input type="text" id="textboxProfissao" placeholder="Digite sua profissão" required>
                 <br>
-                <label id="lblNomeItemAnuncio">Item</label>
-                <input type="text" id="textboxNomeItemAnuncio" placeholder="Digite o nome do item" required>
-                <br>
-                <label id="lblContatoAnuncio">Contato</label>
-                <input type="text" id="textboxContatoAnuncio" placeholder="Digite seu contato (email ou telefone)" required>
-                <br>
-                <label id="lblMetodoPagamentoAnuncio">Método de Pagamento:</label>
-                <select id="comboMetodoPagamentoAnuncio" required>
-                    <option value="" disabled selected>Selecione um método de pagamento</option>
-                    <option value="pix">PIX</option>
-                    <option value="debito">Cartão Débito</option>
-                    <option value="credito">Cartão Crédito</option>
-                    <option value="troca">Troca</option>
+
+                <!-- Campo Estado -->
+                <label for="comboEstado">Estado:</label>
+                <select id="comboEstado" required>
+                    <option value="" disabled selected>Selecione seu estado</option>
+                    <!-- Adicione aqui opções dos estados ou preencha dinamicamente -->
+                    <option value="SP">São Paulo</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <!-- Outros estados... -->
                 </select>
                 <br>
-                <label id="lblDescricaoAnuncio">Descrição</label>
-                <textarea id="textareaDescricaoAnuncio" placeholder="Digite uma descrição" required></textarea>
+
+                <!-- Campo Cidade -->
+                <label for="textboxCidade">Cidade:</label>
+                <input type="text" id="textboxCidade" placeholder="Digite sua cidade" required>
                 <br>
-                <button id="btnCadastrarAnuncio" onclick="anuncios().fecharModal();">Cadastrar Anúncio</button>
+
+                <!-- Campo Descrição -->
+                <label for="textareaDescricao">Descrição:</label>
+                <textarea id="textareaDescricao" placeholder="Digite uma descrição" required></textarea>
+                <br>
+
+                <!-- Botão Cadastrar Anúncio -->
+                <button id="btnCadastrarAnuncio" onclick="anuncios().cadastrarAnuncio();">Cadastrar
+                    Anúncio</button>
             </div>
         </div>
 
+
+        <div id="modalPerfilInvalido" class="modal">
+            <div class="modal-content">
+                <h2>Perfil inválido!</h2>
+                <br>
+                <label>Anuncie seu trabalho assinando nosso plano Premium!</label>
+                <br>
+                <div>
+                    <button id="btnCadastrarAnuncio" onclick="anuncios().fecharModalPerfilInvalido();">Vamos lá!</button>
+                    <button id="btnCadastrarAnuncio" onclick="anuncios().fecharModalPerfilInvalido();">Fechar</button>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="loginPopup" class="modal">
+            @Html.Partial("_LoginPopup")
+        </div>
     </div>
 </body>
 

@@ -43,9 +43,15 @@
         <textarea name="textareaDescricao" id="textareaDescricao" type="text" placeholder="Descrição"></textarea>
         <br>
         <select name="comboGenero" id="comboGenero" placeholder="Genero">
+            <option value="" disabled selected>Selecione um Gênero</option>
             <option>Masculino</option>
             <option>Feminino</option>
             <option>Outro</option>
+        </select>
+        <select name="comboPerfil" id="comboPerfil">
+            <option value="" disabled selected>Selecione um Perfil</option>
+            <option>Básico</option>
+            <option>Premium</option>
         </select>
         <br>
         <button class="botao-login" name="btnCadastrar" id="btnCadastrar" onclick="cadastroUsuario().cadastrarUsuario();">Cadastrar</button>

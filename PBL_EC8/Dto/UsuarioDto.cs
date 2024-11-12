@@ -10,4 +10,5 @@ public class UsuarioDto
     public string DataNascimento { get; set; }
     public string Descricao { get; set; }
     public string Genero { get; set; }
+    public string Perfil { get; set; }
 }

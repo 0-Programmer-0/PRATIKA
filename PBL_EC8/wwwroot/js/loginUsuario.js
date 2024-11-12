@@ -22,9 +22,10 @@ function loginUsuario() {
                     type: 'POST',
                     dataType: 'json',
                     success: function (data) {
-                        console.log(data.message);
                         alert(data.message);
                         if(data.success) {
+                             
+                            expiracaoToken(data.token);
                             window.location.href = data.redirectUrl;
                         }
                     },
@@ -52,8 +53,15 @@ function loginUsuario() {
         return true;
     }
 
+    function expiracaoToken(token) {
+        const expiration = JSON.parse(atob(token.split('.')[1])).exp * 1000; // Converte o 'exp' para milissegundos
+        sessionStorage.setItem('token', token);
+        sessionStorage.setItem('tokenExpiration', expiration);
+    }    
+
     return {
         validacaoLogin: validacaoLogin,
-        validaCampos: validaCampos
+        validaCampos: validaCampos,
+        expiracaoToken: expiracaoToken
     };
 }

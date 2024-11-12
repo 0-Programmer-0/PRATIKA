@@ -1,27 +1,45 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using MongoDB.Driver;
 using Microsoft.Extensions.Options;
-using PBL_EC8.Bll; // Para usar IOptions
+using PBL_EC8.Bll;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.WebHost.ConfigureKestrel(options =>
-// {
-//     options.ListenAnyIP(5020); // Escuta em todas as interfaces na porta 5020
-// });
-
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenLocalhost(5014); // HTTP
+    //options.ListenLocalhost(5014); // HTTP
     options.ListenLocalhost(7282, listenOptions => listenOptions.UseHttps()); // HTTPS
+});
+
+// Carregar configurações JWT do appsettings.json
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
+
+// Configuração do JWT
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidAudience = jwtSettings["Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(key)
+    };
 });
 
 // Registrar o MongoClient
 builder.Services.AddSingleton<IMongoClient, MongoClient>(sp =>
 {
-    //Configuração antiga
-    // var connectionString = builder.Configuration["MongoDBSettings:ConnectionString"];
-    // return new MongoClient(connectionString);
-
     //Configuração nova - aumento de tempo de requisão, devido a casos de internet lenta
     var settings = MongoClientSettings.FromConnectionString(builder.Configuration["MongoDBSettings:ConnectionString"]);
     settings.ConnectTimeout = TimeSpan.FromSeconds(60); // Ajusta para o tempo desejado
@@ -40,6 +58,18 @@ builder.Services.AddScoped<UsuarioBll>(sp =>
     return new UsuarioBll(mongoClient, databaseName, collectionName);
 });
 
+// Registrar o AnuncioBll
+builder.Services.AddScoped<AnuncioBll>(sp =>
+{
+    var mongoClient = sp.GetRequiredService<IMongoClient>();
+    var databaseName = builder.Configuration["MongoDBSettings:DatabaseName"] ?? "db_pratika"; // Pega o nome do banco de dados
+    var collectionName = "collection_anuncios";  // Nome da coleção
+    return new AnuncioBll(mongoClient, databaseName, collectionName);
+});
+
+// Registrar o JwtService no contêiner de dependências
+builder.Services.AddSingleton<JwtService>();
+
 // Registrar controllers com views
 builder.Services.AddControllersWithViews();
 
@@ -55,10 +85,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
+app.UseAuthentication();
 
 // Utilizar Session
 app.UseSession();

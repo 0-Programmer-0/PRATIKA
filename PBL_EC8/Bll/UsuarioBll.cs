@@ -51,7 +51,11 @@ public class UsuarioBll : IUsuarioBll
     {
         try
         {
-            var filtro = Builders<Usuario>.Filter.Eq(u => u.Email, usuarioDto.Email);
+            FilterDefinition<Usuario> filtro = Builders<Usuario>.Filter.Or
+                    (
+                        Builders<Usuario>.Filter.Eq(u => u.Email, usuarioDto.Email),
+                        Builders<Usuario>.Filter.Eq(u => u.NomeUsuario, usuarioDto.NomeUsuario)
+                    );
             Usuario usuario = await _usuariosCollection.Find(filtro).FirstOrDefaultAsync();
             usuarioDto = ConverterUsuario(usuario);
         }
@@ -65,13 +69,11 @@ public class UsuarioBll : IUsuarioBll
     public async Task<RetornoAcaoDto> ValidaCriacaoUsuario(UsuarioDto usuarioDto)
     {
         RetornoAcaoDto retorno = new RetornoAcaoDto();
-        FilterDefinition<Usuario> filtro;
-        Usuario usuario = new Usuario();
         try
         {
             //Valida apenas Nome de Usuário
-            filtro = Builders<Usuario>.Filter.Eq(u => u.NomeUsuario, usuarioDto.NomeUsuario);
-            usuario = await _usuariosCollection.Find(filtro).FirstOrDefaultAsync();
+            FilterDefinition<Usuario> filtro = Builders<Usuario>.Filter.Eq(u => u.NomeUsuario, usuarioDto.NomeUsuario);
+            Usuario usuario = await _usuariosCollection.Find(filtro).FirstOrDefaultAsync();
             if (usuario != null)
             {
                 retorno.Sucesso = false;
@@ -104,7 +106,7 @@ public class UsuarioBll : IUsuarioBll
         RetornoAcaoDto retorno = new RetornoAcaoDto();
         try
         {
-            var filtro = Builders<Usuario>.Filter.And(
+            FilterDefinition<Usuario> filtro = Builders<Usuario>.Filter.And(
                 Builders<Usuario>.Filter.Or
                     (
                         Builders<Usuario>.Filter.Eq(u => u.Email, login),
@@ -160,6 +162,7 @@ public class UsuarioBll : IUsuarioBll
         usuario.DataNascimento = Convert.ToDateTime(usuarioDto.DataNascimento);
         usuario.Descricao = usuarioDto.Descricao;
         usuario.Genero = usuarioDto.Genero;
+        usuario.Perfil = usuarioDto.Perfil;
         return usuario;
     }
 
@@ -167,7 +170,7 @@ public class UsuarioBll : IUsuarioBll
     {
         UsuarioDto usuarioDto = new UsuarioDto();
 
-        usuarioDto.ImagemPerfil = usuarioDto.ImagemPerfil;
+        usuarioDto.ImagemPerfil = usuario.ImagemPerfil;
         usuarioDto.NomeUsuario = usuario.NomeUsuario;
         usuarioDto.Nome = usuario.Nome;
         usuarioDto.Sobrenome = usuario.Sobrenome;
@@ -176,6 +179,7 @@ public class UsuarioBll : IUsuarioBll
         usuarioDto.DataNascimento = usuario.DataNascimento.ToString();
         usuarioDto.Descricao = usuario.Descricao;
         usuarioDto.Genero = usuario.Genero;
+        usuarioDto.Perfil = usuario.Perfil;
         return usuarioDto;
     }
 }

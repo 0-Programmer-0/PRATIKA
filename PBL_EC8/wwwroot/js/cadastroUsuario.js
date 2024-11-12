@@ -22,6 +22,7 @@ function cadastroUsuario() {
         textareaDescricao: $('#textareaDescricao').val(),
         comboGenero: $('#comboGenero').find(":selected").text(),
         imagemInput: $('#imagemInput'),
+        comboPerfil: $('#comboPerfil').find(":selected").text(),
         btnLogin: $('#btnLogin')
     }
 
@@ -70,13 +71,14 @@ function cadastroUsuario() {
                                 Senha: dto.textboxSenha,
                                 DataNascimento: dto.textboxDataNascimento,
                                 Descricao: dto.textareaDescricao,
-                                Genero: dto.comboGenero
+                                Genero: dto.comboGenero,
+                                Perfil: dto.comboPerfil
                             }
                         },
                         type: 'POST', // Certifique-se de que o método do controlador está aceitando GET
                         dataType: 'json',
                         success: function (data) {
-                            debugger;
+                             
                             alert(`${data.message}`);
                             if (data.success) {
                                 window.location.href = data.redirectUrl;
@@ -141,6 +143,10 @@ function cadastroUsuario() {
         }
         else if (dto.comboGenero != "Masculino" && dto.comboGenero != "Feminino" && dto.comboGenero != "Outro") {
             mensagemErro = "Por favor, preencha o campo de Gênero corretamente";
+            return false;
+        }
+        else if (dto.comboPerfil != "Básico" && dto.comboPerfil != "Premium") {
+            mensagemErro = "Por favor, preencha o campo de Perfil corretamente";
             return false;
         }
         else {
