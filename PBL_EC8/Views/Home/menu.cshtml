@@ -27,7 +27,10 @@
             <label>Senha</label>
             <input class="input-senha-email" name="textboxSenha" id="textboxSenha" type="password">
             <br>
-            <label class="forgot-password" onclick="alert('Recuperação de senha iniciada')">Esqueci minha senha</label>
+            <div style="display: flex">
+                <label class="forgot-password" onclick="alert('Recuperação de senha iniciada')">Esqueci minha senha</label>
+                <a class="forgot-password" asp-area="" asp-controller="Home" asp-action="CadastroUsuario">Cadastre-se</a>
+            </div>
             <br>
             <button class="botao-login" name="" id="btnLogin" onclick="loginUsuario().validacaoLogin();">Login</button>
         </div>
