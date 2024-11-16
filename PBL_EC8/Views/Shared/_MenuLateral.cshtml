@@ -1,9 +1,9 @@
 <head>
     <link rel="stylesheet" href="../css/menuLateral.css">
-    <script></script>
+    <script src="../js/loginUsuario.js"></script>
 </head>
 <div class="header">
-    <img src="../img/pump_preenchido.png" class="header-icon left-icon">
+    <img src="../img/pump2_preenchido.png" class="header-icon left-icon">
     <img src="../img/logout.png" class="header-icon right-icon" onclick="logout();">
 </div>
 <br>
@@ -28,19 +28,13 @@
     <br>
     <br>
     <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
     <button class="btnCriacaoConteudo" id="btnCriacaoConteudo">BOTÃO</button>
     <br>
     <br>
     <div class="user-info">
-        <img src="../img/default_usuario.png" alt="Avatar do usuário" class="user-avatar" onclick="acessarPerfil();">
-        <label class="username" onclick="acessarPerfil();">@@username_123</label>
+        <img id="imgPerfil" src="../img/default_usuario.png" alt="Avatar do usuário" class="user-avatar"
+            onclick="acessarPerfil();">
+        <label class="nomeUsuario" onclick="acessarPerfil();" id="lblNomeUsuario"></label>
     </div>
 </div>
 
@@ -52,4 +46,19 @@
     function logout() {
         alert("saindo do site");
     }
+
+    $(document).ready(function () {
+        $.ajax({
+            url: base_path + "/Home/BuscaSessionInfos",
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('#lblNomeUsuario').text('@@' + data.usuario);
+                $('#imgPerfil').attr('src', data.imagemPerfil).show();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Erro na requisição:', textStatus, errorThrown);
+            }
+        });
+    });
 </script>

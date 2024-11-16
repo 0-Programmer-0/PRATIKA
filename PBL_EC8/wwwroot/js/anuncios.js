@@ -1,6 +1,10 @@
 // base_path = window.location.origin;
 var mensagemErro = "";
 
+document.addEventListener('DOMContentLoaded', function () {
+    $('#btnCriacaoConteudo').text("Anunciar");
+});
+
 function anuncios() {
     var dto = {
         modalCadastroAnuncio: $('#modalCadastroAnuncio'),
@@ -134,7 +138,6 @@ function anuncios() {
         abrirModalCadastrarAnuncio: abrirModalCadastrarAnuncio,
         fecharModalCadastrarAnuncio: fecharModalCadastrarAnuncio,
         fecharModalPerfilInvalido: fecharModalPerfilInvalido,
-        inserirImagem: inserirImagem,
         cadastrarAnuncio: cadastrarAnuncio
     }
 }

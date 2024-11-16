@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', function () {
+    $('#btnCriacaoConteudo').text("Postar");
+});
+
 function comunidade() {
 
     function abrirModalNovaPostagem() {

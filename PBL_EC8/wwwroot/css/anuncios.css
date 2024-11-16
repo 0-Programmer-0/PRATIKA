@@ -96,3 +96,41 @@
     position: relative;
     padding-top: 0.5%;
 }
+
+/* Centralizar a barra de pesquisa */
+.search-container {
+    position: absolute;
+    top: 20px; /* Parte superior da tela */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%; /* Largura relativa */
+}
+
+/* Caixa de pesquisa */
+.search-box {
+    width: 100%; /* Ocupa toda a largura do contêiner */
+    padding: 10px 40px; /* Espaçamento interno (esquerda reservada para a lupa) */
+    font-size: 16px;
+    border: 2px solid #00FF0A; /* Borda verde */
+    border-radius: 25px; /* Bordas arredondadas */
+    outline: none;
+    background-color: black; /* Fundo preto */
+    color: #00FF0A; /* Texto verde */
+}
+
+/* Ícone de lupa */
+.search-icon {
+    position: absolute;
+    left: 15px; /* Posição na esquerda dentro do input */
+    font-size: 20px;
+    color: #00FF0A; /* Cor da lupa */
+}
+
+/* Placeholder estilizado */
+.search-box::placeholder {
+    color: #00FF0A; /* Cor do texto placeholder */
+    opacity: 0.7; /* Transparência */
+}

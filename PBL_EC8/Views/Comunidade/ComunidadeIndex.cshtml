@@ -7,19 +7,21 @@
   <title>Timeline estilo Twitter</title>
   <link rel="stylesheet" href="../css/comunidade.css">
   <script src="../js/comunidade.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-  <button class="novaPostagem" onclick="comunidade().abrirModalNovaPostagem();">
-    <img src="../img/img_send.png">
-  </button>
   <div class="sidebar-container">
     @await Html.PartialAsync("_MenuLateral")
   </div>
-  <div id="modalContainer" style="display: none;">
-    <!-- O conteúdo da modal será inserido aqui via AJAX -->
-  </div>
 
+  <div class="search-container">
+    <input type="text" class="search-box" placeholder="Pesquise aqui..." />
+    <i class="search-icon fas fa-search"></i>
+  </div>
+  <br>
+  <br>
+  <br>
   <div class="timeline">
     <div class="tweet">
       <div class="icons">
@@ -67,8 +69,8 @@
     </div>
     <!-- Adicione mais tweets aqui -->
   </div>
-  
-  <div id="loginPopup">
+
+  <div id="loginPopup" hidden>
     @Html.Partial("_ValidacaoJwt")
   </div>
 </body>
