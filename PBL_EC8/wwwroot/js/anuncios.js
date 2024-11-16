@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-//base_path = window.location.origin;
-=======
 // base_path = window.location.origin;
->>>>>>> 34d4153346426f2029abef26205441104148643e
 var mensagemErro = "";
 
 function anuncios() {

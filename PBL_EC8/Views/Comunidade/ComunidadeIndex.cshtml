@@ -10,12 +10,16 @@
 </head>
 
 <body>
+  <button class="novaPostagem" onclick="comunidade().abrirModalNovaPostagem();">
+    <img src="../img/img_send.png">
+  </button>
   <div class="sidebar-container">
     @await Html.PartialAsync("_MenuLateral")
   </div>
   <div id="modalContainer" style="display: none;">
     <!-- O conteúdo da modal será inserido aqui via AJAX -->
-</div>
+  </div>
+
   <div class="timeline">
     <div class="tweet">
       <div class="icons">
@@ -27,7 +31,7 @@
       <div class="profile-pic"></div>
       <div class="tweet-content">
         <div>
-          <span class="username">João Silva</span>
+          <span class="username">João Silva Teste</span>
           <span class="handle">@@joaosilva</span>
         </div>
         <div class="content">
@@ -63,13 +67,10 @@
     </div>
     <!-- Adicione mais tweets aqui -->
   </div>
-  <button class="novaPostagem" onclick="comunidade().abrirModalNovaPostagem();">
-    <img src="../img/novaPostagem.png">
-  </button>
-
-  @* <div id="loginPopup">
-    @Html.Partial("_LoginPopup")
-  </div> *@
+  
+  <div id="loginPopup">
+    @Html.Partial("_ValidacaoJwt")
+  </div>
 </body>
 
 </html>
