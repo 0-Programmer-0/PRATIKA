@@ -7,22 +7,20 @@ public class Posts
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; }
 
-    [BsonElement("Titulo")]
-    public string Titulo { get; set; }
+    [BsonElement("Descricao")]
+    public string Descricao { get; set; }
 
     [BsonElement("IdUsuario")]
     [BsonRepresentation(BsonType.ObjectId)]
     public string IdUsuario { get; set; }
 
-    [BsonElement("Profissao")]
-    public string Profissao { get; set; }
+    [BsonElement("QtdImpulsionamentos")]
+    public string QtdImpulsionamentos { get; set; }
 
-    [BsonElement("Estado")]
-    public string Estado { get; set; }
+    [BsonElement("QtdCurtidas")]
+    public string QtdCurtidas { get; set; }
 
-    [BsonElement("Cidade")]
-    public string Cidade { get; set; }
+    [BsonElement("FotoAnexo")]
+    public string FotoAnexo { get; set; }
 
-    [BsonElement("Descricao")]
-    public string Descricao { get; set; }
 }
