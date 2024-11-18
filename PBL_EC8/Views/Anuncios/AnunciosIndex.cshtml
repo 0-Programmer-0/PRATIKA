@@ -17,78 +17,111 @@
     <div class="sidebar-container">
         @await Html.PartialAsync("_MenuLateral")
     </div>
-    <div class="marketplace">
+    <header class="header-container">
         <div class="search-container">
-            <input type="text" class="search-box" placeholder="Pesquise aqui..." />
-            <i class="search-icon fas fa-search"></i>
+            <input type="text" class="search-box" placeholder="Pesquise um anúncio" />
+            @* <i class="search-icon fas fa-search"></i> *@
         </div>
+    </header>
+    <main>
+        <div class="anuncios">
+            <div id="divAnuncios"></div>
 
-        <div id="modalCadastroAnuncio" class="modal">
-            <div class="modal-content">
-                <h2>Anúncio</h2>
-                <br>
-                <div id="divImagemPerfil">
-                    <img id="imgPreview" src="#" alt="Imagem do perfil" />
+            <div id="modalCadastroAnuncio" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="anuncios().fecharModalCadastrarAnuncio()">&times;</span>
+                    <h2>Anúncio</h2>
+                    <br>
+                    <div id="divImagemPerfil">
+                        <img id="imgPreview" src="#" alt="Imagem do anunciante" />
+                    </div>
+                    <br>
+
+                    <label for="textboxTitulo">Título:</label>
+                    <input type="text" id="textboxTitulo" placeholder="Digite o título do anúncio"
+                        class="campos-cadastro" required>
+                    <br>
+
+                    <label for="textboxProfissao">Profissão:</label>
+                    <input type="text" id="textboxProfissao" placeholder="Digite sua profissão" class="campos-cadastro"
+                        required>
+                    <br>
+
+                    <div class="form-group">
+                        <div class="input-container">
+                            <label for="comboEstado">Estado:</label>
+                            <select id="comboEstado" class="campos-cadastro" required>
+                                <option value="" disabled selected>Selecione</option>
+                                <option value="AC">AC</option>
+                                <option value="AL">AL</option>
+                                <option value="AP">AP</option>
+                                <option value="AM">AM</option>
+                                <option value="BA">BA</option>
+                                <option value="CE">CE</option>
+                                <option value="DF">DF</option>
+                                <option value="ES">ES</option>
+                                <option value="GO">GO</option>
+                                <option value="MA">MA</option>
+                                <option value="MT">MT</option>
+                                <option value="MS">MS</option>
+                                <option value="MG">MG</option>
+                                <option value="PA">PA</option>
+                                <option value="PB">PB</option>
+                                <option value="PR">PR</option>
+                                <option value="PE">PE</option>
+                                <option value="PI">PI</option>
+                                <option value="RJ">RJ</option>
+                                <option value="RN">RN</option>
+                                <option value="RS">RS</option>
+                                <option value="RO">RO</option>
+                                <option value="RR">RR</option>
+                                <option value="SC">SC</option>
+                                <option value="SP">SP</option>
+                                <option value="SE">SE</option>
+                                <option value="TO">TO</option>
+                            </select>
+                        </div>
+
+                        <div class="input-container">
+                            <label for="textboxCidade">Cidade:</label>
+                            <input type="text" id="textboxCidade" placeholder="Digite sua cidade"
+                                class="campos-cadastro" required>
+                        </div>
+                    </div>
+
+                    <br>
+                    <label for="textareaDescricao">Descrição:</label>
+                    <textarea id="textareaDescricao" placeholder="Digite uma descrição" class="campos-cadastro"
+                        required></textarea>
+                    <br>
+
+                    <button id="btnCadastrarAnuncio" class="btnCriacaoConteudo"
+                        onclick="anuncios().cadastrarAnuncio();">Cadastrar Anúncio</button>
                 </div>
-                <br>
+            </div>
 
-                <!-- Campo Título -->
-                <label for="textboxTitulo">Título:</label>
-                <input type="text" id="textboxTitulo" placeholder="Digite o título do anúncio" required>
-                <br>
 
-                <!-- Campo Profissão -->
-                <label for="textboxProfissao">Profissão:</label>
-                <input type="text" id="textboxProfissao" placeholder="Digite sua profissão" required>
-                <br>
+            <div id="modalPerfilInvalido" class="modal">
+                <div class="modal-content">
+                    <h2>Perfil inválido!</h2>
+                    <br>
+                    <label>Anuncie seu trabalho assinando nosso plano Premium!</label>
+                    <br>
+                    <div>
+                        <button id="btnCadastrarAnuncio" onclick="anuncios().fecharModalPerfilInvalido();">Vamos
+                            lá!</button>
+                        <button id="btnCadastrarAnuncio"
+                            onclick="anuncios().fecharModalPerfilInvalido();">Fechar</button>
 
-                <!-- Campo Estado -->
-                <label for="comboEstado">Estado:</label>
-                <select id="comboEstado" required>
-                    <option value="" disabled selected>Selecione seu estado</option>
-                    <!-- Adicione aqui opções dos estados ou preencha dinamicamente -->
-                    <option value="SP">São Paulo</option>
-                    <option value="RJ">Rio de Janeiro</option>
-                    <!-- Outros estados... -->
-                </select>
-                <br>
+                    </div>
+                </div>
+            </div>
 
-                <!-- Campo Cidade -->
-                <label for="textboxCidade">Cidade:</label>
-                <input type="text" id="textboxCidade" placeholder="Digite sua cidade" required>
-                <br>
-
-                <!-- Campo Descrição -->
-                <label for="textareaDescricao">Descrição:</label>
-                <textarea id="textareaDescricao" placeholder="Digite uma descrição" required></textarea>
-                <br>
-
-                <!-- Botão Cadastrar Anúncio -->
-                <button id="btnCadastrarAnuncio" onclick="anuncios().cadastrarAnuncio();">Cadastrar
-                    Anúncio</button>
+            <div id="loginPopup" class="modal">
+                @Html.Partial("_ValidacaoJwt")
             </div>
         </div>
-
-
-        <div id="modalPerfilInvalido" class="modal">
-            <div class="modal-content">
-                <h2>Perfil inválido!</h2>
-                <br>
-                <label>Anuncie seu trabalho assinando nosso plano Premium!</label>
-                <br>
-                <div>
-                    <button id="btnCadastrarAnuncio" onclick="anuncios().fecharModalPerfilInvalido();">Vamos
-                        lá!</button>
-                    <button id="btnCadastrarAnuncio" onclick="anuncios().fecharModalPerfilInvalido();">Fechar</button>
-
-                </div>
-            </div>
-        </div>
-
-        <div id="loginPopup" class="modal">
-            @Html.Partial("_ValidacaoJwt")
-        </div>
-    </div>
+    </main>
 </body>
 
 </html>

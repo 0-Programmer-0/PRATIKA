@@ -170,6 +170,7 @@ public class UsuarioBll : IUsuarioBll
     {
         UsuarioDto usuarioDto = new UsuarioDto();
 
+        usuarioDto.Id = usuario.Id;
         usuarioDto.ImagemPerfil = usuario.ImagemPerfil;
         usuarioDto.NomeUsuario = usuario.NomeUsuario;
         usuarioDto.Nome = usuario.Nome;
