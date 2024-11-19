@@ -40,20 +40,32 @@ public class HomeController : Controller
     public async Task<JsonResult> ValidacaoLogin(string login, string senha)
     {
         string token = "";
+        UsuarioDto usuario = new UsuarioDto();
         RetornoAcaoDto resultado = await usuarioBll.ValidacaoLogin(login, senha);
         if (resultado.Sucesso)
         {
+            usuario.NomeUsuario = login;
+            usuario = await usuarioBll.PesquisarUsuario(usuario);
             HttpContext.Session.SetString("Usuario", login);
+            HttpContext.Session.SetString("ImagemPerfil", usuario.ImagemPerfil);
             token = jwtService.GenerateToken(login);
         }
         return Json(new { success = resultado.Sucesso, message = resultado.Mensagem, redirectUrl = Url.Action("ComunidadeIndex", "Comunidade"), token = token });
     }
 
-    [HttpPost]
+    [HttpGet]
     public async Task<JsonResult> CadastrarUsuario(UsuarioDto dto)
     {
         RetornoAcaoDto resultado = await usuarioBll.CriarUsuario(dto);
         return Json(new { success = resultado.Sucesso, message = resultado.Mensagem, redirectUrl = Url.Action("ComunidadeIndex", "Comunidade") });
+    }
+
+    [HttpGet]
+    public JsonResult BuscaSessionInfos()
+    {
+        string nomeUsuario = HttpContext.Session.GetString("Usuario");
+        string imgPerfil = HttpContext.Session.GetString("ImagemPerfil");
+        return Json(new { usuario = nomeUsuario, imagemPerfil = imgPerfil });
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -61,10 +61,23 @@ public class AnunciosController : Controller
         UsuarioDto usuarioDto = new UsuarioDto();
         usuarioDto.NomeUsuario = HttpContext.Session.GetString("Usuario");
         usuarioDto = await usuarioBll.PesquisarUsuario(usuarioDto);
-        dto.IdUsuario = usuarioDto.Id;
+        if (usuarioDto.Id != null)
+        {
+            dto.IdUsuario = usuarioDto.Id;
+            dto.NomeAnunciante = usuarioDto.Nome;
+            retorno = await anuncioBll.CriarAnuncio(dto);
+            return Json(new { success = retorno.Sucesso, message = retorno.Mensagem });
+        }
+        else
+            return Json(new { success = false, message = "Falha em identificar o usuário do anúncio!" });
+    }
 
-        retorno = await anuncioBll.CriarAnuncio(dto);
-        return Json(new { success = retorno.Sucesso, message = retorno.Mensagem });
+    [HttpPost]
+    public async Task<JsonResult> PesquisarTodosAnuncios()
+    {
+        List<AnuncioDto> listaAnuncio = new List<AnuncioDto>();
+        listaAnuncio = await anuncioBll.PesquisarTodosAnuncios();
+        return Json(new { success = true, lista = listaAnuncio });
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

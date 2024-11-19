@@ -67,6 +67,15 @@ builder.Services.AddScoped<AnuncioBll>(sp =>
     return new AnuncioBll(mongoClient, databaseName, collectionName);
 });
 
+// Registrar o ComunidadeBll
+builder.Services.AddScoped<ComunidadeBll>(sp =>
+{
+    var mongoClient = sp.GetRequiredService<IMongoClient>();
+    var databaseName = builder.Configuration["MongoDBSettings:DatabaseName"] ?? "db_pratika"; // Pega o nome do banco de dados
+    var collectionName = "collection_posts";  // Nome da coleção
+    return new ComunidadeBll(mongoClient, databaseName, collectionName);
+});
+
 // Registrar o JwtService no contêiner de dependências
 builder.Services.AddSingleton<JwtService>();
 

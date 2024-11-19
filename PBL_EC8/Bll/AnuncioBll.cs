@@ -19,15 +19,12 @@ public class AnuncioBll : IAnuncioBll
         anunciosCollection = database.GetCollection<Anuncio>(collectionName);
     }
 
-    // Método de criação de usuário, que tenta criar e retorna uma mensagem
     public async Task<RetornoAcaoDto> CriarAnuncio(AnuncioDto anuncioDto)
     {
         RetornoAcaoDto retorno = new RetornoAcaoDto();
         try
         {   
             Anuncio anuncio = new Anuncio();
-            if(anuncio == null)
-                Console.Write("anuncio nulo");
             FilterDefinition<Anuncio> filtro = Builders<Anuncio>.Filter.Eq(m => m.IdUsuario, anuncioDto.IdUsuario);
             anuncio = await anunciosCollection.Find(filtro).FirstOrDefaultAsync();
             if (anuncio == null)
@@ -40,7 +37,6 @@ public class AnuncioBll : IAnuncioBll
             }
             else
             {
-                
                 retorno.Mensagem = "Já existe um anúncio para o seu perfil!";
                 retorno.Sucesso = false;
             }
@@ -91,6 +87,8 @@ public class AnuncioBll : IAnuncioBll
         anuncio.Estado = anuncioDto.Estado;
         anuncio.Cidade = anuncioDto.Cidade;
         anuncio.Descricao = anuncioDto.Descricao;
+        anuncio.NomeAnunciante = anuncioDto.NomeAnunciante;
+        anuncio.ImagemAnunciante = anuncioDto.ImagemAnunciante;
         return anuncio;
     }
 
@@ -98,12 +96,15 @@ public class AnuncioBll : IAnuncioBll
     {
         AnuncioDto anuncioDto = new AnuncioDto();
 
+        anuncioDto.Id = anuncio.Id;
         anuncioDto.Titulo = anuncio.Titulo;
         anuncioDto.IdUsuario = anuncio.IdUsuario;
         anuncioDto.Profissao = anuncio.Profissao;
         anuncioDto.Estado = anuncio.Estado;
         anuncioDto.Cidade = anuncio.Cidade;
         anuncioDto.Descricao = anuncio.Descricao;
+        anuncioDto.NomeAnunciante = anuncio.NomeAnunciante;
+        anuncioDto.ImagemAnunciante = anuncio.ImagemAnunciante;
         return anuncioDto;
     }
 }

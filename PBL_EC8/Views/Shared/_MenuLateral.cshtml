@@ -1,13 +1,65 @@
 <head>
     <link rel="stylesheet" href="../css/menuLateral.css">
+    <script src="../js/loginUsuario.js"></script>
+    <script src="../js/comunidade.js"></script>
 </head>
+<div class="header">
+    <img src="../img/pump2_preenchido.png" class="header-icon left-icon">
+    <img src="../img/logout.png" class="header-icon right-icon" onclick="logout();">
+</div>
+<br>
+<br>
 <div>
     <ul class="navbar-nav flex-grow-1">
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Comunidade" asp-action="ComunidadeIndex">Comunidade</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Comunidade"
+                asp-action="ComunidadeIndex">Comunidade</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Anuncios" asp-action="AnunciosIndex">Anuncios</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Marketplace</a>
+        </li>
     </ul>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <button onclick="comunidade().abrirModalNovaPostagem()" class="btnCriacaoConteudo" id="btnCriacaoConteudo">Postar</button>
+    <br>
+    <br>
+    <div class="user-info">
+        <img id="imgPerfil" src="../img/default_usuario.png" alt="Avatar do usuário" class="user-avatar"
+            onclick="acessarPerfil();">
+        <label class="nomeUsuario" onclick="acessarPerfil();" id="lblNomeUsuario"></label>
+    </div>
 </div>
+
+<script>
+    function acessarPerfil() {
+        alert("entrando no perfil");
+    }
+
+    function logout() {
+        alert("saindo do site");
+    }
+
+    $(document).ready(function () {
+        $.ajax({
+            url: base_path + "/Home/BuscaSessionInfos",
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('#lblNomeUsuario').text('@@' + data.usuario);
+                $('#imgPerfil').attr('src', data.imagemPerfil).show();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Erro na requisição:', textStatus, errorThrown);
+            }
+        });
+    });
+</script>

@@ -7,8 +7,17 @@
   <title>Timeline estilo Twitter</title>
   <link rel="stylesheet" href="../css/comunidade.css">
   <script src="../js/comunidade.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
+  <script>
+       
 
+        // Inicializando a função assim que o DOM for carregado
+        document.addEventListener('DOMContentLoaded', () => {
+            comunidade().carregarPosts();
+        });
+    </script>
 <body>
   <div class="sidebar-container">
     @await Html.PartialAsync("_MenuLateral")
@@ -16,60 +25,13 @@
   <div id="modalContainer" style="display: none;">
     <!-- O conteúdo da modal será inserido aqui via AJAX -->
 </div>
-  <div class="timeline">
-    <div class="tweet">
-      <div class="icons">
-        <img src="../img/pump_vazio.png" alt="Clique e dê um PUMP!" class="pump">
-        <label>123k</label>
-        <img src="../img/relevancia_vazia.png" alt="Aumente a relevância desse post!" class="relevancia">
-        <label>90k</label>
-      </div>
-      <div class="profile-pic"></div>
-      <div class="tweet-content">
-        <div>
-          <span class="username">João Silva</span>
-          <span class="handle">@@joaosilva</span>
-        </div>
-        <div class="content">
-          Esse é um exemplo de um tweet! Com flexbox, é fácil alinhar elementos em uma timeline.
-          Esse é um exemplo de um tweet! Com flexbox, é fácil alinhar elementos em uma timeline.
-          Esse é um exemplo de um tweet! Com flexbox, é fácil alinhar elementos em uma timeline.
-          Esse é um exemplo de um tweet! Com flexbox, é fácil alinhar elementos em uma timeline.
-          Esse é um exemplo de um tweet! Com flexbox, é fácil alinhar elementos em uma timeline.
-          Esse é um exemplo de um tweet! Com flexbox, é fácil alinhar elementos em uma timeline.
-          Esse é um exemplo de um tweet! Com flexbox, é fácil alinhar elementos em uma timeline.
-          Esse é um exemplo de um tweet! Com flexbox, é fácil alinhar elementos em uma timeline.
-          Esse é um exemplo de um tweet! Com flexbox, é fácil alinhar elementos em uma timeline.
-        </div>
-      </div>
-    </div>
-    <div class="tweet">
-      <div class="icons">
-        <img src="../img/pump_vazio.png" alt="Clique e dê um PUMP!" class="pump">
-        <label>123k</label>
-        <img src="../img/relevancia_vazia.png" alt="Aumente a relevância desse post!" class="relevancia">
-        <label>90k</label>
-      </div>
-      <div class="profile-pic"></div>
-      <div class="tweet-content">
-        <div>
-          <span class="username">Maria Souza</span>
-          <span class="handle">@@mariasouza</span>
-        </div>
-        <div class="content">
-          Outro exemplo de tweet. Flexbox é top demais para layouts de timeline.
-        </div>
-      </div>
-    </div>
-    <!-- Adicione mais tweets aqui -->
+  <div class="timeline" id="posts-container">
+   
   </div>
-  <button class="novaPostagem" onclick="comunidade().abrirModalNovaPostagem();">
-    <img src="../img/novaPostagem.png">
-  </button>
 
-  @* <div id="loginPopup">
-    @Html.Partial("_LoginPopup")
-  </div> *@
+  <div id="loginPopup" hidden>
+    @Html.Partial("_ValidacaoJwt")
+  </div>
 </body>
 
 </html>

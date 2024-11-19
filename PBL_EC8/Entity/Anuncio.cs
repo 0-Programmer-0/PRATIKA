@@ -14,6 +14,12 @@ public class Anuncio
     [BsonRepresentation(BsonType.ObjectId)]
     public string IdUsuario { get; set; }
 
+    [BsonElement("NomeAnunciante")]
+    public string NomeAnunciante { get; set; }
+
+    [BsonElement("ImagemAnunciante")]
+    public string ImagemAnunciante { get; set; }
+
     [BsonElement("Profissao")]
     public string Profissao { get; set; }
 
