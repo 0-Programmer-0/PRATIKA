@@ -103,7 +103,7 @@ function comunidade() {
             
                 // Limpe o contêiner
                 const postsContainer = document.getElementById('posts-container');
-                postsContainer.innerHTML = '';
+                postsContainer.innerHTML = ' ';
                 data.forEach(post => {
                     let profilePicHtml = '';
                     
@@ -115,8 +115,8 @@ function comunidade() {
                     const max = 1000000000000000000000;
                     post.idBotaoPumpCheio = post.id + "_pumpPreenchido"
                     post.idBotaoPumpVazio = post.id + "_pumpVazio";
-                    post.impulsionarCheio = post.id + "_impulsionarVazio";
-                    post.impulsionarVazio = post.id + "_impulsionarPreenchido";
+                    post.idBotaoImpulsionarCheio = post.id + "_impulsionarVazio";
+                    post.idBotaoImpulsionarVazio = post.id + "_impulsionarPreenchido";
                     // Serializa o post para JSON e o escapa para uso no HTML
                     const serializedPost = encodeURIComponent(JSON.stringify(post));
                     // Escapa aspas sem modificar outros caracteres
@@ -144,10 +144,10 @@ function comunidade() {
                                     <img src="../img/pump_preenchido.png" alt="" class="pump">
                                 </button>
                                 <label>${post.qtdCurtidas}</label>
-                                <button id="${post.impulsionarVazio}" class="relevancia-button" aria-label="Aumente a relevância desse post!">
+                                <button id="${post.idBotaoImpulsionarVazio}" class="relevancia-button" onclick="comunidade().impulsionarPost('${serializedPost}')" aria-label="Aumente a relevância desse post!">
                                     <img src="../img/relevancia_vazia.png" alt="" class="relevancia">
                                 </button>
-                                <button id="${post.impulsionarCheio}" class="relevancia-button" aria-label="Aumente a relevância desse post!" hidden>
+                                <button id="${post.idBotaoImpulsionarCheio}" class="relevancia-button" onclick="comunidade().retiraImpulsionarPost('${serializedPost}')"aria-label="Aumente a relevância desse post!" hidden>
                                     <img src="../img/relevancia_preenchido.png" alt="" class="relevancia">
                                 </button>
                                 <label>${post.qtdImpulsionamentos}</label>
@@ -169,8 +169,6 @@ function comunidade() {
     async function darPumpPost(dto) {
         const post = JSON.parse(decodeURIComponent(dto));
         
-        console.log(post);
-        
         try {
             // Realiza a requisição AJAX
             const data = await $.ajax({
@@ -179,7 +177,7 @@ function comunidade() {
                 data: post, // Serializa o objeto como JSON
                 dataType: 'json'
             });
-            
+
             // Aguarda o carregamento dos posts após o sucesso
             await carregarPosts();
             
@@ -197,7 +195,6 @@ function comunidade() {
     async function retirarPumpPost(dto) {
         const post = JSON.parse(decodeURIComponent(dto));
         
-        console.log(post);
         
         try {
             // Realiza a requisição AJAX
@@ -244,6 +241,73 @@ function comunidade() {
         //$("#" + elementId).prop("hidden", true);
     }
 
+    async function impulsionarPost(dto) {
+        const post = JSON.parse(decodeURIComponent(dto));
+        
+        try {
+            // Realiza a requisição AJAX
+            const data = await $.ajax({
+                url: '/Comunidade/ImpulsionarPost', // Certifique-se do caminho correto
+                type: 'POST',
+                data: post, // Serializa o objeto como JSON
+                dataType: 'json'
+            });
+            
+            // Aguarda o carregamento dos posts após o sucesso
+            await carregarPosts();
+            
+            // Adiciona um pequeno atraso para garantir que os elementos estejam prontos
+            setTimeout(() => {
+                tiraImpulsionarVazioColocaPreenchido(post);
+            }, 100); // 100 milissegundos de atraso
+            
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro ao cadastrar post. Tente novamente.');
+        }
+    }
+
+    async function retiraImpulsionarPost(dto) {
+        const post = JSON.parse(decodeURIComponent(dto));
+     
+        
+        try {
+            // Realiza a requisição AJAX
+            const data = await $.ajax({
+                url: '/Comunidade/RetiraImpulsionarPost', // Certifique-se do caminho correto
+                type: 'POST',
+                data: post, // Serializa o objeto como JSON
+                dataType: 'json'
+            });
+            
+            // Aguarda o carregamento dos posts após o sucesso
+            await carregarPosts();
+            
+            // Adiciona um pequeno atraso para garantir que os elementos estejam prontos
+            setTimeout(() => {
+                colocaImpulsionarVazioTiraPreenchido(post);
+            }, 100); // 100 milissegundos de atraso
+            
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro ao cadastrar post. Tente novamente.');
+        }
+    }
+
+    function tiraImpulsionarVazioColocaPreenchido(post){
+        
+        var vazio = post.id + "_impulsionarVazio";
+        document.getElementById(vazio).hidden = false;
+        var preenchido = post.id + "_impulsionarPreenchido";
+        document.getElementById(preenchido).hidden = true;
+    }
+
+    function colocaImpulsionarVazioTiraPreenchido(post){
+        var vazio = post.id + "_impulsionarVazio";
+        document.getElementById(vazio).hidden = true;
+        var preenchido = post.id + "_impulsionarPreenchido";
+        document.getElementById(preenchido).hidden = false;
+    }
 
     return {
         abrirModalNovaPostagem: abrirModalNovaPostagem,
@@ -251,6 +315,9 @@ function comunidade() {
         cadastrarPost: cadastrarPost,
         carregarPosts: carregarPosts,
         darPumpPost:darPumpPost,
-        retirarPumpPost: retirarPumpPost
+        retirarPumpPost: retirarPumpPost,
+        retiraImpulsionarPost: retiraImpulsionarPost,
+        impulsionarPost: impulsionarPost
+
     };
 }

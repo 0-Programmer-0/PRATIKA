@@ -129,6 +129,86 @@ public class ComunidadeBll : IComunidadeBll
         return retorno;
     }
 
+    public async Task<RetornoAcaoDto> ImpulsionarPost(PostsDto postsDto)
+    {
+         RetornoAcaoDto retorno = new RetornoAcaoDto();
+
+        // if (string.IsNullOrWhiteSpace(postsDto.Id))
+        //     throw new ArgumentException("O ID do post não pode ser nulo ou vazio.");
+
+        PostsDto postagem = await PesquisarPostPorId(postsDto.Id);
+
+        if (postagem == null)
+            throw new Exception("Post não encontrado.");
+
+        // Incrementa o número de curtidas
+        int numeroImpulsionamentos = Convert.ToInt32(postagem.QtdImpulsionamentos) + 1;
+        postagem.QtdImpulsionamentos = numeroImpulsionamentos.ToString();
+
+        // Cria o filtro para localizar o post no banco de dados
+        var filter = Builders<Posts>.Filter.Eq(p => p.Id, postsDto.Id);
+
+        // Cria o update para modificar o número de curtidas
+        var update = Builders<Posts>.Update.Set(p => p.QtdImpulsionamentos, postagem.QtdImpulsionamentos);
+
+        // Executa a atualização no MongoDB
+        var result = await postsCollection.UpdateOneAsync(filter, update);
+
+        // Verifica se a atualização foi realizada
+        if (result.ModifiedCount > 0)
+        {
+            retorno.Mensagem = "Você impulsionou com sucesso!";
+            retorno.Sucesso = true;
+        }
+        else
+        {
+            retorno.Mensagem = "Falha ao impulsionar este post...";
+            retorno.Sucesso = false;
+        }
+
+        return retorno;
+    }
+
+    public async Task<RetornoAcaoDto> RetiraImpulsionarPost(PostsDto postsDto)
+    {
+         RetornoAcaoDto retorno = new RetornoAcaoDto();
+
+        // if (string.IsNullOrWhiteSpace(postsDto.Id))
+        //     throw new ArgumentException("O ID do post não pode ser nulo ou vazio.");
+
+        PostsDto postagem = await PesquisarPostPorId(postsDto.Id);
+
+        if (postagem == null)
+            throw new Exception("Post não encontrado.");
+
+        // Incrementa o número de curtidas
+        int numeroImpulsionamentos = Convert.ToInt32(postagem.QtdImpulsionamentos) - 1;
+        postagem.QtdImpulsionamentos = numeroImpulsionamentos.ToString();
+
+        // Cria o filtro para localizar o post no banco de dados
+        var filter = Builders<Posts>.Filter.Eq(p => p.Id, postsDto.Id);
+
+        // Cria o update para modificar o número de curtidas
+        var update = Builders<Posts>.Update.Set(p => p.QtdImpulsionamentos, postagem.QtdImpulsionamentos);
+
+        // Executa a atualização no MongoDB
+        var result = await postsCollection.UpdateOneAsync(filter, update);
+
+        // Verifica se a atualização foi realizada
+        if (result.ModifiedCount > 0)
+        {
+            retorno.Mensagem = "Você tirou impulsionamento com sucesso!";
+            retorno.Sucesso = true;
+        }
+        else
+        {
+            retorno.Mensagem = "Falha ao retirar impulsionamento este post...";
+            retorno.Sucesso = false;
+        }
+
+        return retorno;
+    }
+
     public async Task<RetornoAcaoDto> CriarPost(PostsDto postsDto)
     {
         RetornoAcaoDto retorno = new RetornoAcaoDto();
