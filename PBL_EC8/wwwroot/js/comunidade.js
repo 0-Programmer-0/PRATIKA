@@ -180,8 +180,6 @@ function comunidade() {
                 dataType: 'json'
             });
             
-            alert(data.message);
-    
             // Aguarda o carregamento dos posts após o sucesso
             await carregarPosts();
             
@@ -209,8 +207,6 @@ function comunidade() {
                 data: post, // Serializa o objeto como JSON
                 dataType: 'json'
             });
-            
-            alert(data.message);
     
             // Aguarda o carregamento dos posts após o sucesso
             await carregarPosts();
