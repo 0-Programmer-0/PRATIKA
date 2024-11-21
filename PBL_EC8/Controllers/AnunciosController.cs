@@ -23,7 +23,7 @@ public class AnunciosController : Controller
         anuncioBll = _anuncioBll;
     }
 
-    [Authorize]
+    // [Authorize]
     public IActionResult AnunciosIndex()
     {
         return View();
