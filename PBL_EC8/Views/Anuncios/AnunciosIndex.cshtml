@@ -6,21 +6,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../js/anuncios.js"></script>
-    <link rel="stylesheet" href="../css/anuncios.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../css/anuncios.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="../js/anuncios.js"></script>
     <title>Anúncios</title>
 </head>
 
-<body>
+<body data-page="anuncios">
     <div class="sidebar-container">
         @await Html.PartialAsync("_MenuLateral")
     </div>
     <header class="header-container">
         <div class="search-container">
-            <input type="text" class="search-box" placeholder="Pesquise um anúncio" />
-            @* <i class="search-icon fas fa-search"></i> *@
+            <input type="text" id="textboxPesquisaAnuncios" class="search-box" placeholder="Pesquise um anúncio" />
+            <button type="submit" onclick="anuncios().pesquisarAnuncio();">
+                <i class="fa fa-search search-icon"></i>
+            </button>
         </div>
     </header>
     <main>
@@ -35,22 +37,23 @@
                     <div id="divImagemPerfil">
                         <img id="imgPreview" src="#" alt="Imagem do anunciante" />
                     </div>
-                    <br>
 
                     <label for="textboxTitulo">Título:</label>
                     <input type="text" id="textboxTitulo" placeholder="Digite o título do anúncio"
                         class="campos-cadastro" required>
                     <br>
-
-                    <label for="textboxProfissao">Profissão:</label>
-                    <input type="text" id="textboxProfissao" placeholder="Digite sua profissão" class="campos-cadastro"
-                        required>
                     <br>
+                    <div class="form-group row">
+                        <div class="input-container column input-profissao">
+                            <label for="textboxProfissao">Profissão:</label>
+                            <input type="text" id="textboxProfissao" placeholder="Digite sua profissão"
+                                class="campos-cadastro" required>
+                            <br>
+                        </div>
 
-                    <div class="form-group">
-                        <div class="input-container">
+                        <div class="input-container column input-estado">
                             <label for="comboEstado">Estado:</label>
-                            <select id="comboEstado" class="campos-cadastro" required>
+                            <select id="comboEstado" class="campos-cadastro" style="height: 49px;" required>
                                 <option value="" disabled selected>Selecione</option>
                                 <option value="AC">AC</option>
                                 <option value="AL">AL</option>
@@ -82,24 +85,22 @@
                             </select>
                         </div>
 
-                        <div class="input-container">
+                        <div class="input-container column input-cidade">
                             <label for="textboxCidade">Cidade:</label>
                             <input type="text" id="textboxCidade" placeholder="Digite sua cidade"
                                 class="campos-cadastro" required>
                         </div>
                     </div>
-
                     <br>
                     <label for="textareaDescricao">Descrição:</label>
                     <textarea id="textareaDescricao" placeholder="Digite uma descrição" class="campos-cadastro"
                         required></textarea>
                     <br>
-
+                    <br>
                     <button id="btnCadastrarAnuncio" class="btnCriacaoConteudo"
                         onclick="anuncios().cadastrarAnuncio();">Cadastrar Anúncio</button>
                 </div>
             </div>
-
 
             <div id="modalPerfilInvalido" class="modal">
                 <div class="modal-content">

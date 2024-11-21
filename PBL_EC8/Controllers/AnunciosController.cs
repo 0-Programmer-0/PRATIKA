@@ -4,6 +4,7 @@ using Pbl_EC8.Models;
 using PBL_EC8.Bll;
 using PBL_EC8;
 using AspNetCoreGeneratedDocument;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PBL_EC8.Controllers;
 
@@ -22,6 +23,7 @@ public class AnunciosController : Controller
         anuncioBll = _anuncioBll;
     }
 
+    [Authorize]
     public IActionResult AnunciosIndex()
     {
         return View();
@@ -77,6 +79,14 @@ public class AnunciosController : Controller
     {
         List<AnuncioDto> listaAnuncio = new List<AnuncioDto>();
         listaAnuncio = await anuncioBll.PesquisarTodosAnuncios();
+        return Json(new { success = true, lista = listaAnuncio });
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> PesquisarAnuncios(string pesquisa)
+    {
+        List<AnuncioDto> listaAnuncio = new List<AnuncioDto>();
+        listaAnuncio = await anuncioBll.PesquisarAnuncios(pesquisa);
         return Json(new { success = true, lista = listaAnuncio });
     }
 

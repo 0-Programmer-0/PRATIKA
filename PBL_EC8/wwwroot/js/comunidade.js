@@ -1,13 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
-    $('#btnCriacaoConteudo').text("Postar");
+    const page = document.body.getAttribute('data-page'); // Obtém a identificação da página
+    debugger;
+    if(page == 'comunidade') {
+        const btnCriacaoConteudo = $('#btnCriacaoConteudo');
+        btnCriacaoConteudo.text("Postar");
+        // btnCriacaoConteudo.on('click', anuncios().abrirModalCadastrarAnuncio);
+        // anuncios().pesquisarTodosAnuncios();
+    }   
 });
 
 function comunidade() {
-
-    document.addEventListener('DOMContentLoaded', () => {
-        carregarPosts();
-    });
-
     function abrirModalNovaPostagem() {
         $.ajax({
             url: '/Comunidade/ShowModalContent',

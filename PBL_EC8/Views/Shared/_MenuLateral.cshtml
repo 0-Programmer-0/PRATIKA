@@ -1,7 +1,6 @@
 <head>
     <link rel="stylesheet" href="../css/menuLateral.css">
-    <script src="../js/loginUsuario.js"></script>
-    <script src="../js/comunidade.js"></script>
+    <script src="../js/menuLateral.js"></script>
 </head>
 <div class="header">
     <img src="../img/pump2_preenchido.png" class="header-icon left-icon">
@@ -29,7 +28,7 @@
     <br>
     <br>
     <br>
-    <button onclick="comunidade().abrirModalNovaPostagem()" class="btnCriacaoConteudo" id="btnCriacaoConteudo">Postar</button>
+    <button onclick="" class="btnCriacaoConteudo" id="btnCriacaoConteudo">Postar</button>
     <br>
     <br>
     <div class="user-info">
@@ -45,7 +44,21 @@
     }
 
     function logout() {
-        alert("saindo do site");
+        // Limpa o token do localStorage ou sessionStorage
+        localStorage.removeItem('jwtToken');
+        sessionStorage.removeItem('jwtToken');
+
+        // Redireciona para a página inicial
+        window.location.href = '/';
+
+
+        // TERMINAR default_usuario FAZER a VALIDAÇÃO default_usuario ROTAS default_usuario voltar data PAGINA 
+        // Evita o "voltar"
+        // Impede que o usuário volte para a página atual
+        history.pushState(null, null, location.href);
+        history.back();
+        history.forward();
+
     }
 
     $(document).ready(function () {
