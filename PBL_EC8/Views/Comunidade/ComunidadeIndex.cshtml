@@ -12,21 +12,16 @@
 </head>
 <script>
   
-          comunidade().getUsuarioLogado();
-            setTimeout(() => {
-                comunidade().buscarCurtidasGeral();
-            }, 200); 
-            setTimeout(() => {
-              comunidade().carregarPosts();
-                
-            }, 210); 
-            
-            
-            
-
-       
+  comunidade().getUsuarioLogado();
+  setTimeout(() => {
+    comunidade().buscarCurtidasGeral();
+  }, 200); 
+  setTimeout(() => {
+    comunidade().carregarPosts();
+  }, 210); 
+      
 </script>
-<body>
+<body data-page="comunidade">
   <div class="sidebar-container">
     @await Html.PartialAsync("_MenuLateral")
   </div>

@@ -23,7 +23,7 @@ public class AnuncioBll : IAnuncioBll
     {
         RetornoAcaoDto retorno = new RetornoAcaoDto();
         try
-        {   
+        {
             Anuncio anuncio = new Anuncio();
             FilterDefinition<Anuncio> filtro = Builders<Anuncio>.Filter.Eq(m => m.IdUsuario, anuncioDto.IdUsuario);
             anuncio = await anunciosCollection.Find(filtro).FirstOrDefaultAsync();
@@ -49,30 +49,28 @@ public class AnuncioBll : IAnuncioBll
         return retorno;
     }
 
-    // public async Task<UsuarioDto> PesquisarAnuncios(UsuarioDto usuarioDto)
-    // {
-    //     try
-    //     {
-    //         var filtro = Builders<Usuario>.Filter.Or
-    //                 (
-    //                     Builders<Usuario>.Filter.Eq(u => u.Email, usuarioDto.Email),
-    //                     Builders<Usuario>.Filter.Eq(u => u.NomeUsuario, usuarioDto.NomeUsuario)
-    //                 );
-    //         Usuario usuario = await _usuariosCollection.Find(filtro).FirstOrDefaultAsync();
-    //         usuarioDto = ConverterUsuario(usuario);
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         Console.WriteLine("Falha ao pesquisar o usuário");
-    //     }
-    //     return usuarioDto;
-    // }
-
     public async Task<List<AnuncioDto>> PesquisarTodosAnuncios()
     {
         List<AnuncioDto> retorno = new List<AnuncioDto>();
         List<Anuncio> listaAnuncio = await anunciosCollection.Find(_ => true).ToListAsync();
-        foreach(Anuncio anuncio in listaAnuncio)
+        foreach (Anuncio anuncio in listaAnuncio)
+            retorno.Add(ConverterAnuncio(anuncio));
+        return retorno;
+    }
+
+    public async Task<List<AnuncioDto>> PesquisarAnuncios(string pesquisa)
+    {
+        List<AnuncioDto> retorno = new List<AnuncioDto>();
+        var filtro = Builders<Anuncio>.Filter.Or
+                        (
+                            Builders<Anuncio>.Filter.Regex(u => u.NomeAnunciante, new MongoDB.Bson.BsonRegularExpression(pesquisa, "i")),
+                            Builders<Anuncio>.Filter.Regex(u => u.Profissao, new MongoDB.Bson.BsonRegularExpression(pesquisa, "i")),
+                            Builders<Anuncio>.Filter.Regex(u => u.Cidade, new MongoDB.Bson.BsonRegularExpression(pesquisa, "i")),
+                            Builders<Anuncio>.Filter.Regex(u => u.Estado, new MongoDB.Bson.BsonRegularExpression(pesquisa, "i")),
+                            Builders<Anuncio>.Filter.Regex(u => u.Descricao, new MongoDB.Bson.BsonRegularExpression(pesquisa, "i"))
+                        );
+        List<Anuncio> listaAnuncio = await anunciosCollection.Find(filtro).ToListAsync();
+        foreach (Anuncio anuncio in listaAnuncio)
             retorno.Add(ConverterAnuncio(anuncio));
         return retorno;
     }

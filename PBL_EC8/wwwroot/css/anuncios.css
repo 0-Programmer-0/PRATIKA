@@ -56,6 +56,7 @@ body {
     outline: none;
     background-color: black;
     color: #00FF0A;
+    position: relative;
 }
 
 .search-box::placeholder {
@@ -64,9 +65,11 @@ body {
 }
 
 .search-icon {
-    left: 15px;
     font-size: 20px;
     color: #00FF0A;
+    width: 4%;
+    cursor: pointer;
+    padding-left: 3%;
 }
 
 /* Div dos Anúncios */
@@ -156,14 +159,24 @@ body {
     justify-content: center;
     align-items: center;
     color: #00FF0A;
+    z-index: 9999;
+
+    max-height: 90vh;
+    /* Define a altura máxima como 90% da altura da janela */
+    overflow-y: auto;
+    /* Adiciona uma barra de rolagem vertical quando necessário */
+    overflow-x: hidden;
+    /* Evita barras de rolagem horizontais */
 }
 
 .modal-content {
     background-color: #252525;
     padding: 2%;
     width: 90%;
-    max-width: 40%;
+    max-width: 55%;
     text-align: center;
+    border-radius: 20px;
+    position: relative;
 }
 
 .modal label {
@@ -183,12 +196,8 @@ body {
     transition: border-color 0.3s;
     width: 100%;
     padding: 10px;
-}
-
-.campos-cadastro {
-    margin-bottom: 3%;
-    background-color: #1a1a1a;
-    resize: none;
+    resize: vertical;
+    overflow-x: hidden;
 }
 
 .btnCadastroItens {
@@ -208,8 +217,8 @@ body {
 
 .close {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 2%;
+    right: 2%;
     font-size: 25px;
     color: #00FF0A;
     cursor: pointer;
@@ -217,21 +226,23 @@ body {
 }
 
 /* Formulários */
-.form-group {
+.row {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    gap: 10px;
 }
 
-.input-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    height: 60%;
+.column {
+    float: left;
 }
 
-.input-container #comboEstado {
-    width: 90%;
-    text-align: left;
+.input-profissao {
+    width: 25%;
+}
+
+.input-estado {
+    width: 15%;
+}
+
+.input-cidade {
+    width: 60%;
 }

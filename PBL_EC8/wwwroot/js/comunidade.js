@@ -1,7 +1,16 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const page = document.body.getAttribute('data-page'); // Obtém a identificação da página
+    debugger;
+    if(page == 'comunidade') {
+        const btnCriacaoConteudo = $('#btnCriacaoConteudo');
+        btnCriacaoConteudo.text("Postar");
+        // btnCriacaoConteudo.on('click', anuncios().abrirModalCadastrarAnuncio);
+        // anuncios().pesquisarTodosAnuncios();
+    }   
+});
 var usuario;
 var curtidas =[];
 function comunidade() {
-
     function abrirModalNovaPostagem() {
         $.ajax({
             url: '/Comunidade/ShowModalContent',
