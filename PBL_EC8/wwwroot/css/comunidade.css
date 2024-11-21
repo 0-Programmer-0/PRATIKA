@@ -15,6 +15,7 @@ body {
 
 .tweet {
   display: flex;
+  flex-direction: column;
   background-color: black;
   padding: 15px;
   margin-bottom: 10px;
@@ -25,23 +26,34 @@ body {
 
 .icons {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
   /* Centraliza os ícones verticalmente */
   margin-right: 15px;
 }
 
-.pump {
-  width: 65%;
-  height: 15%;
-  margin-bottom: 8px;
+.pump-button {
+  width: 35px;
+  height: 35px;
+  margin: 8px 8px;
 }
 
-.relevancia {
-  width: 65%;
-  height: 20%;
-  margin-bottom: 8px;
+.relevancia-button {
+  width: 35px;
+  height: 35px;
+  margin: 8px 8px;
+}
+
+.icons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s;
+}
+
+.icons button:hover {
+  transform: scale(1.1);
 }
 
 .profile-pic {

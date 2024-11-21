@@ -46,6 +46,87 @@ public class ComunidadeController: Controller
     }
 
     [HttpPost]
+    public async Task<JsonResult> DarPumpPost(PostsDto postsDto)
+    {
+        if (postsDto == null)
+        {
+            throw new ArgumentNullException(nameof(postsDto), "O objeto postsDto ou seu ID é nulo.");
+        }
+
+        try
+        {
+            var posts = await comunidadeBll.PumpPost(postsDto);
+            return Json(posts);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Erro ao dar pump no posts: {Message}", ex.Message);
+            return Json(new { success = false, message = "Erro ao dar um pump no posts." });
+        }
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> RetirarPumpPost(PostsDto postsDto)
+    {
+        if (postsDto == null)
+        {
+            throw new ArgumentNullException(nameof(postsDto), "O objeto postsDto ou seu ID é nulo.");
+        }
+
+        try
+        {
+            var posts = await comunidadeBll.RetirarPumpPost(postsDto);
+            return Json(posts);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Erro ao dar pump no posts: {Message}", ex.Message);
+            return Json(new { success = false, message = "Erro ao dar um pump no posts." });
+        }
+    }
+
+     [HttpPost]
+    public async Task<JsonResult> ImpulsionarPost(PostsDto postsDto)
+    {
+        if (postsDto == null)
+        {
+            throw new ArgumentNullException(nameof(postsDto), "O objeto postsDto ou seu ID é nulo.");
+        }
+
+        try
+        {
+            var posts = await comunidadeBll.ImpulsionarPost(postsDto);
+            return Json(posts);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Erro ao dar pump no posts: {Message}", ex.Message);
+            return Json(new { success = false, message = "Erro ao impulsionar posts." });
+        }
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> RetiraImpulsionarPost(PostsDto postsDto)
+    {
+        if (postsDto == null)
+        {
+            throw new ArgumentNullException(nameof(postsDto), "O objeto postsDto ou seu ID é nulo.");
+        }
+
+        try
+        {
+            var posts = await comunidadeBll.RetiraImpulsionarPost(postsDto);
+            return Json(posts);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Erro ao dar pump no posts: {Message}", ex.Message);
+            return Json(new { success = false, message = "Erro ao dar um pump no posts." });
+        }
+    }
+
+
+    [HttpPost]
     public async Task<JsonResult> CadastrarPost(PostsDto dto)
     {
         try
