@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const page = document.body.getAttribute('data-page'); // Obtém a identificação da página
-    debugger;
+   
     if(page == 'comunidade') {
         const btnCriacaoConteudo = $('#btnCriacaoConteudo');
         btnCriacaoConteudo.text("Postar");
@@ -8,8 +8,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // anuncios().pesquisarTodosAnuncios();
     }   
 });
+
 var usuario;
 var curtidas =[];
+var relevancias =[];
+
 function comunidade() {
     function abrirModalNovaPostagem() {
         $.ajax({
@@ -173,6 +176,15 @@ function comunidade() {
                             }
                         });
                     }, 150);
+                    setTimeout(() => {
+                        relevancias.forEach(relevancia => {
+                            if(relevancia.idUsuario == usuario.id && relevancia.idPost == post.id){
+                              
+                                tiraImpulsionarVazioColocaPreenchido(post);
+                                
+                            }
+                        });
+                    }, 150);
                 });
                  
                
@@ -305,15 +317,19 @@ function comunidade() {
                 data: post, // Serializa o objeto como JSON
                 dataType: 'json'
             });
-            
-            // Aguarda o carregamento dos posts após o sucesso
-            await carregarPosts();
-            
-            // Adiciona um pequeno atraso para garantir que os elementos estejam prontos
+            relevancias =[];
+            setTimeout(() => {
+                buscarRelevanciasGeral();
+           }, 100); 
+           
+            setTimeout(() => {
+                carregarPosts();
+            }, 100); 
+         
             setTimeout(() => {
                 colocaImpulsionarVazioTiraPreenchido(post);
-            }, 100); // 100 milissegundos de atraso
-            
+            }, 150);
+           
         } catch (error) {
             console.error('Erro na requisição:', error);
             alert('Erro ao cadastrar post. Tente novamente.');
@@ -352,6 +368,23 @@ function comunidade() {
         });
     }
 
+    async function  buscarRelevanciasGeral(){
+        $.ajax({
+            url: '/Comunidade/BuscarRelevancia', // Certifique-se do caminho correto
+            type: 'POST', // Serializa o objeto como JSON
+            dataType: 'json',
+            success: function(data) {
+                if(data){
+                relevancias = data;
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Erro na requisição:', textStatus, errorThrown);
+                alert('Erro ao buscar relevancias. Tente novamente.');
+            }
+        });
+    }
+
     function getUsuarioLogado(){
         $.ajax({
             url: '/Comunidade/GetUsuarioLogado', // Certifique-se do caminho correto
@@ -378,7 +411,8 @@ function comunidade() {
         retiraImpulsionarPost: retiraImpulsionarPost,
         impulsionarPost: impulsionarPost,
         buscarCurtidasGeral:buscarCurtidasGeral,
-        getUsuarioLogado:getUsuarioLogado
+        getUsuarioLogado:getUsuarioLogado,
+        buscarRelevanciasGeral:buscarRelevanciasGeral
 
     };
 }
