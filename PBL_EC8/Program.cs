@@ -76,6 +76,15 @@ builder.Services.AddScoped<ComunidadeBll>(sp =>
     return new ComunidadeBll(mongoClient, databaseName, collectionName);
 });
 
+// Registrar o CurtidaBll
+builder.Services.AddScoped<CurtidaBll>(sp =>
+{
+    var mongoClient = sp.GetRequiredService<IMongoClient>();
+    var databaseName = builder.Configuration["MongoDBSettings:DatabaseName"] ?? "db_pratika"; // Pega o nome do banco de dados
+    var collectionName = "collection_curtidas";  // Nome da coleção
+    return new CurtidaBll(mongoClient, databaseName, collectionName);
+});
+
 // Registrar o JwtService no contêiner de dependências
 builder.Services.AddSingleton<JwtService>();
 

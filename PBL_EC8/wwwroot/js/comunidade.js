@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // anuncios().pesquisarTodosAnuncios();
     }   
 });
-
+var usuario;
+var curtidas =[];
 function comunidade() {
     function abrirModalNovaPostagem() {
         $.ajax({
@@ -162,8 +163,19 @@ function comunidade() {
                             </div>
                         </div>`;
                     postsContainer.innerHTML += postHtml;
+           
+                    setTimeout(() => {
+                        curtidas.forEach(curtida => {
+                            if(curtida.idUsuario == usuario.id && curtida.idPost == post.id){
+                              
+                                tiraPumpVazioColocaPreenchido(post);
+                                
+                            }
+                        });
+                    }, 150);
                 });
-                          
+                 
+               
                
             },                        
             error: function(jqXHR, textStatus, errorThrown) {
@@ -212,14 +224,20 @@ function comunidade() {
                 data: post, // Serializa o objeto como JSON
                 dataType: 'json'
             });
-    
+            curtidas =[];
+            setTimeout(() => {
+                 buscarCurtidasGeral();
+
+           }, 100); 
             // Aguarda o carregamento dos posts após o sucesso
-            await carregarPosts();
-            
+            setTimeout(() => {
+                 carregarPosts();
+
+            }, 100); 
             // Adiciona um pequeno atraso para garantir que os elementos estejam prontos
             setTimeout(() => {
                 tiraPumpPreenchidoColocaVazio(post);
-            }, 100); // 100 milissegundos de atraso
+            }, 150); // 100 milissegundos de atraso
             
         } catch (error) {
             console.error('Erro na requisição:', error);
@@ -317,6 +335,39 @@ function comunidade() {
         document.getElementById(preenchido).hidden = false;
     }
 
+    async function  buscarCurtidasGeral(){
+        $.ajax({
+            url: '/Comunidade/BuscarCurtidas', // Certifique-se do caminho correto
+            type: 'POST', // Serializa o objeto como JSON
+            dataType: 'json',
+            success: function(data) {
+                if(data){
+                curtidas = data;
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Erro na requisição:', textStatus, errorThrown);
+                alert('Erro ao buscar curtidas. Tente novamente.');
+            }
+        });
+    }
+
+    function getUsuarioLogado(){
+        $.ajax({
+            url: '/Comunidade/GetUsuarioLogado', // Certifique-se do caminho correto
+            type: 'POST', // Serializa o objeto como JSON
+            dataType: 'json',
+            success: function(data) {
+                usuario = data;
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Erro na requisição:', textStatus, errorThrown);
+                alert('Erro ao buscar curtidas. Tente novamente.');
+            }
+        });
+    }
+
+
     return {
         abrirModalNovaPostagem: abrirModalNovaPostagem,
         closeModal: closeModal,
@@ -325,7 +376,9 @@ function comunidade() {
         darPumpPost:darPumpPost,
         retirarPumpPost: retirarPumpPost,
         retiraImpulsionarPost: retiraImpulsionarPost,
-        impulsionarPost: impulsionarPost
+        impulsionarPost: impulsionarPost,
+        buscarCurtidasGeral:buscarCurtidasGeral,
+        getUsuarioLogado:getUsuarioLogado
 
     };
 }

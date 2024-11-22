@@ -11,16 +11,29 @@ public class ComunidadeController: Controller
     private readonly ILogger<ComunidadeController> _logger;
     private readonly ComunidadeBll comunidadeBll;
     private readonly UsuarioBll usuarioBll;
+    private readonly CurtidaBll curtidaBll;
 
-    public ComunidadeController(ILogger<ComunidadeController> logger, ComunidadeBll _comunidadeBll, UsuarioBll _usuarioBll)
+
+    public ComunidadeController(ILogger<ComunidadeController> logger, ComunidadeBll _comunidadeBll, UsuarioBll _usuarioBll, CurtidaBll _curtidaBll)
     {
         _logger = logger;
         usuarioBll = _usuarioBll;
         comunidadeBll = _comunidadeBll;
+        curtidaBll = _curtidaBll;
+    }
+
+    public async Task<JsonResult> GetUsuarioLogado()
+    {
+        UsuarioDto u = new UsuarioDto();
+        u.NomeUsuario = HttpContext.Session.GetString("Usuario");
+        u = await usuarioBll.PesquisarUsuario(u);
+        return Json(u);
+
     }
 
     public IActionResult ComunidadeIndex()
     {
+
         return View();
     }
 
@@ -48,13 +61,23 @@ public class ComunidadeController: Controller
     [HttpPost]
     public async Task<JsonResult> DarPumpPost(PostsDto postsDto)
     {
+        UsuarioDto usuarioDto = new UsuarioDto();
+        CurtidaDto curtidaDto = new CurtidaDto();
+
         if (postsDto == null)
         {
             throw new ArgumentNullException(nameof(postsDto), "O objeto postsDto ou seu ID é nulo.");
         }
+        
+        usuarioDto.NomeUsuario = HttpContext.Session.GetString("Usuario");
+        usuarioDto = await usuarioBll.PesquisarUsuario(usuarioDto);
 
+        curtidaDto.IdUsuario = usuarioDto.Id;
+        curtidaDto.IdPost = postsDto.Id;
+        
         try
         {
+            await curtidaBll.CriarCurtida(curtidaDto);
             var posts = await comunidadeBll.PumpPost(postsDto);
             return Json(posts);
         }
@@ -68,13 +91,30 @@ public class ComunidadeController: Controller
     [HttpPost]
     public async Task<JsonResult> RetirarPumpPost(PostsDto postsDto)
     {
+        UsuarioDto usuarioDto = new UsuarioDto();
+        CurtidaDto curtidaDto = new CurtidaDto();
+       
         if (postsDto == null)
         {
             throw new ArgumentNullException(nameof(postsDto), "O objeto postsDto ou seu ID é nulo.");
         }
 
+        usuarioDto.NomeUsuario = HttpContext.Session.GetString("Usuario");
+        usuarioDto = await usuarioBll.PesquisarUsuario(usuarioDto);
+
+        var curtidas = await curtidaBll.BuscarCurtidas();
+        curtidaDto.IdUsuario = usuarioDto.Id;
+        curtidaDto.IdPost = postsDto.Id;
+
+        foreach(var curtida in curtidas){
+            if(curtida.IdPost == curtidaDto.IdPost && curtida.IdUsuario == curtidaDto.IdUsuario ){
+                curtidaDto.Id = curtida.Id;
+            }
+        }
+
         try
         {
+            await curtidaBll.RetirarCurtida(curtidaDto);
             var posts = await comunidadeBll.RetirarPumpPost(postsDto);
             return Json(posts);
         }
@@ -152,6 +192,21 @@ public class ComunidadeController: Controller
         {
             _logger.LogError("Erro ao cadastrar post: {Message}", ex.Message);
             return Json(new { success = false, message = "Erro ao cadastrar post." });
+        }
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> BuscarCurtidas()
+    {
+        try
+        {
+            var curtidas = await curtidaBll.BuscarCurtidas();
+            return Json(curtidas);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Erro ao listar curtidas: {Message}", ex.Message);
+            return Json(new { success = false, message = "Erro ao listar curtidas." });
         }
     }
 
