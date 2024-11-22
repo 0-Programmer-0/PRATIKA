@@ -161,12 +161,8 @@ body {
     color: #00FF0A;
     z-index: 9999;
 
-    max-height: 90vh;
-    /* Define a altura máxima como 90% da altura da janela */
     overflow-y: auto;
-    /* Adiciona uma barra de rolagem vertical quando necessário */
     overflow-x: hidden;
-    /* Evita barras de rolagem horizontais */
 }
 
 .modal-content {
@@ -183,6 +179,14 @@ body {
     display: block;
     text-align: left;
     margin-bottom: 5px;
+}
+
+.modal img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 5px solid #00FF0A;
+    box-shadow: 0px 4px 12px rgba(0, 255, 10, 0.5);
 }
 
 /* Inputs e Botões */
