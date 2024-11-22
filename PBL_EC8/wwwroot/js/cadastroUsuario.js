@@ -1,4 +1,4 @@
-const base_path = window.location.origin;
+//const base_path = window.location.origin;
 var mensagemErro = "";
 
 // Pegar a data atual e formatá-la como 'YYYY-MM-DD'
@@ -55,10 +55,9 @@ function cadastroUsuario() {
     }
 
     function cadastrarUsuario() {
-        if (validaCampos()) {
+        if (validaCampos() && validarEmail(dto.textboxEmail) && validarSenha(dto.textboxSenha)) {
             $(document).ready(function () {
                 converterImagem(dto.imagemInput[0].files[0], function(imagemProcessada) {
-                    console.log(imagemProcessada);
                     $.ajax({
                         url: base_path + "/Home/CadastrarUsuario", // Verifique se o base_path está correto
                         data: {
@@ -93,6 +92,32 @@ function cadastroUsuario() {
         }
         else {
             alert(mensagemErro);
+        }
+    }
+
+    function voltar() {
+        window.location.href = "/";
+    }
+
+    function validarSenha(senha) {
+        const regexSenhaForte = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?=.{8,})/;
+        if (regexSenhaForte.test(senha)) {
+            mensagemErro = "Senha válida!";
+            return true;
+        } else {
+            mensagemErro = "Senha inválida! A senha deve ter pelo menos 8 caracteres, com 1 letra maiúscula, 1 letra minúscula e 1 caracter especial.";
+            return false;
+        }
+    }
+
+    function validarEmail(email) {
+        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (regexEmail.test(email)) {
+            mensagemErro = "Email válido!";
+            return true;
+        } else {
+            mensagemErro = "Email inválido! Verifique se está no formato correto (exemplo: usuario@dominio.com).";
+            return false;
         }
     }
 
@@ -157,6 +182,7 @@ function cadastroUsuario() {
     return {
         cadastrarUsuario: cadastrarUsuario,
         validaCampos: validaCampos,
-        inserirImagem: inserirImagem
+        inserirImagem: inserirImagem,
+        voltar: voltar
     };
 }

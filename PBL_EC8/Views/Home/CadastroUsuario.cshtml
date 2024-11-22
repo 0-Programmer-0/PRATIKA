@@ -4,6 +4,7 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,30 +12,36 @@
     <link rel="stylesheet" href="../css/cadastroUsuario.css">
     <title>PRATIKA</title>
 </head>
+
 <body>
     <div class="login-box">
-        <img src="../img/pump2_preenchido.png">
+        <img src="../img/pump2_preenchido.png" class="img-logo" onclick="">
+        <br>
         <div id="divImagemPerfil" hidden>
-            <label>Imagem Selecionada:</label>
-            <br>
             <img id="imagePreview" src="#" alt="Imagem do perfil" />
         </div>
         <br>
         <form id="uploadForm">
-            <input type="file" id="imagemInput" onchange="cadastroUsuario().inserirImagem(this);" accept="image/png, image/jpeg" required>
-        </form>   
-        <br>   
-        <input name="textboxNomeUsuario" id="textboxNomeUsuario" type="text" placeholder="Nome de Usuário" class="campos-menu">
+            <input type="file" id="imagemInput" onchange="cadastroUsuario().inserirImagem(this);"
+                accept="image/png, image/jpeg" required>
+        </form>
+        <br>
+        <input name="textboxNomeUsuario" id="textboxNomeUsuario" type="text" placeholder="Nome de Usuário"
+            class="campos-menu">
         <br>
         <input name="textboxNome" id="textboxNome" type="text" placeholder="Nome" class="campos-menu">
+        <br>
         <input name="textboxSobrenome" id="textboxSobrenome" type="text" placeholder="Sobrenome" class="campos-menu">
         <br>
         <input name="textboxEmail" id="textboxEmail" type="text" placeholder="Email" class="campos-menu">
         <br>
         <input name="textboxSenha" id="textboxSenha" type="password" placeholder="Senha" class="campos-menu">
-        <input name="textboxConfirmacaoSenha" id="textboxConfirmacaoSenha" type="password" placeholder="Confirme sua senha" class="campos-menu">
         <br>
-        <input name="textboxDataNascimento" id="textboxDataNascimento" type="date" placeholder="Data de nascimento" class="campos-menu">
+        <input name="textboxConfirmacaoSenha" id="textboxConfirmacaoSenha" type="password"
+            placeholder="Confirme sua senha" class="campos-menu">
+        <br>
+        <input name="textboxDataNascimento" id="textboxDataNascimento" type="date" placeholder="Data de nascimento"
+            class="campos-menu">
         <br>
         <select name="comboGenero" id="comboGenero" placeholder="Genero" class="campos-menu">
             <option value="" disabled selected>Selecione um Gênero</option>
@@ -42,18 +49,26 @@
             <option>Feminino</option>
             <option>Outro</option>
         </select>
+        <br>
         <select name="comboPerfil" id="comboPerfil" class="campos-menu">
             <option value="" disabled selected>Selecione um Perfil</option>
             <option>Básico</option>
             <option>Premium</option>
         </select>
         <br>
-        <textarea name="textareaDescricao" id="textareaDescricao" type="text" placeholder="Descrição" class="campos-menu"></textarea>
+        <textarea name="textareaDescricao" id="textareaDescricao" type="text" placeholder="Descrição"
+            class="campos-menu"></textarea>
         <br>
-        <button class="botao-login" name="btnCadastrar" id="btnCadastrar" onclick="cadastroUsuario().cadastrarUsuario();">Cadastrar</button>
+        <div class="divBotoeos">
+            <button class="botao-login" name="btnCadastrar" id="btnCadastrar"
+                onclick="cadastroUsuario().voltar();">Voltar</button>
+            <button class="botao-login" name="btnCadastrar" id="btnCadastrar"
+                onclick="cadastroUsuario().cadastrarUsuario();">Cadastrar</button>
+        </div>
     </div>
 
 </body>
+
 </html>
 
 @* <body>

@@ -27,9 +27,9 @@
             <label>Senha</label>
             <input class="campos-menu" name="textboxSenha" id="textboxSenha" type="password">
             <br>
-            <div style="display: flex">
-                <label class="forgot-password" onclick="alert('Recuperação de senha iniciada')">Esqueci minha senha</label>
-                <a class="forgot-password" asp-area="" asp-controller="Home" asp-action="CadastroUsuario">Cadastre-se</a>
+            <div class="div-labels">
+                <label class="label-menu" onclick="alert('Recuperação de senha iniciada')">Esqueci minha senha</label>
+                <a class="label-menu" asp-area="" asp-controller="Home" asp-action="CadastroUsuario">Cadastre-se</a>
             </div>
             <br>
             <button class="botao-login" name="" id="btnLogin" onclick="loginUsuario().validacaoLogin();">Login</button>
