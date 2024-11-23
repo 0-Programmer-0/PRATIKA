@@ -409,7 +409,7 @@ function comunidade() {
     }
 
     function pesquisarUsuarioPost(idUsuario, postId){
-        console.log(idUsuario);
+    
         $.ajax({
             url: '/Comunidade/PesquisarUsuarioPost', // Certifique-se do caminho correto
             type: 'POST', // Serializa o objeto como JSON

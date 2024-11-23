@@ -141,7 +141,6 @@ public class UsuarioBll : IUsuarioBll
 
     public async Task<UsuarioDto> PesquisarUsuarioPorId(string IdUsuario)
     {
-        Console.WriteLine(IdUsuario);
         UsuarioDto usuarioDto = new UsuarioDto();
         try
         {
