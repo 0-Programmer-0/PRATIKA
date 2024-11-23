@@ -205,6 +205,8 @@ public class ComunidadeController: Controller
     [HttpPost]
     public async Task<JsonResult> CadastrarPost(PostsDto dto)
     {
+        UsuarioDto usuarioDto = new UsuarioDto();
+
         try
         {
             var usuarioNome = HttpContext.Session.GetString("Usuario");
@@ -213,13 +215,11 @@ public class ComunidadeController: Controller
                 return Json(new { success = false, message = "Usuário não autenticado." });
             }
 
-            var usuarioDto = await usuarioBll.PesquisarUsuario(new UsuarioDto { NomeUsuario = usuarioNome });
-            if (usuarioDto == null)
-            {
-                return Json(new { success = false, message = "Usuário não encontrado." });
-            }
+            usuarioDto.NomeUsuario = HttpContext.Session.GetString("Usuario");
+            usuarioDto = await usuarioBll.PesquisarUsuario(usuarioDto);
 
             dto.IdUsuario = usuarioDto.Id;
+
             var retorno = await comunidadeBll.CriarPost(dto);
 
             return Json(new { success = retorno.Sucesso, message = retorno.Mensagem });
@@ -259,6 +259,15 @@ public class ComunidadeController: Controller
             _logger.LogError("Erro ao listar relevancia: {Message}", ex.Message);
             return Json(new { success = false, message = "Erro ao listar relevancia." });
         }
+    }
+
+    public async Task<JsonResult> PesquisarUsuarioPost(string IdUsuario){
+        
+        UsuarioDto retorno = new UsuarioDto();
+        retorno = await usuarioBll.PesquisarUsuarioPorId(IdUsuario);
+        
+      
+        return Json(retorno);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

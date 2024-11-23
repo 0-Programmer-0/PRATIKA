@@ -112,13 +112,17 @@ function comunidade() {
                     document.getElementById('posts-container').innerHTML = '<p>Nenhum post encontrado.</p>';
                     return;
                 }
-            
+                
+              
+                
                 // Limpe o contêiner
                 const postsContainer = document.getElementById('posts-container');
                 postsContainer.innerHTML = ' ';
-                data.forEach(post => {
+                data.forEach( post => {
                     let profilePicHtml = '';
-                    
+                  
+                   
+
                     // Verifique se a imagem Base64 está presente (foto de perfil)
                     if (post.fotoAnexo) {
                         // Não adicione a foto no perfil, mas adicione abaixo da descrição
@@ -136,35 +140,35 @@ function comunidade() {
 
                 
                     const postHtml = `
-                        <div class="tweet">
-                            <div class="tweet-content">
-                                <div>
-                                    <span class="username">${post.nomeUsuario || 'Usuário Anônimo'}</span>
-                                    <span class="handle">@${post.idUsuario}</span>
-                                </div>
-                                <div class="content">${post.descricao}</div>
+                    <div class="tweet" id="post-${post.id}">
+                        <div class="tweet-content">
+                            <div class = "perfil-post">
+                                <img id="fotoPerfil-${post.id}" alt="Foto do post" class="profile-pic">
+                                <span class="username" id="username-${post.id}">Carregando...</span>
+                                <span class="handle" id="handle-${post.id}">@carregando</span>
                             </div>
-                            <!-- Adicione a foto abaixo da descrição -->
-                            <div class="post-image-container">
-                                ${profilePicHtml} <!-- Adiciona a imagem apenas se disponível -->
-                            </div>
-                            <div class="icons">
-                                <button id="${post.idBotaoPumpVazio}" class="pump-button" onclick="comunidade().darPumpPost('${serializedPost}')" aria-label="Clique e dê um PUMP!">
-                                    <img src="../img/pump_vazio.png" alt="" class="pump">
-                                </button>
-                                <button id="${post.idBotaoPumpCheio}" class="pump-button" onclick="comunidade().retirarPumpPost('${serializedPost}')" aria-label="Clique e dê um PUMP!" hidden>
-                                    <img src="../img/pump_preenchido.png" alt="" class="pump">
-                                </button>
-                                <label>${post.qtdCurtidas}</label>
-                                <button id="${post.idBotaoImpulsionarVazio}" class="relevancia-button" onclick="comunidade().impulsionarPost('${serializedPost}')" aria-label="Aumente a relevância desse post!">
-                                    <img src="../img/relevancia_vazia.png" alt="" class="relevancia">
-                                </button>
-                                <button id="${post.idBotaoImpulsionarCheio}" class="relevancia-button" onclick="comunidade().retiraImpulsionarPost('${serializedPost}')"aria-label="Aumente a relevância desse post!" hidden>
-                                    <img src="../img/relevancia_preenchido.png" alt="" class="relevancia">
-                                </button>
-                                <label>${post.qtdImpulsionamentos}</label>
-                            </div>
-                        </div>`;
+                            <div class="content">${post.descricao}</div>
+                        </div>
+                        <div class="post-image-container">
+                            ${profilePicHtml}
+                        </div>
+                        <div class="icons">
+                            <button id="${post.idBotaoPumpVazio}" class="pump-button" onclick="comunidade().darPumpPost('${serializedPost}')" aria-label="Clique e dê um PUMP!">
+                                <img src="../img/pump_vazio.png" alt="" class="pump">
+                            </button>
+                            <button id="${post.idBotaoPumpCheio}" class="pump-button" onclick="comunidade().retirarPumpPost('${serializedPost}')" aria-label="Clique e dê um PUMP!" hidden>
+                                <img src="../img/pump_preenchido.png" alt="" class="pump">
+                            </button>
+                            <label>${post.qtdCurtidas}</label>
+                            <button id="${post.idBotaoImpulsionarVazio}" class="relevancia-button" onclick="comunidade().impulsionarPost('${serializedPost}')" aria-label="Aumente a relevância desse post!">
+                                <img src="../img/relevancia_vazia.png" alt="" class="relevancia">
+                            </button>
+                            <button id="${post.idBotaoImpulsionarCheio}" class="relevancia-button" onclick="comunidade().retiraImpulsionarPost('${serializedPost}')" aria-label="Aumente a relevância desse post!" hidden>
+                                <img src="../img/relevancia_preenchido.png" alt="" class="relevancia">
+                            </button>
+                            <label>${post.qtdImpulsionamentos}</label>
+                        </div>
+                    </div>`;
                     postsContainer.innerHTML += postHtml;
            
                     setTimeout(() => {
@@ -185,6 +189,10 @@ function comunidade() {
                             }
                         });
                     }, 150);
+                    setTimeout(async () => {
+                        await pesquisarUsuarioPost(post.idUsuario, post.id);
+                      
+                   }, 150);
                 });
                  
                
@@ -400,6 +408,26 @@ function comunidade() {
         });
     }
 
+    function pesquisarUsuarioPost(idUsuario, postId){
+        console.log(idUsuario);
+        $.ajax({
+            url: '/Comunidade/PesquisarUsuarioPost', // Certifique-se do caminho correto
+            type: 'POST', // Serializa o objeto como JSON
+            data: { idUsuario: idUsuario },
+            dataType: 'json',
+            success: function(data) {
+             
+                document.getElementById(`username-${postId}`).textContent = data.nome;
+                document.getElementById(`handle-${postId}`).textContent = "@" + data.nomeUsuario;
+                document.getElementById(`fotoPerfil-${postId}`).src  = data.imagemPerfil;
+                return data;
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Erro na requisição:', textStatus, errorThrown);
+                alert('Erro ao buscar curtidas. Tente novamente.');
+            }
+        });
+    }
 
     return {
         abrirModalNovaPostagem: abrirModalNovaPostagem,
@@ -412,7 +440,8 @@ function comunidade() {
         impulsionarPost: impulsionarPost,
         buscarCurtidasGeral:buscarCurtidasGeral,
         getUsuarioLogado:getUsuarioLogado,
-        buscarRelevanciasGeral:buscarRelevanciasGeral
+        buscarRelevanciasGeral:buscarRelevanciasGeral,
+        pesquisarUsuarioPost:pesquisarUsuarioPost
 
     };
 }
