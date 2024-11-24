@@ -101,7 +101,8 @@ function comunidade() {
     }
     
 
-    async function carregarPosts() {
+    async function carregarPosts(pesquisa) {
+
 
         $.ajax({
             url: '/Comunidade/ListarPosts', // Certifique-se do caminho correto
@@ -112,8 +113,10 @@ function comunidade() {
                     document.getElementById('posts-container').innerHTML = '<p>Nenhum post encontrado.</p>';
                     return;
                 }
-                
-              
+               
+                if(pesquisa){
+                    data = pesquisa;
+                }            
                 
                 // Limpe o contêiner
                 const postsContainer = document.getElementById('posts-container');
@@ -204,6 +207,28 @@ function comunidade() {
                 document.getElementById('posts-container').innerHTML = '<p>Erro ao carregar os posts. Tente novamente mais tarde.</p>';
             }
         });
+    }
+
+    function pesquisarPostsSeachbar(){
+      var pesquisa = $('#textboxPesquisaAnuncios').val();
+      console.log(pesquisa);
+        $(document).ready(function () {
+            $.ajax({
+                url: base_path + "/Comunidade/PesquisarAnunciosSeachbar",
+                data: {
+                    pesquisa: pesquisa
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+                    carregarPosts(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Erro na requisição:', textStatus, errorThrown);
+                }
+            });
+        });
+    
     }
 
     async function darPumpPost(dto) {
@@ -429,6 +454,11 @@ function comunidade() {
         });
     }
 
+    function limparSearchbar(){
+        $('#textboxPesquisaAnuncios').val('');
+        carregarPosts();
+    }
+
     return {
         abrirModalNovaPostagem: abrirModalNovaPostagem,
         closeModal: closeModal,
@@ -441,7 +471,9 @@ function comunidade() {
         buscarCurtidasGeral:buscarCurtidasGeral,
         getUsuarioLogado:getUsuarioLogado,
         buscarRelevanciasGeral:buscarRelevanciasGeral,
-        pesquisarUsuarioPost:pesquisarUsuarioPost
+        pesquisarUsuarioPost:pesquisarUsuarioPost,
+        pesquisarPostsSeachbar:pesquisarPostsSeachbar,
+        limparSearchbar:limparSearchbar
 
     };
 }

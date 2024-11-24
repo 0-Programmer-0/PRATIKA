@@ -62,6 +62,21 @@ public class ComunidadeController: Controller
     }
 
     [HttpPost]
+    public async Task<JsonResult> PesquisarAnunciosSeachbar(string pesquisa)
+    {
+        try
+        {
+            var posts = await comunidadeBll.PesquisarAnunciosSeachbar(pesquisa);
+            return Json(posts);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Erro ao listar posts: {Message}", ex.Message);
+            return Json(new { success = false, message = "Erro ao listar posts." });
+        }
+    }
+
+    [HttpPost]
     public async Task<JsonResult> DarPumpPost(PostsDto postsDto)
     {
         UsuarioDto usuarioDto = new UsuarioDto();
