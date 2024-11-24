@@ -8,7 +8,10 @@
         <textarea id="postContent" class="input-post" placeholder="Digite sua postagem..."></textarea>
 
         <!-- Botão para escolher arquivos -->
-        <input type="file" id="fileInput" class="file-input" multiple />
+        <input type="file" id="fileInput" class="file-input" accept="image/*" onchange="comunidade().onchangeInputFile(event)" />
+        <div id="previewContainer" class="preview-container"></div>
+
+
         
         <!-- Botão para enviar a postagem -->
         <button class="botao-enviar" onclick="comunidade().cadastrarPost()">Enviar</button>

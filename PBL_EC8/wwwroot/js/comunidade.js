@@ -122,26 +122,26 @@ function comunidade() {
                 // Limpe o contêiner
                 const postsContainer = document.getElementById('posts-container');
                 postsContainer.innerHTML = ' ';
-                data.forEach( post => {
-                    let profilePicHtml = '';
-                  
-                   
+               // Ordena os posts por quantidade de impulsionamentos (qtdImpulsionamentos) em ordem decrescente
+                data.sort((a, b) => b.qtdImpulsionamentos - a.qtdImpulsionamentos);
 
+                data.forEach(post => {
+                    let profilePicHtml = '';
+                
                     // Verifique se a imagem Base64 está presente (foto de perfil)
                     if (post.fotoAnexo) {
                         // Não adicione a foto no perfil, mas adicione abaixo da descrição
                         profilePicHtml = `<img src="data:image/png;base64,${post.fotoAnexo}" alt="Foto do post" class="post-image">`;
                     }
+                
                     const max = 1000000000000000000000;
-                    post.idBotaoPumpCheio = post.id + "_pumpPreenchido"
+                    post.idBotaoPumpCheio = post.id + "_pumpPreenchido";
                     post.idBotaoPumpVazio = post.id + "_pumpVazio";
                     post.idBotaoImpulsionarCheio = post.id + "_impulsionarVazio";
                     post.idBotaoImpulsionarVazio = post.id + "_impulsionarPreenchido";
+                
                     // Serializa o post para JSON e o escapa para uso no HTML
                     const serializedPost = encodeURIComponent(JSON.stringify(post));
-                    // Escapa aspas sem modificar outros caracteres
-                    
-
                 
                     const postHtml = `
                     <div class="tweet" id="post-${post.id}">
@@ -174,30 +174,28 @@ function comunidade() {
                         </div>
                     </div>`;
                     postsContainer.innerHTML += postHtml;
-           
+                
                     setTimeout(() => {
                         curtidas.forEach(curtida => {
-                            if(curtida.idUsuario == usuario.id && curtida.idPost == post.id){
-                              
+                            if (curtida.idUsuario == usuario.id && curtida.idPost == post.id) {
                                 tiraPumpVazioColocaPreenchido(post);
-                                
                             }
                         });
                     }, 150);
+                
                     setTimeout(() => {
                         relevancias.forEach(relevancia => {
-                            if(relevancia.idUsuario == usuario.id && relevancia.idPost == post.id){
-                              
+                            if (relevancia.idUsuario == usuario.id && relevancia.idPost == post.id) {
                                 tiraImpulsionarVazioColocaPreenchido(post);
-                                
                             }
                         });
                     }, 150);
+                
                     setTimeout(async () => {
                         await pesquisarUsuarioPost(post.idUsuario, post.id);
-                      
-                   }, 150);
+                    }, 150);
                 });
+
                  
                
                
@@ -460,6 +458,28 @@ function comunidade() {
         carregarPosts();
     }
 
+    function onchangeInputFile(event) {
+        
+        const file = event.target.files[0];
+        const previewContainer = document.getElementById('previewContainer');
+
+        previewContainer.innerHTML = ''; // Limpa o contêiner anterior
+
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover';
+                previewContainer.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+    
+
     return {
         abrirModalNovaPostagem: abrirModalNovaPostagem,
         closeModal: closeModal,
@@ -474,7 +494,8 @@ function comunidade() {
         buscarRelevanciasGeral:buscarRelevanciasGeral,
         pesquisarUsuarioPost:pesquisarUsuarioPost,
         pesquisarPostsSeachbar:pesquisarPostsSeachbar,
-        limparSearchbar:limparSearchbar
+        limparSearchbar:limparSearchbar,
+        onchangeInputFile:onchangeInputFile
 
     };
 }
