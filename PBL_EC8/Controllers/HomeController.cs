@@ -53,11 +53,11 @@ public class HomeController : Controller
         return Json(new { success = resultado.Sucesso, message = resultado.Mensagem, redirectUrl = Url.Action("ComunidadeIndex", "Comunidade"), token = token });
     }
 
-    [HttpGet]
+    [HttpPost]
     public async Task<JsonResult> CadastrarUsuario(UsuarioDto dto)
     {
         RetornoAcaoDto resultado = await usuarioBll.CriarUsuario(dto);
-        return Json(new { success = resultado.Sucesso, message = resultado.Mensagem, redirectUrl = Url.Action("ComunidadeIndex", "Comunidade") });
+        return Json(new { success = resultado.Sucesso, message = resultado.Mensagem, redirectUrl = Url.Action("Menu", "Home") });
     }
 
     [HttpGet]

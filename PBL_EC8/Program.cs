@@ -76,6 +76,33 @@ builder.Services.AddScoped<ComunidadeBll>(sp =>
     return new ComunidadeBll(mongoClient, databaseName, collectionName);
 });
 
+// Registrar o CurtidaBll
+builder.Services.AddScoped<CurtidaBll>(sp =>
+{
+    var mongoClient = sp.GetRequiredService<IMongoClient>();
+    var databaseName = builder.Configuration["MongoDBSettings:DatabaseName"] ?? "db_pratika"; // Pega o nome do banco de dados
+    var collectionName = "collection_curtidas";  // Nome da coleção
+    return new CurtidaBll(mongoClient, databaseName, collectionName);
+});
+
+// Registrar o MarketplaceBll
+builder.Services.AddScoped<MarketplaceBll>(sp =>
+{
+    var mongoClient = sp.GetRequiredService<IMongoClient>();
+    var databaseName = builder.Configuration["MongoDBSettings:DatabaseName"] ?? "db_pratika";
+    var collectionName = "collection_marketplace";
+    return new MarketplaceBll(mongoClient, databaseName, collectionName);
+});
+
+// Registrar o RelevanciaBll
+builder.Services.AddScoped<RelevanciaBll>(sp =>
+{
+    var mongoClient = sp.GetRequiredService<IMongoClient>();
+    var databaseName = builder.Configuration["MongoDBSettings:DatabaseName"] ?? "db_pratika"; // Pega o nome do banco de dados
+    var collectionName = "collection_relevancia";  // Nome da coleção
+    return new RelevanciaBll(mongoClient, databaseName, collectionName);
+});
+
 // Registrar o JwtService no contêiner de dependências
 builder.Services.AddSingleton<JwtService>();
 

@@ -53,6 +53,7 @@ public class UsuarioBll : IUsuarioBll
         {
             FilterDefinition<Usuario> filtro = Builders<Usuario>.Filter.Or
                     (
+                        Builders<Usuario>.Filter.Eq(u => u.Id, usuarioDto.Id),
                         Builders<Usuario>.Filter.Eq(u => u.Email, usuarioDto.Email),
                         Builders<Usuario>.Filter.Eq(u => u.NomeUsuario, usuarioDto.NomeUsuario)
                     );
@@ -137,6 +138,26 @@ public class UsuarioBll : IUsuarioBll
     public async Task<List<Usuario>> PesquisarTodosUsuario()
     {
         return await _usuariosCollection.Find(_ => true).ToListAsync();
+    }
+
+    public async Task<UsuarioDto> PesquisarUsuarioPorId(string IdUsuario)
+    {
+        UsuarioDto usuarioDto = new UsuarioDto();
+        try
+        {
+            FilterDefinition<Usuario> filtro = Builders<Usuario>.Filter.Or
+                    (
+                       
+                        Builders<Usuario>.Filter.Eq(u => u.Id, IdUsuario)
+                    );
+            Usuario usuario = await _usuariosCollection.Find(filtro).FirstOrDefaultAsync();
+            usuarioDto = ConverterUsuario(usuario);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Falha ao pesquisar o usuário" + ex);
+        }
+        return usuarioDto;
     }
 
     public void DeletarUsuario()

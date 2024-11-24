@@ -1,17 +1,19 @@
-// base_path = window.location.origin;
-var mensagemErro = "";
-
 document.addEventListener('DOMContentLoaded', function () {
-    var btnCriacaoConteudo = $('#btnCriacaoConteudo');
-    btnCriacaoConteudo.text("Anunciar");
-    btnCriacaoConteudo.on('click', anuncios().abrirModalCadastrarAnuncio);
-    anuncios().pesquisarTodosAnuncios();
+    const page = document.body.getAttribute('data-page'); // Obtém a identificação da página
+    if(page == 'anuncios') {
+        const btnCriacaoConteudo = $('#btnCriacaoConteudo');
+        btnCriacaoConteudo.text("Anunciar");
+        btnCriacaoConteudo.on('click', anuncios().abrirModalCadastrarAnuncio);
+        anuncios().pesquisarTodosAnuncios();
+    }   
 });
 
 function anuncios() {
     var dto = {
+        textboxPesquisaAnuncios: $('#textboxPesquisaAnuncios').val(),
         modalCadastroAnuncio: $('#modalCadastroAnuncio'),
         modalPerfilInvalido: $('#modalPerfilInvalido'),
+        btnCriacaoConteudo: $('#btnCriacaoConteudo').text(),
 
         //Campos do modal
         divImagemPerfil: $('#divImagemPerfil'),
@@ -125,6 +127,42 @@ function anuncios() {
         });
     }
 
+    function pesquisarAnuncio() {
+        if (dto.textboxPesquisaAnuncios != '') {
+            $(document).ready(function () {
+                $.ajax({
+                    url: base_path + "/Anuncios/PesquisarAnuncios",
+                    data: {
+                        pesquisa: dto.textboxPesquisaAnuncios
+                    },
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (data) {
+                        criarAnunciosHtml(data.lista);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Erro na requisição:', textStatus, errorThrown);
+                    }
+                });
+            });
+        }
+        else {
+            $(document).ready(function () {
+                $.ajax({
+                    url: base_path + "/Anuncios/PesquisarTodosAnuncios",
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (data) {
+                        criarAnunciosHtml(data.lista);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Erro na requisição:', textStatus, errorThrown);
+                    }
+                });
+            });
+        }
+    }
+
     function criarAnunciosHtml(listaAnuncios) {
         // Seleciona a div pai onde os anúncios serão inseridos
         const divAnuncios = document.getElementById('divAnuncios');
@@ -218,6 +256,7 @@ function anuncios() {
         fecharModalCadastrarAnuncio: fecharModalCadastrarAnuncio,
         fecharModalPerfilInvalido: fecharModalPerfilInvalido,
         cadastrarAnuncio: cadastrarAnuncio,
-        pesquisarTodosAnuncios: pesquisarTodosAnuncios
+        pesquisarTodosAnuncios: pesquisarTodosAnuncios,
+        pesquisarAnuncio: pesquisarAnuncio
     }
 }

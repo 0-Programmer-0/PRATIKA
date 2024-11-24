@@ -22,14 +22,14 @@
         <div class="login-box">
             <img src="../img/pump2_preenchido.png">
             <label>Login</label>
-            <input class="input-senha-email" name="textboxLogin" id="textboxLogin" type="text">
+            <input class="campos-menu" name="textboxLogin" id="textboxLogin" type="text">
             <br>
             <label>Senha</label>
-            <input class="input-senha-email" name="textboxSenha" id="textboxSenha" type="password">
+            <input class="campos-menu" name="textboxSenha" id="textboxSenha" type="password">
             <br>
-            <div style="display: flex">
-                <label class="forgot-password" onclick="alert('Recuperação de senha iniciada')">Esqueci minha senha</label>
-                <a class="forgot-password" asp-area="" asp-controller="Home" asp-action="CadastroUsuario">Cadastre-se</a>
+            <div class="div-labels">
+                <label class="label-menu" onclick="alert('Recuperação de senha iniciada')">Esqueci minha senha</label>
+                <a class="label-menu" asp-area="" asp-controller="Home" asp-action="CadastroUsuario">Cadastre-se</a>
             </div>
             <br>
             <button class="botao-login" name="" id="btnLogin" onclick="loginUsuario().validacaoLogin();">Login</button>

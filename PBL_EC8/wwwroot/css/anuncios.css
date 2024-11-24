@@ -21,28 +21,19 @@ body {
 .header-container {
     width: 100%;
     padding: 10px 0;
-    /* Espaçamento interno */
     background-color: #000;
-    /* Fundo do header */
     display: flex;
     justify-content: center;
-    /* Centraliza a barra de pesquisa horizontalmente */
     position: fixed;
-    /* Deixa o header fixo no topo */
     top: 0;
-    /* Garante que está no topo */
     z-index: 1000;
-    /* Fica acima dos outros elementos */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-    /* Adiciona um leve sombreado */
 }
 
 /* Pesquisa */
 .search-container {
     width: 90%;
-    /* Largura total com margem */
     max-width: 600px;
-    /* Limita o tamanho da barra de pesquisa */
     display: flex;
     align-items: center;
 }
@@ -56,6 +47,7 @@ body {
     outline: none;
     background-color: black;
     color: #00FF0A;
+    position: relative;
 }
 
 .search-box::placeholder {
@@ -64,9 +56,11 @@ body {
 }
 
 .search-icon {
-    left: 15px;
     font-size: 20px;
     color: #00FF0A;
+    width: 4%;
+    cursor: pointer;
+    padding-left: 3%;
 }
 
 /* Div dos Anúncios */
@@ -79,7 +73,7 @@ body {
     box-sizing: border-box;
     gap: 15px;
     background-color: #000;
-    overflow-y: auto;
+    /* overflow-y: auto; */
     position: absolute;
     top: 70px;
     left: 0;
@@ -156,20 +150,32 @@ body {
     justify-content: center;
     align-items: center;
     color: #00FF0A;
+    z-index: 9999;
+    overflow-x: hidden;
 }
 
 .modal-content {
     background-color: #252525;
     padding: 2%;
     width: 90%;
-    max-width: 40%;
+    max-width: 55%;
     text-align: center;
+    border-radius: 20px;
+    position: relative;
 }
 
 .modal label {
     display: block;
     text-align: left;
     margin-bottom: 5px;
+}
+
+.modal img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 5px solid #00FF0A;
+    box-shadow: 0px 4px 12px rgba(0, 255, 10, 0.5);
 }
 
 /* Inputs e Botões */
@@ -183,12 +189,8 @@ body {
     transition: border-color 0.3s;
     width: 100%;
     padding: 10px;
-}
-
-.campos-cadastro {
-    margin-bottom: 3%;
-    background-color: #1a1a1a;
-    resize: none;
+    resize: vertical;
+    overflow-x: hidden;
 }
 
 .btnCadastroItens {
@@ -208,8 +210,8 @@ body {
 
 .close {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 2%;
+    right: 2%;
     font-size: 25px;
     color: #00FF0A;
     cursor: pointer;
@@ -217,21 +219,23 @@ body {
 }
 
 /* Formulários */
-.form-group {
+.row {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    gap: 10px;
 }
 
-.input-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    height: 60%;
+.column {
+    float: left;
 }
 
-.input-container #comboEstado {
-    width: 90%;
-    text-align: left;
+.input-profissao {
+    width: 25%;
+}
+
+.input-estado {
+    width: 15%;
+}
+
+.input-cidade {
+    width: 60%;
 }
