@@ -247,6 +247,42 @@ public class ComunidadeController: Controller
     }
 
     [HttpPost]
+    public async Task<JsonResult> ExcluirPost(PostsDto dto)
+    {
+        UsuarioDto usuarioDto = new UsuarioDto();
+
+        try
+        {
+            var retorno = await comunidadeBll.ExcluirPost(dto);
+
+            return Json(new { success = retorno.Sucesso, message = retorno.Mensagem });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Erro ao cadastrar post: {Message}", ex.Message);
+            return Json(new { success = false, message = "Erro ao cadastrar post." });
+        }
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> EditarPost(PostsDto dto)
+    {
+        UsuarioDto usuarioDto = new UsuarioDto();
+
+        try
+        {
+            var retorno = await comunidadeBll.EditarPost(dto);
+
+            return Json(new { success = retorno.Sucesso, message = retorno.Mensagem });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Erro ao cadastrar post: {Message}", ex.Message);
+            return Json(new { success = false, message = "Erro ao cadastrar post." });
+        }
+    }
+
+    [HttpPost]
     public async Task<JsonResult> BuscarCurtidas()
     {
         try
@@ -267,6 +303,21 @@ public class ComunidadeController: Controller
         try
         {
             var relevancia = await relevanciaBll.BuscarRelevancia();
+            return Json(relevancia);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Erro ao listar relevancia: {Message}", ex.Message);
+            return Json(new { success = false, message = "Erro ao listar relevancia." });
+        }
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> ListarPostsPorUsuario(string IdUsuario)
+    {
+        try
+        {
+            var relevancia = await comunidadeBll.ListarPostsPorUsuario(IdUsuario);
             return Json(relevancia);
         }
         catch (Exception ex)

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Informações do Usuário</title>
+    <link rel="stylesheet" href="../css/perfil.css">
+    <link rel="stylesheet" href="../css/comunidade.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="perfil">
+    <div class="user-container">
+        <textarea id="idUsuario" rows="1"  hidden></textarea>
+        <div class="user-informacoes-pincipais">
+            <img id="fotoPerfil" alt="Foto do post" class="profile-pic">
+            <span class="nome-perfil" id="nome"></span>
+            <span class="informacoes-perfil" id="usuario"></span>
+        </div>
+        <div class="user-informacoes-adicionais">
+            <span class="informacoes-perfil" id="email"></span>
+            <span class="informacoes-perfil" id="descricao"></span>
+            <span class="informacoes-perfil" id="genero"></span>
+        </div>
+
+        <!-- Abas de paginação -->
+        <div class="tabs">
+            <span class="tab active" id="tab1" onclick="showTab('tab1')">Posts</span>
+            <span class="tab" id="tab2" onclick="showTab('tab2')">Anúncios</span>
+            <span class="tab" id="tab3" onclick="showTab('tab3')">Itens</span>
+        </div>
+
+        <!-- Conteúdo das abas -->
+        <div class="tab-content">
+            <div id="tab1-content" class="tab-pane active">
+                <p>Conteúdo da Aba 1</p>
+            </div>
+            <div id="tab2-content" class="tab-pane">
+                <p>Conteúdo da Aba 2</p>
+            </div>
+            <div id="tab3-content" class="tab-pane">
+                <p>Conteúdo da Aba 3</p>
+            </div>
+        </div>
+    </div>
+    <div id="conteudo" class="conteudo-tab"></div>
+</body>
+    <script src="../js/comunidade.js"></script>
+    <script>
+        // Função para exibir o conteúdo da aba selecionada
+        function showTab(tabId) {
+            // Esconde todas as abas
+            const tabs = document.querySelectorAll('.tab-pane');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Remove a classe active de todas as abas
+            const tabsLinks = document.querySelectorAll('.tab');
+            tabsLinks.forEach(tabLink => {
+                tabLink.classList.remove('active');
+            });
+
+            // Mostra a aba selecionada
+            document.getElementById(tabId + '-content').classList.add('active');
+
+            // Marca a aba selecionada como ativa
+            document.getElementById(tabId).classList.add('active');
+            var idUsuario = $('#idUsuario').val();
+            comunidade().carregarPostsPorUsuario(idUsuario);
+        }
+
+        async function carregarUsuario() {
+            try {
+                // Aguarda o retorno do usuário logado
+                var isPerfil = true;
+                const usuarioLogado = await comunidade().getUsuarioLogado(isPerfil);
+
+                // Atualiza os elementos com as informações do usuário
+
+            } catch (error) {
+                console.error("Erro ao obter o usuário logado:", error);
+            }
+        }
+
+        // Inicia o carregamento ao carregar a página
+        document.addEventListener("DOMContentLoaded", carregarUsuario);
+    </script>
+
+</html>
