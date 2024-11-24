@@ -21,28 +21,19 @@ body {
 .header-container {
     width: 100%;
     padding: 10px 0;
-    /* Espaçamento interno */
     background-color: #000;
-    /* Fundo do header */
     display: flex;
     justify-content: center;
-    /* Centraliza a barra de pesquisa horizontalmente */
     position: fixed;
-    /* Deixa o header fixo no topo */
     top: 0;
-    /* Garante que está no topo */
     z-index: 1000;
-    /* Fica acima dos outros elementos */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-    /* Adiciona um leve sombreado */
 }
 
 /* Pesquisa */
 .search-container {
     width: 90%;
-    /* Largura total com margem */
     max-width: 600px;
-    /* Limita o tamanho da barra de pesquisa */
     display: flex;
     align-items: center;
 }
@@ -82,7 +73,7 @@ body {
     box-sizing: border-box;
     gap: 15px;
     background-color: #000;
-    overflow-y: auto;
+    /* overflow-y: auto; */
     position: absolute;
     top: 70px;
     left: 0;
@@ -160,8 +151,6 @@ body {
     align-items: center;
     color: #00FF0A;
     z-index: 9999;
-
-    overflow-y: auto;
     overflow-x: hidden;
 }
 

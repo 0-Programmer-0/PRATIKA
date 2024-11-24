@@ -85,6 +85,15 @@ builder.Services.AddScoped<CurtidaBll>(sp =>
     return new CurtidaBll(mongoClient, databaseName, collectionName);
 });
 
+// Registrar o MarketplaceBll
+builder.Services.AddScoped<MarketplaceBll>(sp =>
+{
+    var mongoClient = sp.GetRequiredService<IMongoClient>();
+    var databaseName = builder.Configuration["MongoDBSettings:DatabaseName"] ?? "db_pratika";
+    var collectionName = "collection_marketplace";
+    return new MarketplaceBll(mongoClient, databaseName, collectionName);
+});
+
 // Registrar o RelevanciaBll
 builder.Services.AddScoped<RelevanciaBll>(sp =>
 {
