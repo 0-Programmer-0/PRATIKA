@@ -94,6 +94,15 @@ builder.Services.AddScoped<MarketplaceBll>(sp =>
     return new MarketplaceBll(mongoClient, databaseName, collectionName);
 });
 
+// Registrar o RelevanciaBll
+builder.Services.AddScoped<RelevanciaBll>(sp =>
+{
+    var mongoClient = sp.GetRequiredService<IMongoClient>();
+    var databaseName = builder.Configuration["MongoDBSettings:DatabaseName"] ?? "db_pratika"; // Pega o nome do banco de dados
+    var collectionName = "collection_relevancia";  // Nome da coleção
+    return new RelevanciaBll(mongoClient, databaseName, collectionName);
+});
+
 // Registrar o JwtService no contêiner de dependências
 builder.Services.AddSingleton<JwtService>();
 

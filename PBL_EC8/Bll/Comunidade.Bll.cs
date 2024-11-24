@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using Microsoft.AspNetCore.Routing.Template;
+using MongoDB.Bson;
+
 
 namespace PBL_EC8.Bll;
 
@@ -48,6 +50,19 @@ public class ComunidadeBll : IComunidadeBll
 
         return ConverterPostEntidade(post);
     }
+
+    public async Task<List<Posts>> PesquisarAnunciosSeachbar(string pesquisa)
+    {
+        var filtro = Builders<Posts>.Filter.Regex(post => post.Descricao, new BsonRegularExpression(pesquisa, "i"));
+
+        var posts = await postsCollection.Find(filtro).ToListAsync();
+
+        if (posts == null || posts.Count == 0)
+            return null;
+
+        return posts;
+    }
+
 
     public async Task<RetornoAcaoDto> PumpPost(PostsDto postsDto)
     {

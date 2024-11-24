@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const page = document.body.getAttribute('data-page'); // Obtém a identificação da página
+   
     if(page == 'comunidade') {
         const btnCriacaoConteudo = $('#btnCriacaoConteudo');
         btnCriacaoConteudo.text("Postar");
@@ -7,8 +8,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // anuncios().pesquisarTodosAnuncios();
     }   
 });
+
 var usuario;
 var curtidas =[];
+var relevancias =[];
+
 function comunidade() {
     function abrirModalNovaPostagem() {
         $.ajax({
@@ -97,7 +101,9 @@ function comunidade() {
     }
     
 
-    async function carregarPosts() {
+    async function carregarPosts(pesquisa) {
+        buscarCurtidasGeral();
+        buscarRelevanciasGeral();
 
         $.ajax({
             url: '/Comunidade/ListarPosts', // Certifique-se do caminho correto
@@ -108,71 +114,88 @@ function comunidade() {
                     document.getElementById('posts-container').innerHTML = '<p>Nenhum post encontrado.</p>';
                     return;
                 }
-            
+               
+                if(pesquisa){
+                    data = pesquisa;
+                }            
+                
                 // Limpe o contêiner
                 const postsContainer = document.getElementById('posts-container');
                 postsContainer.innerHTML = ' ';
+               // Ordena os posts por quantidade de impulsionamentos (qtdImpulsionamentos) em ordem decrescente
+                data.sort((a, b) => b.qtdImpulsionamentos - a.qtdImpulsionamentos);
+
                 data.forEach(post => {
                     let profilePicHtml = '';
-                    
+                
                     // Verifique se a imagem Base64 está presente (foto de perfil)
                     if (post.fotoAnexo) {
                         // Não adicione a foto no perfil, mas adicione abaixo da descrição
                         profilePicHtml = `<img src="data:image/png;base64,${post.fotoAnexo}" alt="Foto do post" class="post-image">`;
                     }
+                
                     const max = 1000000000000000000000;
-                    post.idBotaoPumpCheio = post.id + "_pumpPreenchido"
+                    post.idBotaoPumpCheio = post.id + "_pumpPreenchido";
                     post.idBotaoPumpVazio = post.id + "_pumpVazio";
                     post.idBotaoImpulsionarCheio = post.id + "_impulsionarVazio";
                     post.idBotaoImpulsionarVazio = post.id + "_impulsionarPreenchido";
+                
                     // Serializa o post para JSON e o escapa para uso no HTML
                     const serializedPost = encodeURIComponent(JSON.stringify(post));
-                    // Escapa aspas sem modificar outros caracteres
-                    
-
                 
                     const postHtml = `
-                        <div class="tweet">
-                            <div class="tweet-content">
-                                <div>
-                                    <span class="username">${post.nomeUsuario || 'Usuário Anônimo'}</span>
-                                    <span class="handle">@${post.idUsuario}</span>
-                                </div>
-                                <div class="content">${post.descricao}</div>
+                    <div class="tweet" id="post-${post.id}">
+                        <div class="tweet-content">
+                            <div class = "perfil-post">
+                                <img id="fotoPerfil-${post.id}" alt="Foto do post" class="profile-pic">
+                                <span class="username" id="username-${post.id}">Carregando...</span>
+                                <span class="handle" id="handle-${post.id}">@carregando</span>
                             </div>
-                            <!-- Adicione a foto abaixo da descrição -->
-                            <div class="post-image-container">
-                                ${profilePicHtml} <!-- Adiciona a imagem apenas se disponível -->
-                            </div>
-                            <div class="icons">
-                                <button id="${post.idBotaoPumpVazio}" class="pump-button" onclick="comunidade().darPumpPost('${serializedPost}')" aria-label="Clique e dê um PUMP!">
-                                    <img src="../img/pump_vazio.png" alt="" class="pump">
-                                </button>
-                                <button id="${post.idBotaoPumpCheio}" class="pump-button" onclick="comunidade().retirarPumpPost('${serializedPost}')" aria-label="Clique e dê um PUMP!" hidden>
-                                    <img src="../img/pump_preenchido.png" alt="" class="pump">
-                                </button>
-                                <label>${post.qtdCurtidas}</label>
-                                <button id="${post.idBotaoImpulsionarVazio}" class="relevancia-button" onclick="comunidade().impulsionarPost('${serializedPost}')" aria-label="Aumente a relevância desse post!">
-                                    <img src="../img/relevancia_vazia.png" alt="" class="relevancia">
-                                </button>
-                                <button id="${post.idBotaoImpulsionarCheio}" class="relevancia-button" onclick="comunidade().retiraImpulsionarPost('${serializedPost}')"aria-label="Aumente a relevância desse post!" hidden>
-                                    <img src="../img/relevancia_preenchido.png" alt="" class="relevancia">
-                                </button>
-                                <label>${post.qtdImpulsionamentos}</label>
-                            </div>
-                        </div>`;
+                            <div class="content">${post.descricao}</div>
+                        </div>
+                        <div class="post-image-container">
+                            ${profilePicHtml}
+                        </div>
+                        <div class="icons">
+                            <button id="${post.idBotaoPumpVazio}" class="pump-button" onclick="comunidade().darPumpPost('${serializedPost}')" aria-label="Clique e dê um PUMP!">
+                                <img src="../img/pump_vazio.png" alt="" class="pump">
+                            </button>
+                            <button id="${post.idBotaoPumpCheio}" class="pump-button" onclick="comunidade().retirarPumpPost('${serializedPost}')" aria-label="Clique e dê um PUMP!" hidden>
+                                <img src="../img/pump_preenchido.png" alt="" class="pump">
+                            </button>
+                            <label>${post.qtdCurtidas}</label>
+                            <button id="${post.idBotaoImpulsionarVazio}" class="relevancia-button" onclick="comunidade().impulsionarPost('${serializedPost}')" aria-label="Aumente a relevância desse post!">
+                                <img src="../img/relevancia_vazia.png" alt="" class="relevancia">
+                            </button>
+                            <button id="${post.idBotaoImpulsionarCheio}" class="relevancia-button" onclick="comunidade().retiraImpulsionarPost('${serializedPost}')" aria-label="Aumente a relevância desse post!" hidden>
+                                <img src="../img/relevancia_preenchido.png" alt="" class="relevancia">
+                            </button>
+                            <label>${post.qtdImpulsionamentos}</label>
+                        </div>
+                    </div>`;
                     postsContainer.innerHTML += postHtml;
-           
+                
                     setTimeout(() => {
                         curtidas.forEach(curtida => {
-                            if(curtida.idUsuario == usuario.id && curtida.idPost == post.id){
-                              
+                            if (curtida.idUsuario == usuario.id && curtida.idPost == post.id) {
                                 tiraPumpVazioColocaPreenchido(post);
-                                
                             }
                         });
                     }, 150);
+                
+                    setTimeout(() => {
+                        relevancias.forEach(relevancia => {
+                            if (relevancia.idUsuario == usuario.id && relevancia.idPost == post.id) {
+                                tiraImpulsionarVazioColocaPreenchido(post);
+                            }
+                        });
+                    }, 150);
+                
+                    setTimeout(async () => {
+                        await pesquisarUsuarioPost(post.idUsuario, post.id);
+                    }, 150);
                 });
+
                  
                
                
@@ -183,6 +206,28 @@ function comunidade() {
                 document.getElementById('posts-container').innerHTML = '<p>Erro ao carregar os posts. Tente novamente mais tarde.</p>';
             }
         });
+    }
+
+    function pesquisarPostsSeachbar(){
+      var pesquisa = $('#textboxPesquisaAnuncios').val();
+      console.log(pesquisa);
+        $(document).ready(function () {
+            $.ajax({
+                url: base_path + "/Comunidade/PesquisarAnunciosSeachbar",
+                data: {
+                    pesquisa: pesquisa
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+                    carregarPosts(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Erro na requisição:', textStatus, errorThrown);
+                }
+            });
+        });
+    
     }
 
     async function darPumpPost(dto) {
@@ -201,9 +246,9 @@ function comunidade() {
             await carregarPosts();
             
             // Adiciona um pequeno atraso para garantir que os elementos estejam prontos
-            setTimeout(() => {
+            
                 tiraPumpVazioColocaPreenchido(post);
-            }, 100); // 100 milissegundos de atraso
+           // 100 milissegundos de atraso
             
         } catch (error) {
             console.error('Erro na requisição:', error);
@@ -304,15 +349,19 @@ function comunidade() {
                 data: post, // Serializa o objeto como JSON
                 dataType: 'json'
             });
-            
-            // Aguarda o carregamento dos posts após o sucesso
-            await carregarPosts();
-            
-            // Adiciona um pequeno atraso para garantir que os elementos estejam prontos
+            relevancias =[];
+            setTimeout(() => {
+                buscarRelevanciasGeral();
+           }, 100); 
+           
+            setTimeout(() => {
+                carregarPosts();
+            }, 100); 
+         
             setTimeout(() => {
                 colocaImpulsionarVazioTiraPreenchido(post);
-            }, 100); // 100 milissegundos de atraso
-            
+            }, 150);
+           
         } catch (error) {
             console.error('Erro na requisição:', error);
             alert('Erro ao cadastrar post. Tente novamente.');
@@ -351,6 +400,23 @@ function comunidade() {
         });
     }
 
+    async function  buscarRelevanciasGeral(){
+        $.ajax({
+            url: '/Comunidade/BuscarRelevancia', // Certifique-se do caminho correto
+            type: 'POST', // Serializa o objeto como JSON
+            dataType: 'json',
+            success: function(data) {
+                if(data){
+                relevancias = data;
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Erro na requisição:', textStatus, errorThrown);
+                alert('Erro ao buscar relevancias. Tente novamente.');
+            }
+        });
+    }
+
     function getUsuarioLogado(){
         $.ajax({
             url: '/Comunidade/GetUsuarioLogado', // Certifique-se do caminho correto
@@ -366,6 +432,53 @@ function comunidade() {
         });
     }
 
+    function pesquisarUsuarioPost(idUsuario, postId){
+    
+        $.ajax({
+            url: '/Comunidade/PesquisarUsuarioPost', // Certifique-se do caminho correto
+            type: 'POST', // Serializa o objeto como JSON
+            data: { idUsuario: idUsuario },
+            dataType: 'json',
+            success: function(data) {
+             
+                document.getElementById(`username-${postId}`).textContent = data.nome;
+                document.getElementById(`handle-${postId}`).textContent = "@" + data.nomeUsuario;
+                document.getElementById(`fotoPerfil-${postId}`).src  = data.imagemPerfil;
+                return data;
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Erro na requisição:', textStatus, errorThrown);
+                alert('Erro ao buscar curtidas. Tente novamente.');
+            }
+        });
+    }
+
+    function limparSearchbar(){
+        $('#textboxPesquisaAnuncios').val('');
+        carregarPosts();
+    }
+
+    function onchangeInputFile(event) {
+        
+        const file = event.target.files[0];
+        const previewContainer = document.getElementById('previewContainer');
+
+        previewContainer.innerHTML = ''; // Limpa o contêiner anterior
+
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover';
+                previewContainer.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+    
 
     return {
         abrirModalNovaPostagem: abrirModalNovaPostagem,
@@ -377,7 +490,12 @@ function comunidade() {
         retiraImpulsionarPost: retiraImpulsionarPost,
         impulsionarPost: impulsionarPost,
         buscarCurtidasGeral:buscarCurtidasGeral,
-        getUsuarioLogado:getUsuarioLogado
+        getUsuarioLogado:getUsuarioLogado,
+        buscarRelevanciasGeral:buscarRelevanciasGeral,
+        pesquisarUsuarioPost:pesquisarUsuarioPost,
+        pesquisarPostsSeachbar:pesquisarPostsSeachbar,
+        limparSearchbar:limparSearchbar,
+        onchangeInputFile:onchangeInputFile
 
     };
 }
