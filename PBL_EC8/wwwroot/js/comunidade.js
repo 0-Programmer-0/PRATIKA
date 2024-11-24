@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     const page = document.body.getAttribute('data-page'); // Obtém a identificação da página
-    debugger;
     if(page == 'comunidade') {
         const btnCriacaoConteudo = $('#btnCriacaoConteudo');
         btnCriacaoConteudo.text("Postar");

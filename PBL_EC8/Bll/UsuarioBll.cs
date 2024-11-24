@@ -53,6 +53,7 @@ public class UsuarioBll : IUsuarioBll
         {
             FilterDefinition<Usuario> filtro = Builders<Usuario>.Filter.Or
                     (
+                        Builders<Usuario>.Filter.Eq(u => u.Id, usuarioDto.Id),
                         Builders<Usuario>.Filter.Eq(u => u.Email, usuarioDto.Email),
                         Builders<Usuario>.Filter.Eq(u => u.NomeUsuario, usuarioDto.NomeUsuario)
                     );

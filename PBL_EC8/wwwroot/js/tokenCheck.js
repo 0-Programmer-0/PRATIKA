@@ -1,6 +1,6 @@
 const base_path = window.location.origin;
 var mensagemErro = "";
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     tokenCheck().checkToken(); // Inicializa a verificação do token após o carregamento do DOM
 });
 
@@ -8,11 +8,11 @@ function tokenCheck() {
     var dto = {
         textboxLogin: $("#textboxLogin").val(),
         textboxSenha: $("#textboxSenha").val(),
-        loginPopup: $("#loginPopup")
+        loginPopup: $("#loginPopup"),
+        divJwt: $("#divJwt"),
     }
 
     function checkToken() {
-         
         const token = sessionStorage.getItem('token');
         if (!token || isTokenExpired(token)) {
             showLoginPopup();
@@ -20,14 +20,14 @@ function tokenCheck() {
     }
 
     function isTokenExpired(token) {
-         
+
         try {
             // Extrair a parte payload do token (segunda parte)
             const payload = JSON.parse(atob(token.split('.')[1]));
 
             // Obter o tempo atual em segundos
             const currentTime = Math.floor(Date.now() / 1000);
-
+            
             // Verificar se o token expirou
             return currentTime > payload.exp;
         } catch (error) {
@@ -37,8 +37,10 @@ function tokenCheck() {
     }
 
     function showLoginPopup() {
+        //PROBLEMA A SOLUCIONAR: IMPEDINDO DE USAR A TELA TALVEZ MUDAR O Z-INDEX DE 0 PRA 9999
         if (dto.loginPopup) {
-            loginPopup.style.display = 'flex';
+            dto.loginPopup.removeAttr('hidden');
+            dto.divJwt.css('background-color', 'rgba(0, 0, 0, 0.8)');
         } else {
             console.error("Elemento 'loginPopup' não encontrado.");
         }
@@ -46,7 +48,8 @@ function tokenCheck() {
 
     function hideLoginPopup() {
         if (dto.loginPopup) {
-            loginPopup.style.display = 'none';
+            dto.loginPopup.attr('hidden', true);
+            dto.divJwt.css('background-color', '');
         } else {
             console.error("Elemento 'loginPopup' não encontrado.");
         }
@@ -64,13 +67,15 @@ function tokenCheck() {
                 dataType: 'json',
                 success: function (data) {
                     if (data.success) {
-                         
-                        alert("usuário validado com sucesso")
+
+                        alert("Usuário validado com sucesso");
                         expiracaoToken(data.token);
                         hideLoginPopup();
                     }
-                    else
-                        alert("falha ao validar o usuário");
+                    else {
+                        alert('Falha ao identificar as credenciais do usuário');
+                        window.location.href = '/';
+                    }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.error('Erro na requisição:', textStatus, errorThrown);

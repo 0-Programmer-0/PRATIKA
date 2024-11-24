@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const page = document.body.getAttribute('data-page'); // Obtém a identificação da página
     if(page == 'anuncios') {
-        debugger;
         const btnCriacaoConteudo = $('#btnCriacaoConteudo');
         btnCriacaoConteudo.text("Anunciar");
         btnCriacaoConteudo.on('click', anuncios().abrirModalCadastrarAnuncio);
