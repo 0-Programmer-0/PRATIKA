@@ -102,7 +102,8 @@ function comunidade() {
     
 
     async function carregarPosts(pesquisa) {
-
+        buscarCurtidasGeral();
+        buscarRelevanciasGeral();
 
         $.ajax({
             url: '/Comunidade/ListarPosts', // Certifique-se do caminho correto
@@ -247,9 +248,9 @@ function comunidade() {
             await carregarPosts();
             
             // Adiciona um pequeno atraso para garantir que os elementos estejam prontos
-            setTimeout(() => {
+            
                 tiraPumpVazioColocaPreenchido(post);
-            }, 100); // 100 milissegundos de atraso
+           // 100 milissegundos de atraso
             
         } catch (error) {
             console.error('Erro na requisição:', error);
