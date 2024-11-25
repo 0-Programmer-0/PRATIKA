@@ -35,7 +35,7 @@ function anuncios() {
                 dataType: 'json',
                 success: function (data) {
                     if (data.success) {
-                     
+                        $("#containerCadastroAnuncio").show();
                         dto.modalCadastroAnuncio.css('display', 'flex');
 
                         if (data.imagemPerfil != null) {
@@ -57,7 +57,7 @@ function anuncios() {
             if(anuncio){
             passarValoresModal(anuncio);
             }
-            },200);
+            },50);
         
         });
 

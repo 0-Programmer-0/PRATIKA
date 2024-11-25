@@ -1,5 +1,7 @@
 <div id="modalCadastroItem" class="modal" hidden>
     <div class="modal-content">
+        <input id="idItemModal" type="hidden">
+        <input id="idUsuarioItem" type="hidden">
         <span class="close" onclick="marketplace().fecharModalCadastrarItem()">&times;</span>
         <h2>Cadastro Item</h2>
         <br>
@@ -11,8 +13,8 @@
                 accept="image/png, image/jpeg" required>
         </form>
         <br>
-        <label for="textboxTitulo">Título:</label>
-        <input type="text" id="textboxTitulo" placeholder="Título do item" class="campos-cadastro" required>
+        <label for="textboxTituloItem">Título:</label>
+        <input type="text" id="textboxTituloItem" placeholder="Título do item" class="campos-cadastro" required>
         <div class="row">
             <div class="column">
                 <label for="textboxValor">Valor:</label>
@@ -32,8 +34,8 @@
         <label for="textboxContato">Contato:</label>
         <input id="textboxContato" placeholder="Ex.: usuario@email.com, 11912345678" class="campos-cadastro" required>
 
-        <label for="textareaDescricao">Descrição:</label>
-        <textarea id="textareaDescricao" placeholder="Descrição do item" class="campos-cadastro" required></textarea>
+        <label for="textareaDescricaoItem">Descrição:</label>
+        <textarea id="textareaDescricaoItem" placeholder="Descrição do item" class="campos-cadastro" required></textarea>
         <button id="btnCadastrarItem" class="btnCadastrarItem" onclick="marketplace().cadastrarItem();">Cadastrar
             Item</button>
     </div>

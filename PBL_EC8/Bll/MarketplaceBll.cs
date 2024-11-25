@@ -64,6 +64,71 @@ public class MarketplaceBll : IMarketplaceBll
         return retorno;
     }
 
+     public async Task<List<Item>> PesquisarItensPorUsuario(string IdUsuario)
+    {
+        var filtro = Builders<Item>.Filter.Eq(item => item.IdUsuario, IdUsuario);
+
+        var itens = await marketplaceCollection.Find(filtro).ToListAsync();
+
+        if (itens == null || itens.Count == 0)
+            return null;
+
+        return itens;
+    }
+
+    public async Task<RetornoAcaoDto> ExcluirItem(ItemDto itemDto)
+    {
+        RetornoAcaoDto retorno = new RetornoAcaoDto();
+        try
+        {
+            var filter = Builders<Item>.Filter.Eq(p => p.Id, itemDto.Id);
+            
+            await marketplaceCollection.DeleteOneAsync(filter);
+            retorno.Mensagem = "Item excluido com sucesso!";
+            retorno.Sucesso = true;
+        }
+        catch (Exception ex)
+        {
+            retorno.Mensagem = $"Falha ao excluir o item: {ex.Message}";
+            retorno.Sucesso = false;
+        }
+        return retorno;
+    }
+
+    public async Task<RetornoAcaoDto> EditarItem(ItemDto dto)
+    {
+        RetornoAcaoDto retorno = new RetornoAcaoDto();
+        try
+        {
+           
+            var filter = Builders<Item>.Filter.Eq(a => a.Id, dto.Id);
+        
+           
+            var update = Builders<Item>.Update
+                .Set(a => a.Titulo, dto.Titulo)              // Atualiza o título
+                .Set(a => a.Descricao, dto.Descricao)        // Atualiza a descrição
+                .Set(a => a.Valor, dto.Valor)                // Atualiza o valor
+                .Set(a => a.ImagemItem, dto.ImagemItem)      // Atualiza a imagem do item
+                .Set(a => a.Contato, dto.Contato)            // Atualiza o contato
+                .Set(a => a.Quantidade, dto.Quantidade)      // Atualiza a quantidade
+                .Set(a => a.MetodoPagamento, dto.MetodoPagamento); // Atualiza o método de pagamento
+
+
+            // Executa a atualização no MongoDB
+            var result = await marketplaceCollection.UpdateOneAsync(filter, update);
+                
+            retorno.Mensagem = "Item editado com sucesso!";
+            retorno.Sucesso = true;
+        }
+        catch (Exception ex)
+        {
+            retorno.Mensagem = $"Falha ao Item o anúncio: {ex.Message}";
+            retorno.Sucesso = false;
+        }
+        return retorno;
+    }
+
+
     private Item ConverterItemDto(ItemDto itemDto)
     {
         Item item = new Item();
