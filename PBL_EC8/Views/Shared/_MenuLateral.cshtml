@@ -16,7 +16,7 @@
                 asp-action="ComunidadeIndex">Comunidade</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Anuncios" asp-action="AnunciosIndex">Anuncios</a>
+            <a class="nav-link text-dark" href="javascript:void(0);" onclick="menuLateral().verificaPerfil();">Anúncios</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Marketplace" asp-action="MarketplaceIndex">Marketplace</a>
@@ -44,6 +44,7 @@
     function acessarPerfil() {
         window.location.href = '/Home/Perfil'; // Certifique-se de que o caminho está correto
     }
+
 
 
     function logout() {

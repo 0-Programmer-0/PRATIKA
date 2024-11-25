@@ -15,8 +15,11 @@ var relevancias =[];
 
 function comunidade() {
     function abrirModalNovaPostagem(dto) {
-
-        const post = JSON.parse(decodeURIComponent(dto));
+        var post;
+        if(dto)
+        {
+            post = JSON.parse(decodeURIComponent(dto));
+        }
         $.ajax({
             url: '/Comunidade/ShowModalContent',
             type: 'POST',

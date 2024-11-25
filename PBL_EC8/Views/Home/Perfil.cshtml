@@ -116,7 +116,7 @@
                     </div>
                 </div>
             </div>
-            <div id="divItens" style="position:relative; top:0" name="tab3-content" class="tab-pane grid-container">                
+            <div id="divItens" style="position:relative; top:0;display: flex;flex-direction: column;align-items: center;left: 0;transform: none;" name="tab3-content" class="tab-pane grid-container">                
             </div>
             <div id="containerCadastroItem" hidden>
                 @Html.Partial("~/Views/Marketplace/_CadastroItem.cshtml")
@@ -130,37 +130,38 @@
     <script src="../js/anuncios.js"></script>
     <script src="../js/marketplace.js"></script>
     <script>
+        
         // Função para exibir o conteúdo da aba selecionada
         function showTab(tabId) {
-    // Remove a classe 'active' de todas as abas e conteúdos
-    const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(tab => tab.classList.remove('active'));
+            // Remove a classe 'active' de todas as abas e conteúdos
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
 
-    const tabContents = document.querySelectorAll('.tab-pane');
-    tabContents.forEach(content => content.classList.remove('active'));
+            const tabContents = document.querySelectorAll('.tab-pane');
+            tabContents.forEach(content => content.classList.remove('active'));
 
-    // Adiciona a classe 'active' à aba clicada e ao conteúdo correspondente
-    const selectedTab = document.getElementById(tabId);
-    if (selectedTab) {
-        selectedTab.classList.add('active');
-    }
+            // Adiciona a classe 'active' à aba clicada e ao conteúdo correspondente
+            const selectedTab = document.getElementById(tabId);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
 
-    const selectedContent = document.querySelector(`[name="${tabId}-content"]`);
-    if (selectedContent) {
-        selectedContent.classList.add('active');
-    }
+            const selectedContent = document.querySelector(`[name="${tabId}-content"]`);
+            if (selectedContent) {
+                selectedContent.classList.add('active');
+            }
 
-    // Lógica específica para cada aba
-    var idUsuario = $('#idUsuario').val();
-    if (tabId === 'tab1') {
-        comunidade().carregarPostsPorUsuario(idUsuario);
-    } else if (tabId === 'tab2') {
-        anuncios().pesquisarAnunciosPorUsuario();
-    }
-    else{
-        marketplace().pesquisarItensPorUsuario();
-    }
-}
+            // Lógica específica para cada aba
+            var idUsuario = $('#idUsuario').val();
+            if (tabId === 'tab1') {
+                comunidade().carregarPostsPorUsuario(idUsuario);
+            } else if (tabId === 'tab2') {
+                anuncios().pesquisarAnunciosPorUsuario();
+            }
+            else{
+                marketplace().pesquisarItensPorUsuario();
+            }
+        }
 
 
         async function carregarUsuario() {
@@ -178,6 +179,10 @@
 
         // Inicia o carregamento ao carregar a página
         document.addEventListener("DOMContentLoaded", carregarUsuario);
+        setTimeout(() => {
+            showTab('tab1');
+        },100)
+        
     </script>
 
 </html>
