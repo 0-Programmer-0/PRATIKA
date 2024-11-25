@@ -48,20 +48,12 @@
 
 
     function logout() {
-        // Limpa o token do localStorage ou sessionStorage
         localStorage.removeItem('jwtToken');
         sessionStorage.removeItem('jwtToken');
 
-        // Redireciona para a página inicial
         window.location.href = '/';
 
-
-        // TERMINAR default_usuario FAZER a VALIDAÇÃO default_usuario ROTAS default_usuario voltar data PAGINA 
-        // Evita o "voltar"
-        // Impede que o usuário volte para a página atual
         history.pushState(null, null, location.href);
-        history.back();
-        history.forward();
 
     }
 
