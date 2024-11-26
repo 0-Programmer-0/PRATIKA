@@ -23,6 +23,7 @@
             <button type="submit" onclick="anuncios().pesquisarAnuncio();">
                 <i class="fa fa-search search-icon"></i>
             </button>
+            <button type="submit" class="btnLimparPesquisa" onclick="comunidade().limparSearchbar();">Limpar</button>
         </div>
     </header>
     <main>
@@ -30,7 +31,10 @@
             <div id="divAnuncios"></div>
 
             <div id="modalCadastroAnuncio" class="modal">
+             <input id="idAnuncioModal" type="hidden">
+                    <input id="idUsuarioModal" type="hidden">
                 <div class="modal-content">
+                   
                     <span class="close" onclick="anuncios().fecharModalCadastrarAnuncio()">&times;</span>
                     <h2>Anúncio</h2>
                     <br>

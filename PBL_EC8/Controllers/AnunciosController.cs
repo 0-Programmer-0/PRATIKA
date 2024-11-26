@@ -59,16 +59,22 @@ public class AnunciosController : Controller
     [HttpPost]
     public async Task<JsonResult> CadastrarAnuncio(AnuncioDto dto)
     {
+       
         RetornoAcaoDto retorno = new RetornoAcaoDto();
         UsuarioDto usuarioDto = new UsuarioDto();
         usuarioDto.NomeUsuario = HttpContext.Session.GetString("Usuario");
         usuarioDto = await usuarioBll.PesquisarUsuario(usuarioDto);
         if (usuarioDto.Id != null)
         {
-            dto.IdUsuario = usuarioDto.Id;
-            dto.NomeAnunciante = usuarioDto.Nome;
-            retorno = await anuncioBll.CriarAnuncio(dto);
-            return Json(new { success = retorno.Sucesso, message = retorno.Mensagem });
+            if(dto.Id != null){
+                retorno = await anuncioBll.EditarAnuncio(dto);
+                return Json(new { success = retorno.Sucesso, message = retorno.Mensagem });
+            }else{
+                dto.IdUsuario = usuarioDto.Id;
+                dto.NomeAnunciante = usuarioDto.Nome;
+                retorno = await anuncioBll.CriarAnuncio(dto);
+                return Json(new { success = retorno.Sucesso, message = retorno.Mensagem });
+            }
         }
         else
             return Json(new { success = false, message = "Falha em identificar o usuário do anúncio!" });
@@ -83,11 +89,39 @@ public class AnunciosController : Controller
     }
 
     [HttpPost]
+    public async Task<JsonResult> PesquisarAnunciosPorUsuario()
+    {
+        UsuarioDto usuarioDto = new UsuarioDto();
+        usuarioDto.NomeUsuario = HttpContext.Session.GetString("Usuario");
+        usuarioDto = await usuarioBll.PesquisarUsuario(usuarioDto);
+
+        List<Anuncio> listaAnuncio = new List<Anuncio>();
+        listaAnuncio = await anuncioBll.PesquisarAnunciosPorUsuario(usuarioDto.Id);
+        return Json(new { success = true, lista = listaAnuncio });
+    }
+
+    [HttpPost]
     public async Task<JsonResult> PesquisarAnuncios(string pesquisa)
     {
         List<AnuncioDto> listaAnuncio = new List<AnuncioDto>();
         listaAnuncio = await anuncioBll.PesquisarAnuncios(pesquisa);
         return Json(new { success = true, lista = listaAnuncio });
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> ExcluirAnuncio(AnuncioDto anuncio)
+    {
+        try
+        {
+            var retorno = await anuncioBll.ExcluirAnuncio(anuncio);
+
+            return Json(new { success = retorno.Sucesso, message = retorno.Mensagem });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Erro ao excluir anuncio: {Message}", ex.Message);
+            return Json(new { success = false, message = "Erro ao excluir anuncio." });
+        }
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

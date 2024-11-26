@@ -63,6 +63,18 @@ public class ComunidadeBll : IComunidadeBll
         return posts;
     }
 
+    public async Task<List<Posts>> ListarPostsPorUsuario(string IdUsuario)
+    {
+        var filtro = Builders<Posts>.Filter.Eq(post => post.IdUsuario, IdUsuario);
+
+        var posts = await postsCollection.Find(filtro).ToListAsync();
+
+        if (posts == null || posts.Count == 0)
+            return null;
+
+        return posts;
+    }
+
 
     public async Task<RetornoAcaoDto> PumpPost(PostsDto postsDto)
     {
@@ -241,6 +253,51 @@ public class ComunidadeBll : IComunidadeBll
         catch (Exception ex)
         {
             retorno.Mensagem = $"Falha ao criar o post: {ex.Message}";
+            retorno.Sucesso = false;
+        }
+        return retorno;
+    }
+
+    public async Task<RetornoAcaoDto> ExcluirPost(PostsDto postsDto)
+    {
+        RetornoAcaoDto retorno = new RetornoAcaoDto();
+        try
+        {
+            var filter = Builders<Posts>.Filter.Eq(p => p.Id, postsDto.Id);
+            
+            await postsCollection.DeleteOneAsync(filter);
+            retorno.Mensagem = "Post excluido com sucesso!";
+            retorno.Sucesso = true;
+        }
+        catch (Exception ex)
+        {
+            retorno.Mensagem = $"Falha ao excluir o post: {ex.Message}";
+            retorno.Sucesso = false;
+        }
+        return retorno;
+    }
+
+    public async Task<RetornoAcaoDto> EditarPost(PostsDto postsDto)
+    {
+        RetornoAcaoDto retorno = new RetornoAcaoDto();
+        try
+        {
+          
+            
+             var filter = Builders<Posts>.Filter.Eq(p => p.Id, postsDto.Id);
+            
+             var update = Builders<Posts>.Update
+                            .Set(p => p.Descricao, postsDto.Descricao)
+                            .Set(p => p.FotoAnexo, postsDto.FotoAnexo);
+
+            // Executa a atualização no MongoDB
+            var result = await postsCollection.UpdateOneAsync(filter, update);
+            retorno.Mensagem = "Post editado com sucesso!";
+            retorno.Sucesso = true;
+        }
+        catch (Exception ex)
+        {
+            retorno.Mensagem = $"Falha ao excluir o post: {ex.Message}";
             retorno.Sucesso = false;
         }
         return retorno;

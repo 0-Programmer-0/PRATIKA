@@ -12,6 +12,11 @@ function tokenCheck() {
         divJwt: $("#divJwt"),
     }
 
+    setInterval(() => {
+        checkToken();
+    }, 5000); // Verifica a cada 5 segundos
+    
+
     function checkToken() {
         const token = sessionStorage.getItem('token');
         if (!token || isTokenExpired(token)) {
@@ -20,7 +25,6 @@ function tokenCheck() {
     }
 
     function isTokenExpired(token) {
-
         try {
             // Extrair a parte payload do token (segunda parte)
             const payload = JSON.parse(atob(token.split('.')[1]));
@@ -29,6 +33,8 @@ function tokenCheck() {
             const currentTime = Math.floor(Date.now() / 1000);
             
             // Verificar se o token expirou
+            console.log("Atual: " + currentTime);
+            console.log("Token: " + payload.exp);
             return currentTime > payload.exp;
         } catch (error) {
             console.error("Token inválido:", error);
@@ -41,6 +47,9 @@ function tokenCheck() {
         if (dto.loginPopup) {
             dto.loginPopup.removeAttr('hidden');
             dto.divJwt.css('background-color', 'rgba(0, 0, 0, 0.8)');
+            dto.divJwt.css('z-index', '9999');
+            dto.divJwt.css('width', '100%');
+            dto.divJwt.css('height', '100%');
         } else {
             console.error("Elemento 'loginPopup' não encontrado.");
         }
@@ -50,6 +59,9 @@ function tokenCheck() {
         if (dto.loginPopup) {
             dto.loginPopup.attr('hidden', true);
             dto.divJwt.css('background-color', '');
+            dto.divJwt.css('z-index', '-9999');
+            dto.divJwt.css('width', '');
+            dto.divJwt.css('height', '');
         } else {
             console.error("Elemento 'loginPopup' não encontrado.");
         }

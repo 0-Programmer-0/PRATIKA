@@ -49,6 +49,18 @@ public class AnuncioBll : IAnuncioBll
         return retorno;
     }
 
+    public async Task<List<Anuncio>> PesquisarAnunciosPorUsuario(string IdUsuario)
+    {
+        var filtro = Builders<Anuncio>.Filter.Eq(anuncio => anuncio.IdUsuario, IdUsuario);
+
+        var anuncios = await anunciosCollection.Find(filtro).ToListAsync();
+
+        if (anuncios == null || anuncios.Count == 0)
+            return null;
+
+        return anuncios;
+    }
+
     public async Task<List<AnuncioDto>> PesquisarTodosAnuncios()
     {
         List<AnuncioDto> retorno = new List<AnuncioDto>();
@@ -74,6 +86,56 @@ public class AnuncioBll : IAnuncioBll
             retorno.Add(ConverterAnuncio(anuncio));
         return retorno;
     }
+
+    public async Task<RetornoAcaoDto> ExcluirAnuncio(AnuncioDto anuncioDto)
+    {
+        RetornoAcaoDto retorno = new RetornoAcaoDto();
+        try
+        {
+            var filter = Builders<Anuncio>.Filter.Eq(p => p.Id, anuncioDto.Id);
+            
+            await anunciosCollection.DeleteOneAsync(filter);
+            retorno.Mensagem = "Anúncio excluido com sucesso!";
+            retorno.Sucesso = true;
+        }
+        catch (Exception ex)
+        {
+            retorno.Mensagem = $"Falha ao excluir o anúncio: {ex.Message}";
+            retorno.Sucesso = false;
+        }
+        return retorno;
+    }
+
+    public async Task<RetornoAcaoDto> EditarAnuncio(AnuncioDto anunciosDto)
+{
+    RetornoAcaoDto retorno = new RetornoAcaoDto();
+    try
+    {
+        // Filtro para localizar o anúncio pelo ID
+        var filter = Builders<Anuncio>.Filter.Eq(a => a.Id, anunciosDto.Id);
+       
+        // Atualização dos campos do anúncio
+        var update = Builders<Anuncio>.Update
+            .Set(a => a.Titulo, anunciosDto.Titulo) // Atualiza o título
+            .Set(a => a.Profissao, anunciosDto.Profissao) // Atualiza a profissão
+            .Set(a => a.Estado, anunciosDto.Estado) // Atualiza o estado
+            .Set(a => a.Cidade, anunciosDto.Cidade) // Atualiza a cidade
+            .Set(a => a.Descricao, anunciosDto.Descricao); // Atualiza a descrição
+
+        // Executa a atualização no MongoDB
+        var result = await anunciosCollection.UpdateOneAsync(filter, update);
+            
+        retorno.Mensagem = "Anúncio editado com sucesso!";
+        retorno.Sucesso = true;
+    }
+    catch (Exception ex)
+    {
+        retorno.Mensagem = $"Falha ao editar o anúncio: {ex.Message}";
+        retorno.Sucesso = false;
+    }
+    return retorno;
+}
+
 
     private Anuncio ConverterAnuncioDto(AnuncioDto anuncioDto)
     {

@@ -39,9 +39,15 @@ public class MarketplaceController : Controller
         usuarioDto = await usuarioBll.PesquisarUsuario(usuarioDto);
         if (usuarioDto.Id != null)
         {
-            dto.IdUsuario = usuarioDto.Id;
-            retorno = await marketplaceBll.CriarItem(dto);
-            return Json(new { success = retorno.Sucesso, message = retorno.Mensagem });
+            if(dto.Id != null){
+                retorno = await marketplaceBll.EditarItem(dto);
+                return Json(new { success = retorno.Sucesso, message = retorno.Mensagem });
+            }else{
+                dto.IdUsuario = usuarioDto.Id;
+                retorno = await marketplaceBll.CriarItem(dto);
+                return Json(new { success = retorno.Sucesso, message = retorno.Mensagem });
+            }
+           
         }
         else
             return Json(new { success = false, message = "Falha em identificar o usuário do anúncio!" });
@@ -83,6 +89,36 @@ public class MarketplaceController : Controller
         }
         return listaItem;
     }
+
+    [HttpPost]
+    public async Task<JsonResult> PesquisarItensPorUsuario()
+    {
+        UsuarioDto usuarioDto = new UsuarioDto();
+        usuarioDto.NomeUsuario = HttpContext.Session.GetString("Usuario");
+        usuarioDto = await usuarioBll.PesquisarUsuario(usuarioDto);
+
+        List<Item> listaItens = new List<Item>();
+        listaItens = await marketplaceBll.PesquisarItensPorUsuario(usuarioDto.Id);
+        return Json(new { success = true, lista = listaItens });
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> ExcluirItem(ItemDto item)
+    {
+        try
+        {
+            await marketplaceBll.ExcluirItem(item);
+            return Json(new { success = true});
+        }
+        catch
+        {
+            return Json(new { success = false, message = "Falha em excluir item!" });
+        }
+    }
+       
+
+        
+       
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

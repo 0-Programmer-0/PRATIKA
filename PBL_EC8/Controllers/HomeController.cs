@@ -26,6 +26,11 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult Perfil()
+    {
+        return View();
+    }
+
     public IActionResult Privacy()
     {
         return View();
@@ -66,6 +71,23 @@ public class HomeController : Controller
         string nomeUsuario = HttpContext.Session.GetString("Usuario");
         string imgPerfil = HttpContext.Session.GetString("ImagemPerfil");
         return Json(new { usuario = nomeUsuario, imagemPerfil = imgPerfil });
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> ValidacaoPerfil()
+    {
+        UsuarioDto usuarioDto = new UsuarioDto();
+        usuarioDto.NomeUsuario = HttpContext.Session.GetString("Usuario");
+        usuarioDto = await usuarioBll.PesquisarUsuario(usuarioDto);
+
+        if(usuarioDto.Perfil =="Premium"){
+            return Json(new { success = true});
+        }
+        else{
+            return Json(new { success = false});
+        }
+        
+       
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
