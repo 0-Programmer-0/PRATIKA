@@ -239,3 +239,17 @@ body {
 .input-cidade {
     width: 60%;
 }
+
+.btnLimparPesquisa {
+    background-color: #00FF0A;
+    color: black;
+    font-size: 13px;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    size: 5px;
+    margin: 20px;
+}
